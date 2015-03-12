@@ -6,3 +6,15 @@ dsauth:
 devise:
   key: <%= ENV["DEVISE_KEY"] %>
   salt: <%= ENV["DEVISE_SALT"] %>
+action_mailer:
+  smtp_settings:
+    address: smtp.sendgrid.net
+    port: 587
+    domain: em.email.dsds.dsd.io
+    authentication: plain
+    user_name: <%= ENV["EMAIL_USERNAME"] %>
+    password: <%= ENV["EMAIL_PASSWORD"] %>
+    enable_starttls_auto: false
+
+sandbox_email: <%= ENV["SANDBOX_EMAIL"] %>
+sandbox_email_address: <%= ENV['SANDBOX_EMAIL_ADDRESS'] || 'iamadefencesolicitor@gmail.com' %>
