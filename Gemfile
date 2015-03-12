@@ -14,6 +14,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'uglifier', '>= 1.3.0'
 gem 'unicorn'
 
+# MOJ styles
+gem 'moj_template', '~> 0.23.0'
+gem 'govuk_frontend_toolkit', '~> 2.0.1'
+gem 'govuk_elements_rails', '~> 0.1.1'
+
 group :development, :test do
   gem 'pry'
   gem 'web-console', '~> 2.0'

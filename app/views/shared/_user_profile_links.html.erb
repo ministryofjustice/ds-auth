@@ -1,0 +1,7 @@
+<% if current_user %>
+  <%= link_to(t('change_password'), edit_user_registration_path, class: 'user-links') %>
+  <%= link_to(t('devise.sessions.log_out'), destroy_user_session_path, method: :delete, class: 'user-links') %>
+  <% if Rails.env.development? %>
+    <h5 class="user-role"><%= current_user.role.humanize.upcase %></h5>
+  <% end %>
+<% end %>
