@@ -19,7 +19,19 @@ gem 'moj_template', '~> 0.23.0'
 gem 'govuk_frontend_toolkit', '~> 2.0.1'
 gem 'govuk_elements_rails', '~> 0.1.1'
 
+group :test do
+  gem 'webmock'
+  gem 'factory_girl_rails'
+  gem 'simplecov', require: false
+  gem 'codeclimate-test-reporter', require: false
+end
+
 group :development, :test do
+  gem 'capybara'
   gem 'pry'
+  gem 'rspec-rails', '~> 3.2.0'
   gem 'web-console', '~> 2.0'
+  gem 'shoulda-matchers'
+  gem 'launchy'
+  gem 'database_cleaner'
 end
