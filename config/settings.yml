@@ -1,2 +1,8 @@
 rails:
   secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
+dsauth:
+  default_mail_host: <%= ENV["DEFAULT_MAIL_HOST"] %>
+  app_title: Defence Solicitor Authentication System
+devise:
+  key: <%= ENV["DEVISE_KEY"] %>
+  salt: <%= ENV["DEVISE_SALT"] %>

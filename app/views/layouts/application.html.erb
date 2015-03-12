@@ -1,14 +1,59 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>DsAuth</title>
-  <%= stylesheet_link_tag    'application', media: 'all' %>
+<% content_for :page_title do %>
+  <%= Settings.dsauth.app_title %>
+<% end %>
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag('application', media: 'all') %>
+  <!--[if IE 6]>
+  <%= stylesheet_link_tag "govuk_elements_extensions_ie6", media: "all" %>
+  <![endif]-->
+  <!--[if IE 7]>
+  <%= stylesheet_link_tag "govuk_elements_extensions_ie7", media: "all" %>
+  <![endif]-->
+  <!--[if IE 8]>
+  <%= stylesheet_link_tag "govuk_elements_extensions_ie8", media: "all" %>
+  <![endif]-->
+<% end %>
+<% content_for :javascripts do %>
   <%= javascript_include_tag 'application' %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<% end %>
+<% content_for :head do %>
+  <%= csrf_meta_tag %>
+  <%# render 'shared/ga' %>
+<% end %>
+<%= content_for :cookie_message, "" %>
+<%= content_for :js_gt_ie, '6' %>
+<%# TODO: convert banner to i18n? %>
+<% content_for :content_override do %>
+  <main id="page-container" role="main">
+    <%= render 'shared/banner' %>
+    <%= yield %>
+  </main>
+<% end %>
+<% content_for :proposition_links do %>
+  <%= render 'shared/user_profile_links' %>
+<% end %>
 
-<%= yield %>
+<% content_for :footer_support_links do %>
+  <li>
+    <ul>
+      <li>
+        <%= link_to t('help'), :help %>
+      </li>
+      <li>
+        <%= link_to t('accessibility'), :accessibility %>
+      </li>
+      <li>
+        <%= link_to t('cookies'), :cookies %>
+      </li>
+      <li>
+        <%= link_to t('terms'), :terms %>
+      </li>
+    </ul>
+  </li>
+<% end %>
 
-</body>
-</html>
+<% content_for :body_end do %>
+  <%= render js_partial rescue nil %>
+<% end %>
+
+<%= render template: 'layouts/moj_template' %>

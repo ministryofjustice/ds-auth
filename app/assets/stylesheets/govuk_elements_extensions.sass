@@ -1,0 +1,216 @@
+// Give elements default CSS by extending from selectors in govuk elements
+
+$path: ''
+
+@import 'elements/helpers'
+@import 'elements/reset'
+@import 'elements/elements-typography'
+@import 'elements/layout'
+@import 'elements/forms'
+@import "elements/tables"
+@import 'elements/buttons'
+@import 'elements/details'
+@import 'elements/lists'
+@import 'elements/panels'
+
+h1
+  @extend .heading-xlarge
+  margin-right: 6%
+  span
+    @extend .heading-secondary
+
+h2
+  @extend .heading-large
+  margin-top: 100px
+  padding-bottom: 0.2em
+  border-bottom: 1px solid $border-colour
+  margin-bottom: 40px
+
+h3
+  @extend .heading-medium
+
+ul
+  @extend .list-bullet
+
+fieldset.radio
+  label
+    @extend .block-label
+
+legend
+  @extend .form-label
+  color: #000000
+
+select
+  @extend .form-label
+
+span.hint
+  @extend .form-hint
+  margin-top: 0px
+
+label[for]
+  @extend .form-label
+
+label + input
+  @extend .form-control
+
+label + textarea
+  @extend .form-control
+
+fieldset, .sub-panel
+  @extend .form-group
+
+.narrow
+  width: 22%
+  @include media(mobile)
+    width: 40%
+
+.alert-summary
+  @extend .validation-summary
+  h3
+    margin-top: 10px
+
+.notice-summary
+  @extend .validation-summary
+  border: 3px solid $green
+  h3
+    margin-top: 10px
+
+.error-summary
+  @extend .validation-summary
+  h3
+    margin-top: 10px
+
+.success-summary
+  @extend .validation-summary
+  border: 3px solid $green
+  h3
+    margin-top: 10px
+
+span.error
+  @extend .validation-message
+
+.js-enabled
+  .hide
+    display: none
+
+.js-only
+  display: none
+  .js-enabled &
+    display: block
+
+.left
+  float: left
+.right
+  float: right
+
+.summary-header
+  margin-top: 100px
+  .section-header
+    margin-top: 0px
+    border: none
+    @include media(mobile)
+      margin-bottom: 10px
+
+  .edit-link
+    float: right
+    margin-right: 15px
+
+    @include media(mobile)
+      float: left
+      margin-left: 15px
+      margin-bottom: 15px
+
+.summary-label
+  color: $secondary-text-colour
+  width: 30%
+
+textarea
+  height: 110px
+
+// --
+// Only required for postcode picker manual entry caption
+a.caption
+  padding-left: 20px
+  background: image-url('summary-arrow-sprite.gif') 0 5px no-repeat
+  color: $link-colour
+  cursor: pointer
+  &:hover
+    text-decoration: underline
+  &:focus
+    background: rgb(254, 188, 64) image-url('summary-arrow-sprite.gif') 0 5px no-repeat
+.open
+  a.caption
+    background-position: -1000px 5px
+    color: $link-active-colour
+    &:focus
+      background: rgb(254, 188, 64) image-url('summary-arrow-sprite.gif') 0 5px no-repeat
+
+// --
+
+section
+  clear: left
+
+.form-group
+  float: none
+
+[type="text"], [type="password"], textarea
+  padding: 5px 4px 2px
+  border: 1px solid $grey-2
+
+input[disabled="disabled"], input[readonly="readonly"]
+  opacity: 1
+  background-color: $grey-4
+  color: $grey-1
+  &:focus
+    outline: none
+
+.button.primary
+  margin-top: 30px
+  margin-bottom: 50px
+
+.button.warning
+  background-color: $yellow
+
+span.hint.inline
+  display: inline
+
+fieldset.time-select select
+  display: inline
+
+.panel
+  border: 1px solid #bfc1c3
+  padding-top: 45px
+  padding-right: 40px
+  padding-bottom: 30px
+  padding-left: 30px
+
+.form-links
+  display: inline-block
+  padding-top: 14px
+
+.flash.success
+  background-color: #FFE1E1
+  border: 3px red solid
+
+.text-field
+  text-transform: none
+  border: 1px solid #bbb
+  margin: 0 0 1em
+  padding: 0.5em
+
+.text-field-wide
+  width: 80%
+
+.date-field-wrapper
+  display: inline-block
+  margin-right: 1em
+
+.time-field-wrapper
+  display: inline-block
+  margin-right: 1em
+
+.hidden
+  display: none
+
+.form-group
+  margin-bottom: 1px
