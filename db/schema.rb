@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150316103749) do
+ActiveRecord::Schema.define(version: 20150318144412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,41 @@ ActiveRecord::Schema.define(version: 20150316103749) do
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+
+  create_table "organisations", force: :cascade do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+    t.string  "slug",              null: false
+    t.string  "name",              null: false
+    t.string  "organisation_type", null: false
+    t.boolean "searchable",        null: false
+    t.string  "tel"
+    t.text    "address"
+    t.string  "postcode"
+    t.string  "email"
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.integer "organisation_id"
+    t.integer "user_id"
+    t.string  "name",            null: false
+    t.string  "tel"
+    t.text    "address"
+    t.string  "postcode"
+    t.string  "email"
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string  "name",            default: "", null: false
+    t.integer "organisation_id"
+    t.integer "application_id"
+    t.integer "permission_id",                null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
