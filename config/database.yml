@@ -5,14 +5,14 @@ default: &default
 
 development:
   <<: *default
-  database: ds-auth_development
+  database: defence-solicitor-service-auth_development
 
 test:
   <<: *default
-  database: ds-auth_test
+  database: defence-solicitor-service-auth_test
 
 production:
   <<: *default
-  database: ds-auth_production
+  database: defence-solicitor-service-auth_production
   username: ds-auth
   password: <%= ENV['DS-AUTH_DATABASE_PASSWORD'] %>
