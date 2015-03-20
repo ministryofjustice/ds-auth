@@ -7,4 +7,9 @@ RSpec.describe Organisation do
     it { expect(subject).to validate_presence_of :organisation_type }
     it { expect(subject).to validate_presence_of :searchable }
   end
+
+  describe 'associations' do
+    specify { expect(subject).to have_many(:permissions) }
+    specify { expect(subject).to have_many(:people).through(:organisation_memberships) }
+  end
 end

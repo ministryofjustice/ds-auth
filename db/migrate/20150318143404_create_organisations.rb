@@ -1,9 +1,6 @@
 class CreateOrganisations < ActiveRecord::Migration
   def change
     create_table :organisations do |t|
-      t.integer :role_id
-      t.integer :user_id
-
       t.string  :slug, null: false
       t.string  :name, null: false
       t.string  :organisation_type, null: false

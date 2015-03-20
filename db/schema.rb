@@ -11,10 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150318160338) do
+ActiveRecord::Schema.define(version: 20150320113722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "government_applications", force: :cascade do |t|
+    t.integer "permission_id"
+    t.string  "oauth_application_id"
+  end
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false
@@ -56,9 +61,12 @@ ActiveRecord::Schema.define(version: 20150318160338) do
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
+  create_table "organisation_memberships", force: :cascade do |t|
+    t.integer "person_id"
+    t.integer "organisation_id"
+  end
+
   create_table "organisations", force: :cascade do |t|
-    t.integer "role_id"
-    t.integer "user_id"
     t.string  "slug",              null: false
     t.string  "name",              null: false
     t.string  "organisation_type", null: false
@@ -82,12 +90,12 @@ ActiveRecord::Schema.define(version: 20150318160338) do
   create_table "permissions", force: :cascade do |t|
     t.integer "role_id"
     t.integer "user_id"
+    t.integer "organisation_id"
+    t.integer "government_application_id"
   end
 
   create_table "roles", force: :cascade do |t|
-    t.string  "name",                 default: "", null: false
-    t.integer "organisation_id"
-    t.string  "oauth_application_id"
+    t.string  "name",          default: "", null: false
     t.integer "permission_id"
   end
 

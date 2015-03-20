@@ -4,10 +4,9 @@ RSpec.describe User do
   let(:user){ create :user }
   let(:role) { Role.create(name: 'super-danger-admin') }
 
-  describe 'roles' do
-    it 'associates a role' do
-      user.roles << role
-      expect(user.roles.first.name).to eq role.name
-    end
+  describe 'associations' do
+    specify { expect(subject).to have_one(:person) }
+    specify { expect(subject).to have_many(:permissions) }
+    specify { expect(subject).to have_many(:roles).through(:permissions) }
   end
 end
