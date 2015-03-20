@@ -5,4 +5,8 @@ RSpec.describe Role do
     specify { expect(subject).to have_many(:permissions) }
     specify { expect(subject).to have_many(:users).through(:permissions) }
   end
+
+  describe 'validations' do
+    specify { expect(subject).to validate_presence_of(:name) }
+  end
 end
