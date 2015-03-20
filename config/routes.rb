@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     patch 'users/:id' => 'devise/registrations#update', as: 'user_registration'
   end
 
+  resources :roles, except: [:edit, :update, :show]
+
   root 'welcome#index'
 
   get '/status' => 'status#index'
