@@ -3,6 +3,7 @@ ruby '2.1.5'
 
 gem 'coffee-rails', '~> 4.1.0'
 gem 'devise', '~> 3.4.1'
+gem 'doorkeeper'
 gem 'dotenv-rails', '~> 1.0.2'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
