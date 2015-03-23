@@ -1,5 +1,5 @@
 class RolesController < ApplicationController
-  before_action :set_role, only: [:show, :edit, :update, :destroy]
+  before_action :set_role, except: [:index, :new, :create]
 
   def index
     @roles = Role.all
@@ -31,11 +31,12 @@ class RolesController < ApplicationController
   end
 
   private
-    def set_role
-      @role = Role.find(params[:id])
-    end
 
-    def role_params
-      params[:role].permit(:name)
-    end
+  def set_role
+    @role = Role.find(params[:id])
+  end
+
+  def role_params
+    params[:role].permit(:name)
+  end
 end

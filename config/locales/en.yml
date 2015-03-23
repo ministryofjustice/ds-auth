@@ -22,9 +22,16 @@
 en:
   are_you_sure: "Are you sure?"
   delete: "Delete"
+  name: "Name"
+  organisation_type: "Organisation type"
+  searchable: "Searchable"
+  show: "Show"
+  slug: "Slug"
+  update: "Update"
 
   models:
     create: "%{model} successfully created"
     destroy: "%{model} successfully deleted"
+    update: "%{model} successfully updated"
     failed_destroy: "%{model} was not deleted"
 

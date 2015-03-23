@@ -6,6 +6,5 @@ class Organisation < ActiveRecord::Base
   validates :slug,
             :name,
             :organisation_type,
-            :searchable,
              presence: true
 end

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
 
   resources :roles, except: [:edit, :update, :show]
+  resources :organisations
 
   root 'welcome#index'
 
