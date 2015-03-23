@@ -20,4 +20,11 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  are_you_sure: "Are you sure?"
+  delete: "Delete"
+
+  models:
+    create: "%{model} successfully created"
+    destroy: "%{model} successfully deleted"
+    failed_destroy: "%{model} was not deleted"
+

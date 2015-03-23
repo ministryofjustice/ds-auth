@@ -15,9 +15,19 @@ class RolesController < ApplicationController
 
   def create
     @role = Role.new(role_params)
+    if @role.save
+      redirect_to roles_path, notice: flash_message(:create, Role)
+    else
+      render :new
+    end
   end
 
   def destroy
+    if @role.destroy
+      redirect_to roles_path, notice: flash_message(:destroy, Role)
+    else
+      redirect_to roles_path, notice: flash_message(:failed_destroy, Role)
+    end
   end
 
   private
@@ -26,6 +36,6 @@ class RolesController < ApplicationController
     end
 
     def role_params
-      params[:role]
+      params[:role].permit(:name)
     end
 end

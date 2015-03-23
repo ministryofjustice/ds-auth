@@ -1,5 +1,24 @@
-<h1>Roles</h1>
+<%= render 'shared/flash_messages' %>
 
-<% @roles.each do |r| %>
-  <%= r.name %>
-<% end %>
+<h1>Listing Roles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @roles.each do |role| %>
+      <tr>
+        <td><%= role.name %>
+        <td><%= link_to t('delete'), role, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Role', new_role_path %>
