@@ -4,4 +4,6 @@ class User < ActiveRecord::Base
   has_many :permissions
   has_many :roles, through: :permissions
   has_one :person
+
+  scope :without_user, ->(user) { where.not(id: user.id) }
 end
