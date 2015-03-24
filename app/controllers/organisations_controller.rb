@@ -48,13 +48,14 @@ class OrganisationsController < ApplicationController
   end
 
   def organisation_params
-    params[:organisation].permit(:slug,
-                                 :name,
-                                 :organisation_type,
-                                 :searchable,
-                                 :tel,
-                                 :addressable,
-                                 :postcode,
-                                 :email)
+    params.require(:organisation)
+          .permit(:slug,
+                  :name,
+                  :organisation_type,
+                  :searchable,
+                  :tel,
+                  :addressable,
+                  :postcode,
+                  :email)
   end
 end

@@ -12,7 +12,6 @@ class RolesController < ApplicationController
     @role = Role.new
   end
 
-
   def create
     @role = Role.new(role_params)
     if @role.save
@@ -37,6 +36,7 @@ class RolesController < ApplicationController
   end
 
   def role_params
-    params[:role].permit(:name)
+    params.require(:role)
+          .permit(:name)
   end
 end
