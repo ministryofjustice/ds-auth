@@ -95,8 +95,10 @@ RSpec.feature 'Users managing organisations' do
     expect(page).to have_content 'Slug: north-american-marlon-brando-lookalikes'
     expect(page).to have_content 'Organisation type: social'
     expect(page).to have_content 'Searchable: true'
-  end
 
+    expect(page).to have_content 'Members'
+    expect(page).to have_content 'Barry Evans', count: 10
+  end
 end
 
 def organisation_cannot_be_destroyed_for_some_reason organisation

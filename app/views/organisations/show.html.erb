@@ -20,6 +20,29 @@
   <%= @organisation.searchable %>
 </p>
 
+<h3>Members</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @organisation.people.any? %>
+      <% @organisation.people.each do |person| %>
+        <tr>
+          <td><%= person.name %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr><td>No members</td></tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br/>
 
 <%= link_to 'Edit', edit_organisation_path(@organisation) %> |
 <%= link_to 'Back', organisations_path %>
