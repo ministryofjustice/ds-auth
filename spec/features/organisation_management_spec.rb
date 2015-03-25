@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Users managing organisations' do
   let(:user) { create(:user) }
-  let!(:organisation) { create(:organisation, :with_profiles_and_users, profile_count: 10) }
+  let!(:organisation) { create(:organisation, :with_profiles_and_users, profile_count: 3) }
 
   before do
     login_as_user user.email
@@ -97,7 +97,9 @@ RSpec.feature 'Users managing organisations' do
     expect(page).to have_content 'Searchable: true'
 
     expect(page).to have_content 'Members'
-    expect(page).to have_content 'Barry Evans', count: 10
+    organisation.profiles.each do |p|
+      expect(page).to have_content p.name
+    end
   end
 end
 
