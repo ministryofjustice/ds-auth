@@ -5,7 +5,7 @@
 <table>
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -15,13 +15,14 @@
         <tr>
           <td><em><%= user.email %></em></td>
           <td></td>
-          <td></td>
         </tr>
       <% else %>
         <tr>
           <td><%= user.email %></td>
-          <td><%= link_to t('edit'), edit_user_path(user) %></td>
-          <td><%= link_to t('delete'), user, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %></td>
+          <td class="actions">
+            <%= link_to t('edit'), edit_user_path(user) %>
+            <%= link_to t('delete'), user, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %>
+          </td>
         </tr>
       <% end %>
     <% end %>
