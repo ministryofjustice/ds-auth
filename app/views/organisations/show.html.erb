@@ -30,10 +30,10 @@
   </thead>
 
   <tbody>
-    <% if @organisation.people.any? %>
-      <% @organisation.people.each do |person| %>
+    <% if @organisation.profiles.any? %>
+      <% @organisation.profiles.each do |profile| %>
         <tr>
-          <td><%= person.name %></td>
+          <td><%= profile.name %></td>
         </tr>
       <% end %>
     <% else %>

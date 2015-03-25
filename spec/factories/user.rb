@@ -4,8 +4,8 @@ FactoryGirl.define do
     user.password               "password"
     user.password_confirmation  "password"
 
-    trait :with_person do
-      association :person, factory: person
+    trait :with_profile do
+      association :profile
     end
   end
 end

@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   has_many :permissions
   has_many :roles, through: :permissions
-  has_one :person
+  has_one :profile
 
   scope :without_user, ->(user) { where.not(id: user.id) }
 end

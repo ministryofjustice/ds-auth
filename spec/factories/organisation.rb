@@ -5,15 +5,15 @@ FactoryGirl.define do
     organisation.organisation_type 'social'
     organisation.searchable         true
 
-    trait :with_people_and_users do
+    trait :with_profiles_and_users do
       transient do
-        people_count 0
+        profile_count 0
       end
 
       after(:create) do |organisation, evaluator|
-        organisation_memberships = FactoryGirl.build_list(:organisation_membership, evaluator.people_count, organisation: organisation)
+        organisation_memberships = FactoryGirl.build_list(:organisation_membership, evaluator.profile_count, organisation: organisation)
         organisation_memberships.each do |membership|
-          FactoryGirl.create(:person, :with_user, organisation_memberships: [membership])
+          FactoryGirl.create(:profile, :with_user, organisation_memberships: [membership])
           membership.save
         end
       end

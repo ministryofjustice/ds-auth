@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :person do |person|
+  factory :profile do |profile|
     name                        "Barry Evans"
     address                     "742 Evergreen terrace"
     postcode                    "POSTCODE"

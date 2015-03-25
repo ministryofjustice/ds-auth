@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Users managing organisations' do
   let(:user) { create(:user) }
-  let!(:organisation) { create(:organisation, :with_people_and_users, people_count: 10) }
+  let!(:organisation) { create(:organisation, :with_profiles_and_users, profile_count: 10) }
 
   before do
     login_as_user user.email

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Person do
+RSpec.describe Profile do
   describe 'validations' do
     it { expect(subject).to validate_presence_of :name }
   end

@@ -1,4 +1,4 @@
-class Person < ActiveRecord::Base
+class Profile < ActiveRecord::Base
   belongs_to :user
   has_many :organisation_memberships
   has_many :organisations, through: :organisation_memberships
