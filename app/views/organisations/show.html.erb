@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong><%= t('name') %>:</strong>
+  <%= @organisation.name %>
+</p>
+
+<p>
+  <strong><%= t('slug') %>:</strong>
+  <%= @organisation.slug %>
+</p>
+
+<p>
+  <strong><%= t('organisation_type') %>:</strong>
+  <%= @organisation.organisation_type %>
+</p>
+
+<p>
+  <strong><%= t('searchable') %>:</strong>
+  <%= @organisation.searchable %>
+</p>
+
+<h3>Members</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @organisation.profiles.any? %>
+      <% @organisation.profiles.each do |profile| %>
+        <tr>
+          <td><%= profile.name %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr><td>No members</td></tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br/>
+
+<%= link_to 'Edit', edit_organisation_path(@organisation) %> |
+<%= link_to 'Back', organisations_path %>

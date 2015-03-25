@@ -1,11 +1,6 @@
 <% content_for :error_messages do %>
   <section class="error-summary" id="form_errors" tabindex="-1">
     <h3 id="page-error-heading">You need to fix the errors on this page before continuing.</h3>
-      <% object.errors.messages.each do |field_name, message| %>
-        <li>
-          <%= "#{t(field_name)}: #{message.is_a?(Array) ? list_errors(object, field_name) : message}".html_safe %>
-        </li>
-      <% end %>
-    </ul>
+    <%= object_error_messages object.errors.messages %>
   </section>
 <% end %>

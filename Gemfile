@@ -30,6 +30,7 @@ end
 group :development, :test do
   gem 'capybara'
   gem 'pry'
+  gem 'faker'
   gem 'rspec-rails', '~> 3.2.0'
   gem 'web-console', '~> 2.0'
   gem 'shoulda-matchers'
