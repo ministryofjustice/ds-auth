@@ -7,6 +7,6 @@ RSpec.describe Profile do
 
   describe 'associations' do
     specify { expect(subject).to belong_to(:user) }
-    specify { expect(subject).to have_many(:organisations).through(:organisation_memberships) }
+    specify { expect(subject).to have_many(:organisations).through(:memberships) }
   end
 end

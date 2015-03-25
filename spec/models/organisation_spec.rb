@@ -9,6 +9,6 @@ RSpec.describe Organisation do
 
   describe 'associations' do
     specify { expect(subject).to have_many(:permissions) }
-    specify { expect(subject).to have_many(:profiles).through(:organisation_memberships) }
+    specify { expect(subject).to have_many(:profiles).through(:memberships) }
   end
 end

@@ -11,9 +11,9 @@ FactoryGirl.define do
       end
 
       after(:create) do |organisation, evaluator|
-        organisation_memberships = FactoryGirl.build_list(:organisation_membership, evaluator.profile_count, organisation: organisation)
-        organisation_memberships.each do |membership|
-          FactoryGirl.create(:profile, :with_user, organisation_memberships: [membership])
+        memberships = FactoryGirl.build_list(:membership, evaluator.profile_count, organisation: organisation)
+        memberships.each do |membership|
+          FactoryGirl.create(:profile, :with_user, memberships: [membership])
           membership.save
         end
       end
