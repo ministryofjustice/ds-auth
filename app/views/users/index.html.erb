@@ -19,7 +19,7 @@
       <% else %>
         <tr>
           <td><%= user.email %></td>
-          <td class="actions">
+          <td class="user-actions">
             <%= link_to t('edit'), edit_user_path(user) %>
             <%= link_to t('delete'), user, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %>
           </td>
