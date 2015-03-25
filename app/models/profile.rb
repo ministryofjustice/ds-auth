@@ -3,9 +3,5 @@ class Profile < ActiveRecord::Base
   has_many :memberships
   has_many :organisations, through: :memberships
 
-  validates :name,
-            :address,
-            :postcode,
-            :email,
-            :tel, presence: true
+  validates :name, :address, :postcode, :email, :tel, presence: true
 end

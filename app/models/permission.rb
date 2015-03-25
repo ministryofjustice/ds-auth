@@ -4,6 +4,5 @@ class Permission < ActiveRecord::Base
   belongs_to :government_application
   belongs_to :organisation
 
-  validates :government_application,
-            :role, presence: true
+  validates :government_application, :role, presence: true
 end
