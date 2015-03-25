@@ -8,10 +8,10 @@ RSpec.feature 'Users managing users' do
     login_as_user user.email
   end
 
-  specify 'can view a list of all users except the current user' do
+  specify 'can view a list of all users' do
     visit users_path
     expect(page).to have_content "Users"
-    expect(page).not_to have_content user.email
+    expect(page).to have_content user.email
     expect(page).to have_content other_user.email
   end
 
@@ -39,6 +39,13 @@ RSpec.feature 'Users managing users' do
 
     expect(page).to have_content "You need to fix the errors on this page before continuing"
     expect(page).to have_content "Password: can't be blank"
+  end
+
+  specify 'can only edit or delete other users' do
+    visit users_path
+
+    expect(page).to have_link "Edit", count: 1
+    expect(page).to have_link "Delete", count: 1
   end
 
   specify 'can delete a user' do

@@ -11,11 +11,19 @@
 
   <tbody>
     <% @users.each do |user| %>
-      <tr>
-        <td><%= user.email %>
-        <td><%= link_to t('edit'), edit_user_path(user) %></td>
-        <td><%= link_to t('delete'), user, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %></td>
-      </tr>
+      <% if user == current_user %>
+        <tr>
+          <td><em><%= user.email %></em></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <% else %>
+        <tr>
+          <td><%= user.email %></td>
+          <td><%= link_to t('edit'), edit_user_path(user) %></td>
+          <td><%= link_to t('delete'), user, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

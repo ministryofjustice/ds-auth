@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, except: [:index, :new, :create]
 
   def index
-    @users = User.without_user(current_user)
+    @users = User.all
   end
 
   def new
