@@ -1,9 +1,4 @@
 module HelperMethods
-
-  def saop
-    save_and_open_page
-  end
-
   def login_as_user(email, password="password")
     visit new_user_session_path
     fill_in 'user_email', with: email
