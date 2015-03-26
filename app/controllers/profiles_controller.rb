@@ -12,7 +12,6 @@ class ProfilesController < ApplicationController
     @profile = Profile.new
   end
 
-
   def create
     @profile = Profile.new(profile_params)
     if @profile.save
