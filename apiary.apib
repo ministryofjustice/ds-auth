@@ -1,0 +1,361 @@
+FORMAT: 1A
+
+# Defence Request App Internal API
+Defence Request Auth App Internal API's
+
+## Authorization
+Access tokens are obtained by signing User in using OAuth.
+
+Access tokens must be passed for each request in an Authorization header.
+
+A missing Authorization Header or invalid Authorization Token value for a protected endpoint will result in a 401 response
+
+## Paging
+Every collection response will include a links object.
+
+The Links Object should contain links to both the first and last pages, optionally with next and previous links 
+
+# Group API Root [/]
+
+This resource does not have any attributes. Instead it offers the initial API affordances in the form of the links in the JSON body.
+
+It is recommended to follow the “url” link values, [Link](https://tools.ietf.org/html/rfc5988) or Location headers where applicable to retrieve resources. Instead of constructing your own URLs, to keep your client decoupled from implementation details. We will use link values for all collection responses.
+
+## Retrieve the Entry Point [GET]
+
++ Response 200 (application/json)
+
+        {
+            "organisations_url": "/api/v1/organisations",
+            "profiles_url": "/api/v1/profiles",
+            "users_url": "/api/v1/users"
+        }
+
+# Group Users
+Users contain login information
+
+## Users Collection [/api/v1/users]
+### List all Users [GET]
++ Payload
+
+    + Headers
+        
+        Authorization: Token <TOKEN>
+
++ Response 200 (application/json)
+
+        {
+            "users": [
+                {
+                    "id": 1,
+                    "first_name": "Bob",
+                    "last_name": "Smith",
+                    "email": "bob.smith@world.com"
+                }
+            ],
+            "links": {
+                "first": "/api/v1/users",
+                "previous": "/api/v1/users?page=1",
+                "next": "/api/v1/users?page=2",
+                "last": "/api/v1/users?page=3"
+            }
+        }
+
++ Response 401 (application/json)
+
+        {
+            "errors": [
+                "You must provide a valid Authorization Token"
+            ]
+        }
+
+## User [/api/v1/user/{id}]
+
++ Parameters
+    + id (integer) 
+        ID of the User
+
+### Single User [GET]
++ Payload
+
+    + Headers
+        
+        Authorization: Token <TOKEN>
+
+
++ Response 200 (application/json)
+
+        {
+            "user": {
+                "id": 1,
+                "first_name": "Bob",
+                "last_name": "Smith",
+                "email": "bob.smith@world.com"
+            }
+        }
+
++ Response 401 (application/json)
+
+        {
+            "errors": [
+                "You must provide a valid Authorization Token"
+            ]
+        }
+
+## User [/api/v1/user/me]
+Returns User object for the user identified by the Authorization Header
+
+### Single User [GET]
++ Payload
+
+    + Headers
+        
+        Authorization: Token <TOKEN>
+
++ Response 200 (application/json)
+
+        {
+            "user": {
+                "id": 1,
+                "first_name": "Bob",
+                "last_name": "Smith",
+                "username": "bob.smith",
+                "email": "bob.smith@world.com"
+            },
+            "profile": {
+                "name": "Bob Smith",
+                "email": "bob.smith@world.com",
+                "telephone": "0123456789",
+                "mobile": "071234567",
+                "address": {
+                    "line1": "",
+                    "line2": "",
+                    "city": ""
+                    "postcode": ""
+                },
+                "PIN": "1234",
+                "organisation_ids": [1,2]
+            },
+            "roles": [
+                "admin", "foo", "bar"
+            ]
+        }
+
++ Response 401 (application/json)
+
+        {
+            "errors": [
+                "You must provide a valid Authorization Token"
+            ]
+        }
+
+# Group Organisations
+Organisations are logical groups of Users
+
+Organisations can be filtered by one or more type:
+* custody_suite
+* call_centre
+* law_firm
+* law_office
+
+## Organisations Collection [/api/v1/organisations?types=xxx]
+### List all Organisations [GET]
++ Payload
+
+    + Headers
+        
+        Authorization: Token <TOKEN>
+
++ Parameters
+    + types (string)
+        Filter types of Organisation, multiple by comma seperation
+        + Values
+            + `'custody_suite'`
+            + `'call_centre'`
+            + `'law_firm'`
+            + `'law_office'`
+            
++ Response 200 (application/json)
+
+        {
+            "organisations:" [
+                {
+                    "id": 1, 
+                    "name": "Tuckers",
+                    "type: "law_firm",
+                    "Profiles_ids": [1,2,3,5,6,7]
+                }, 
+                {
+                    "id": 2, 
+                    "name": "Brighton",
+                    "type: "custody_suite",
+                    "profiles_ids": [5,8,9]
+
+                }    
+            ],
+            "links": {
+                "first": "/api/v1/organisations",
+                "previous": "/api/v1/organisations?page=1",
+                "next": "/api/v1/organisations?page=2",
+                "last": "/api/v1/organisations?page=3"
+            }
+        }
+        
++ Response 401 (application/json)
+
+        {
+            "errors": [
+                "You must provide a valid Authorization Token"
+            ]
+        }
+
+## Organisation [/api/v1/organisation/{id}]
+A single Organisation with all its details
+
++ Parameters
+    + id (integer)
+        ID of the organisation
+
+### Single Organisation [GET]
++ Payload
+
+    + Headers
+        
+        Authorization: Token <TOKEN>
+
++ Response 200 (application/json)
+
+        {
+            "organisation": { 
+                "id": 1, 
+                "name": "Tuckers",
+                "type": "law_firm",
+                "profiles_ids": [1,2,3,5,6,7] 
+            }
+        }
+
++ Response 401 (application/json)
+
+        {
+            "errors": [
+                "You must provide a valid Authorization Token"
+            ]
+        }
+
+# Group Profiles
+Profiles of people that may or may not have a login to Defence Request.
+
+Will eventually contain all Solicitors that have a Legal Aid Contract.
+
+Used to find contact details for Solicitors or Agents
+
+## Profiles Collection [/api/v1/profiles?ids=1,2,3,4&types=xxx]
+### List all Profiles [GET]
++ Payload
+
+    + Headers
+        
+        Authorization: Token <TOKEN>
+
++ Parameters
+    + ids (integer, optional)
+        Comma seperated list of User ids to load
+    + types (string, optional)
+        Filter types of Profile, multiple by comma seperation
+        + Values
+            + `'solicitor'`
+            + `'agent'`
+            
++ Response 200 (application/json)
+
+        {
+            "profiles:" [
+                {
+                    "id": 1, 
+                    "name": "Bob Smith",
+                    "type: "solicitor"
+                }, 
+                {
+                    "id": 2, 
+                    "name": "Andy Brown",
+                    "type: "agent"
+                }    
+            ],
+            "links": {
+                "first": "/api/v1/profiles",
+                "previous": "/api/v1/profiles?page=1",
+                "next": "/api/v1/profiles?page=2",
+                "last": "/api/v1/profiles?page=3"
+            }
+        }
+        
++ Response 401 (application/json)
+
+        {
+            "errors": [
+                "You must provide a valid Authorization Token"
+            ]
+        }
+
+## Profile [/api/v1/profiles/{id}]
+A single Profile with all its details
+
++ Parameters
+    + id (required, integer)
+    ID of the Profile
+
+### Single Profile [GET]
++ Payload
+
+    + Headers
+        
+        Authorization: Token <TOKEN>
+        
++ Response 200 (application/json)
+
+        {
+            "profile": { 
+                "id": 1, 
+                "name": "Bob Smith",
+                "type": "solicitor" 
+            }
+        }
+
++ Response 401 (application/json)
+
+        {
+            "errors": [
+                "You must provide a valid Authorization Token"
+            ]
+        }
+
+## Profile Search [/api/v1/profiles/search?q=xxx]
+Search Profiles on Name, Firm (Organisation) Name, Firm Address
+
+No authorization is needed for this endpoint
+
++ Response 200 (application/json)
+
+        {
+            "profiles": [
+                {
+                    "id": 1, 
+                    "name": "Bob Smith",
+                    "type": "solicitor"
+                }
+            ],
+            "links": {
+                "first": "/api/v1/profiles/search?q=xxx",
+                "previous": "/api/v1/profiles/search?q=xxx&page=1",
+                "next": "/api/v1/profiles/search?q=xxx&page=2",
+                "last": "/api/v1/profiles/search?q=xxx&page=3"
+            }
+        }
+
++ Response 401 (application/json)
+
+        {
+            "errors": [
+                "You must provide a valid Authorization Token"
+            ]
+        }
