@@ -1,6 +1,6 @@
 <%= flash_messages %>
 
-<h1>Listing Organisations</h1>
+<h1><%= t("listing_organisations") %></h1>
 
 <table>
   <thead>
@@ -13,9 +13,9 @@
     <% @organisations.each do |organisation| %>
       <tr>
         <td><%= organisation.name %></td>
-        <td><%= link_to t('show'), organisation_path(organisation) %></td>
-        <td><%= link_to t('edit'), edit_organisation_path(organisation) %></td>
-        <td><%= link_to t('delete'), organisation, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %></td>
+        <td><%= link_to t("show"), organisation_path(organisation) %></td>
+        <td><%= link_to t("edit"), edit_organisation_path(organisation) %></td>
+        <td><%= link_to t("delete"), organisation, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -23,4 +23,4 @@
 
 <br>
 
-<%= link_to 'New Organisation', new_organisation_path %>
+<%= link_to t("new_organisation"), new_organisation_path %>

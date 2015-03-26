@@ -1,7 +1,7 @@
 <%= render 'shared/error_and_flash', object: @organisation %>
 
-<h1>New Organisation</h1>
+<h1><%= t('new_organisation') %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', organisations_path %>
+<%= link_to t('back'), organisations_path %>

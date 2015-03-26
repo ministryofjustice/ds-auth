@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users, skip: [:registrations]
 
   resources :users, except: [:show]
+  resources :profiles, except: [:show]
   resources :roles, except: [:edit, :update, :show]
   resources :organisations
 

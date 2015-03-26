@@ -1,6 +1,6 @@
 <%= flash_messages %>
 
-<h1>Listing Roles</h1>
+<h1><%= t("listing_roles") %></h1>
 
 <table>
   <thead>
@@ -13,7 +13,7 @@
     <% @roles.each do |role| %>
       <tr>
         <td><%= role.name %>
-        <td><%= link_to t('delete'), role, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %></td>
+        <td><%= link_to t("delete"), role, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -21,4 +21,4 @@
 
 <br>
 
-<%= link_to 'New Role', new_role_path %>
+<%= link_to t("new_role"), new_role_path %>
