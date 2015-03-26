@@ -12,7 +12,6 @@ class OrganisationsController < ApplicationController
     @organisation = Organisation.new
   end
 
-
   def create
     @organisation = Organisation.new(organisation_params)
     if @organisation.save
