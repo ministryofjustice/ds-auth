@@ -1,9 +1,9 @@
+<%= render 'shared/error_and_flash', object: resource %>
 <div class="panel-default">
   <div class="panel-body">
     <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
     <%= form_for(resource, as: resource_name, url: user_registration_path(resource), html: {method: :patch}) do |f| %>
-      <%= devise_error_messages! %>
 
       <div class="field">
         <%= f.label :email %>
