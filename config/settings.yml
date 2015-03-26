@@ -1,20 +1,20 @@
 rails:
-  secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
+  secret_key_base: <%= ENV.fetch("SECRET_KEY_BASE") %>
 dsauth:
-  default_mail_host: <%= ENV["DEFAULT_MAIL_HOST"] %>
+  default_mail_host: <%= ENV.fetch("DEFAULT_MAIL_HOST") %>
   app_title: Defence Solicitor Authentication System
 devise:
-  key: <%= ENV["DEVISE_KEY"] %>
-  salt: <%= ENV["DEVISE_SALT"] %>
+  key: <%= ENV.fetch("DEVISE_KEY") %>
+  salt: <%= ENV.fetch("DEVISE_SALT") %>
 action_mailer:
   smtp_settings:
     address: smtp.sendgrid.net
     port: 587
     domain: em.email.dsds.dsd.io
     authentication: plain
-    user_name: <%= ENV["EMAIL_USERNAME"] %>
-    password: <%= ENV["EMAIL_PASSWORD"] %>
+    user_name: <%= ENV.fetch("EMAIL_USERNAME") %>
+    password: <%= ENV.fetch("EMAIL_PASSWORD") %>
     enable_starttls_auto: false
 
-sandbox_email: <%= ENV["SANDBOX_EMAIL"] %>
-sandbox_email_address: <%= ENV['SANDBOX_EMAIL_ADDRESS'] || 'iamadefencesolicitor@gmail.com' %>
+sandbox_email: <%= ENV.fetch("SANDBOX_EMAIL") %>
+sandbox_email_address: <%= ENV.fetch("SANDBOX_EMAIL_ADDRESS") { "iamadefencesolicitor@gmail.com" } %>
