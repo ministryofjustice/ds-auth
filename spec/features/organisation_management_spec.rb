@@ -23,11 +23,26 @@ RSpec.feature 'Users managing organisations' do
     fill_in "Slug", with: "imperial-college-london"
     fill_in "Organisation type", with: "social"
     check "Searchable"
+    fill_in "Tel", with: "09011105010"
+    fill_in "Address", with: "123 Fake Street"
+    fill_in "Postcode", with: "POSTCODE"
+    fill_in "Email", with: "imperial@example.com"
 
     click_button "Create Organisation"
 
     expect(page).to have_content "Organisation successfully created"
     expect(page).to have_content "Imperial College London"
+
+    within '#imperial-college-london-row' do
+      click_link "Show"
+    end
+
+    expect(page).to have_content "Name: Imperial College London"
+    expect(page).to have_content "Slug: imperial-college-london"
+    expect(page).to have_content "Tel: 09011105010"
+    expect(page).to have_content "Address: 123 Fake Street"
+    expect(page).to have_content "Postcode: POSTCODE"
+    expect(page).to have_content "Email: imperial@example.com"
   end
 
   specify 'are shown errors if an organisation cannot be created' do
@@ -69,10 +84,24 @@ RSpec.feature 'Users managing organisations' do
     click_link 'Edit'
     fill_in "Name", with: "North American Man Boy Love Association"
     fill_in "Slug", with: "north-american-man-boy-love-association"
+    fill_in "Tel", with: "09011105010"
+    fill_in "Address", with: "Somewhere"
+    fill_in "Postcode", with: "555 PQ45"
+    fill_in "Email", with: "nambla@example.com"
+
     click_button 'Update Organisation'
 
     expect(page).to have_content "Organisation successfully updated"
     expect(page).to have_content "North American Man Boy Love Association"
+
+    click_link "Show"
+
+    expect(page).to have_content "Name: North American Man Boy Love Association"
+    expect(page).to have_content "Slug: north-american-man-boy-love-association"
+    expect(page).to have_content "Tel: 09011105010"
+    expect(page).to have_content "Address: Somewhere"
+    expect(page).to have_content "Postcode: 555 PQ45"
+    expect(page).to have_content "Email: nambla@example.com"
   end
 
   specify 'are shown errors if invalid details are entered' do
