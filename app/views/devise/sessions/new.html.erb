@@ -1,4 +1,4 @@
-<%= render 'shared/error_and_flash', object: resource %>
+<%= render 'shared/error_messages', object: resource %>
 <div class="panel-default">
   <div class="panel-body">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
