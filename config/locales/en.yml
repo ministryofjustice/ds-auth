@@ -28,6 +28,7 @@ en:
   show: "Show"
   slug: "Slug"
   update: "Update"
+  new_profile: "New Profile"
 
   models:
     create: "%{model} successfully created"
