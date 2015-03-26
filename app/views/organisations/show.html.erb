@@ -20,7 +20,7 @@
   <%= @organisation.searchable %>
 </p>
 
-<h3>Members</h3>
+<h3><%= t('members') %></h3>
 
 <table>
   <thead>
@@ -44,5 +44,5 @@
 
 <br/>
 
-<%= link_to 'Edit', edit_organisation_path(@organisation) %> |
-<%= link_to 'Back', organisations_path %>
+<%= link_to t('edit'), edit_organisation_path(@organisation) %> |
+<%= link_to t('back'), organisations_path %>
