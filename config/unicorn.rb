@@ -1,8 +1,8 @@
 worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
 listen Integer(ENV.fetch('UNICORN_PORT', 3000))
 
-pid File.join(File.dirname(__FILE__), '..', 'tmp', 'pids', 'unicorn.pid')
-listen File.join(File.dirname(__FILE__), '..', 'tmp', 'sockets', 'unicorn.sock'), :backlog => 64
+pid File.expand_path('../../tmp/pids/unicorn.pid', __FILE__)
+listen File.expand_path('../../tmp/sockets/unicorn.sock', __FILE__), backlog: 64
 
 timeout 15
 preload_app true
