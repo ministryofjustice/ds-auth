@@ -1,0 +1,8 @@
+#!/bin/sh
+
+COMMIT_MESSAGE=`git log --pretty=format:"%cN %s %h" -n 1`
+TEXT="*Defence Request Auth* has been updated\nLast commit by ${COMMIT_MESSAGE}\n<http://auth.staging.defence-request.dsd.io>"
+
+SLACK_URL='https://hooks.slack.com/services/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'
+
+curl -X POST --data-urlencode "payload={\"channel\": \"#moj-dsds\", \"username\": \"deploybot\", \"text\": \"${TEXT}\", \"icon_emoji\": \":white_check_mark:\"}" $SLACK_URL
