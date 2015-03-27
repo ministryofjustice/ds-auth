@@ -82,26 +82,26 @@ RSpec.feature 'Users managing organisations' do
     visit organisations_path
 
     click_link 'Edit'
-    fill_in "Name", with: "North American Man Boy Love Association"
-    fill_in "Slug", with: "north-american-man-boy-love-association"
+    fill_in "Name", with: "Ministry of Justice"
+    fill_in "Slug", with: "ministry-of-justice"
     fill_in "Tel", with: "09011105010"
     fill_in "Address", with: "Somewhere"
     fill_in "Postcode", with: "555 PQ45"
-    fill_in "Email", with: "nambla@example.com"
+    fill_in "Email", with: "moj@example.com"
 
     click_button 'Update Organisation'
 
     expect(page).to have_content "Organisation successfully updated"
-    expect(page).to have_content "North American Man Boy Love Association"
+    expect(page).to have_content "Ministry of Justice"
 
     click_link "Show"
 
-    expect(page).to have_content "Name: North American Man Boy Love Association"
-    expect(page).to have_content "Slug: north-american-man-boy-love-association"
+    expect(page).to have_content "Name: Ministry of Justice"
+    expect(page).to have_content "Slug: ministry-of-justice"
     expect(page).to have_content "Tel: 09011105010"
     expect(page).to have_content "Address: Somewhere"
     expect(page).to have_content "Postcode: 555 PQ45"
-    expect(page).to have_content "Email: nambla@example.com"
+    expect(page).to have_content "Email: moj@example.com"
   end
 
   specify 'are shown errors if invalid details are entered' do
