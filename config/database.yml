@@ -1,18 +1,16 @@
 default: &default
   adapter: postgresql
-  encoding: unicode
-  pool: 5
+  database: <%= ENV.fetch("DS_AUTH_DATABASE_DATABASE", nil) %>
+  host: <%= ENV.fetch("DS_AUTH_DATABASE_HOST", nil) %>
+  password: <%= ENV.fetch("DS_AUTH_DATABASE_PASSWORD", nil) %>
+  username: <%= ENV.fetch("DS_AUTH_DATABASE_USERNAME", nil) %>
+  pool: <%= ENV.fetch("DS_AUTH_DATABASE_POOL", 5) %>
 
 development:
   <<: *default
-  database: defence-solicitor-service-auth_development
 
 test:
   <<: *default
-  database: defence-solicitor-service-auth_test
 
 production:
   <<: *default
-  database: defence-solicitor-service-auth_production
-  username: ds-auth
-  password: <%= ENV['DS-AUTH_DATABASE_PASSWORD'] %>
