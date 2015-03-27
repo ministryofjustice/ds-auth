@@ -11,7 +11,7 @@
 
   <tbody>
     <% @organisations.each do |organisation| %>
-      <tr>
+      <tr id='<%= organisation.slug %>-row'>
         <td><%= organisation.name %></td>
         <td><%= link_to t("show"), organisation_path(organisation) %></td>
         <td><%= link_to t("edit"), edit_organisation_path(organisation) %></td>

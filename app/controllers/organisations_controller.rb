@@ -12,7 +12,6 @@ class OrganisationsController < ApplicationController
     @organisation = Organisation.new
   end
 
-
   def create
     @organisation = Organisation.new(organisation_params)
     if @organisation.save
@@ -54,7 +53,7 @@ class OrganisationsController < ApplicationController
                   :organisation_type,
                   :searchable,
                   :tel,
-                  :addressable,
+                  :address,
                   :postcode,
                   :email)
   end
