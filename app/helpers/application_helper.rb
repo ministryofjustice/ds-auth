@@ -1,8 +1,10 @@
 module ApplicationHelper
   def flash_messages
-    capture do
-      flash.each do |key, msg|
-        concat flash_message(key, msg)
+    if flash.any?
+      capture do
+        flash.each do |key, msg|
+          concat flash_message(key, msg)
+        end
       end
     end
   end

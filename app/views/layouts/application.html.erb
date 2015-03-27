@@ -26,6 +26,7 @@
 <% content_for :content_override do %>
   <main id="page-container" role="main">
     <%= render 'shared/banner' %>
+    <%= flash_messages %>
     <%= yield %>
   </main>
 <% end %>

@@ -18,4 +18,11 @@ RSpec.feature 'User authentication' do
       click_button 'Sign in'
       expect(page).to_not have_content('You made it...')
     end
+
+    specify 'receives a message when missing credentials for login' do
+      visit new_user_session_path
+      fill_in 'user_email', with: user.email
+      click_button 'Sign in'
+      expect(page).to have_content('Invalid email or password')
+    end
 end
