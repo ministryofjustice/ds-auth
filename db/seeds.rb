@@ -43,9 +43,9 @@ role = Role.where(name: 'admin').first_or_create
 Permission.where(role: role,
                  user: user2,
                  government_application: service_oauth_app,
-                 orgnaisation: example_org).first_or_create
+                 organisation: example_org).first_or_create
 Permission.where(role: role,
                  user: user2,
                  government_application: rota_oauth_app,
-                 orgnaisation: example_org).first_or_create
+                 organisation: example_org).first_or_create
 
