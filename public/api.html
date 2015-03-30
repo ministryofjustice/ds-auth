@@ -1,0 +1,415 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Defence Request App Internal API</title><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/slate/bootstrap.min.css"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200"><style>/* Highlight.js Theme Tomorrow Night Eighties */
+pre{color:#fff;background:#272b30;border:1px solid rgba(255, 255, 255, 0.2)}
+pre code{display:block;padding:.5em;background:#272b30}
+.hljs-comment,.hljs-title{color:#999}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#f2777a}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f99157}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#fc6}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#9c9}.css .hljs-hexcolor{color:#6cc}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#69c}.hljs-keyword,.javascript .hljs-function{color:#c9c}.hljs{display:block;background:#2d2d2d;color:#ccc;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}</style><style>body,
+h4,
+h5 {
+  font-family: 'Roboto' sans-serif !important;
+}
+h1,
+h2,
+h3,
+.aglio {
+  font-family: 'Raleway' sans-serif !important;
+}
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a {
+  display: none;
+}
+h1:hover a,
+h2:hover a,
+h3:hover a,
+h4:hover a,
+h5:hover a {
+  display: inline;
+}
+code {
+  color: #222;
+  background-color: #aaa;
+  font-family: 'Inconsolata' monospace !important;
+}
+a[data-target] {
+  cursor: pointer;
+}
+h4 {
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.back-to-top {
+  position: fixed;
+  z-index: 1;
+  bottom: 0px;
+  right: 24px;
+  padding: 4px 8px;
+  color: #aaa;
+  background-color: #171b20;
+  text-decoration: none !important;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-left: 1px solid rgba(0,0,0,0.1);
+  border-right: 1px solid rgba(0,0,0,0.1);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.panel {
+  overflow: hidden;
+}
+.panel-heading code {
+  margin-left: 3px;
+  color: #000;
+  background-color: rgba(255,255,255,0.7);
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.panel-heading h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+a.list-group-item:hover {
+  background-color: #f8f8f8;
+  border-left: 2px solid #555;
+  padding-left: 15px;
+}
+.indent {
+  display: block;
+  text-indent: 16px;
+}
+.list-group-item {
+  padding-left: 16px;
+}
+.list-group-item .toggle .open {
+  display: block;
+}
+.list-group-item .toggle .closed {
+  display: none;
+}
+.list-group-item.collapsed .toggle .open {
+  display: none;
+}
+.list-group-item.collapsed .toggle .closed {
+  display: block;
+}
+a.list-group-item:hover {
+  background-color: #4b5159;
+  border-left-color: #c8c8c8;
+}
+a.list-group-item {
+  font-size: 13px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+a.list-group-item.heading {
+  font-size: 15px;
+  background-color: #3e444c;
+}
+a.list-group-item.heading:hover {
+  background-color: #4b5159;
+}
+.list-group-item.collapse {
+  display: none;
+}
+.list-group-item.collapse.in {
+  display: block;
+}
+.list-group-item a span.closed {
+  display: none;
+}
+.list-group-item a span.open {
+  display: block;
+}
+.list-group-item a.collapsed span.closed {
+  display: block;
+}
+.list-group-item a.collapsed span.open {
+  display: none;
+}
+#nav {
+  width: inherit;
+  margin-top: 38px;
+  max-width: 255px;
+  top: 0;
+  bottom: 0;
+  padding-right: 12px;
+  padding-bottom: 12px;
+  overflow-y: auto;
+}
+@media (max-width: 1199px) {
+  #nav {
+    max-width: 212px;
+  }
+}
+</style></head><body><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><div class="col-md-3"><nav id="nav" class="hidden-sm hidden-xs affix nav"><div class="list-group"><a data-toggle="" data-target="#-menu" href="#" class="list-group-item heading collapsed">Resource Group</a><div id="-menu"><a href="#-group-api-root" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>Group API Root</a></div></div><div class="list-group"><a data-toggle="" data-target="#users-menu" href="#users" class="list-group-item heading collapsed">Users</a><div id="users-menu"><a href="#users-users-collection" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>Users Collection</a><a href="#users-user" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>User</a><a href="#users-user" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>User</a></div></div><div class="list-group"><a data-toggle="" data-target="#organisations-menu" href="#organisations" class="list-group-item heading collapsed">Organisations</a><div id="organisations-menu"><a href="#organisations-organisations-collection" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>Organisations Collection</a><a href="#organisations-organisation" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>Organisation</a></div></div><div class="list-group"><a data-toggle="" data-target="#profiles-menu" href="#profiles" class="list-group-item heading collapsed">Profiles</a><div id="profiles-menu"><a href="#profiles-profiles-collection" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>Profiles Collection</a><a href="#profiles-profile" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>Profile</a><a href="#profiles-profile-search" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">Profile Search</a></div></div></nav></div><div class="col-md-8"><div><header><div class="page-header"><h1 id="top">Defence Request App Internal API</h1></div></header><div class="description"><p>Defence Request Auth App Internal API’s</p>
+<h2>Authorization</h2>
+<p>Access tokens are obtained by signing User in using OAuth.</p>
+<p>Access tokens must be passed for each request in an Authorization header.</p>
+<p>A missing Authorization Header or invalid Authorization Token value for a protected endpoint will result in a 401 response</p>
+<h2>Paging</h2>
+<p>Every collection response will include a links object.</p>
+<p>The Links Object should contain links to both the first and last pages, optionally with next and previous links</p>
+</div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="">Resource Group&nbsp;<a href="#"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="-group-api-root">Group API Root&nbsp;<a href="#-group-api-root"><i class="fa fa-link"></i></a></h4><p>This resource does not have any attributes. Instead it offers the initial API affordances in the form of the links in the JSON body.</p>
+<p>It is recommended to follow the “url” link values, <a href="https://tools.ietf.org/html/rfc5988">Link</a> or Location headers where applicable to retrieve resources. Instead of constructing your own URLs, to keep your client decoupled from implementation details. We will use link values for all collection responses.</p>
+<section id="-group-api-root-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Retrieve the Entry Point</span></div><div style="float:left"><a href="#-group-api-root-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#0da2fceecdcbe592b6b6f42d35945e5c" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="0da2fceecdcbe592b6b6f42d35945e5c" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">organisations_url</span>": <span class="hljs-value"><span class="hljs-string">"/api/v1/organisations"</span></span>,
+    "<span class="hljs-attribute">profiles_url</span>": <span class="hljs-value"><span class="hljs-string">"/api/v1/profiles"</span></span>,
+    "<span class="hljs-attribute">users_url</span>": <span class="hljs-value"><span class="hljs-string">"/api/v1/users"</span>
+</span>}
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="users">Users&nbsp;<a href="#users"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><p>Users contain login information</p>
+<h4 id="users-users-collection">Users Collection&nbsp;<a href="#users-users-collection"><i class="fa fa-link"></i></a></h4><section id="users-users-collection-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">List all Users</span></div><div style="float:left"><a href="#users-users-collection-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/users</code></div></div><div class="panel-body"><ul>
+<li><p>Payload</p>
+<ul>
+<li><p>Headers</p>
+<p>Authorization: Token <TOKEN></p></li>
+</ul></li>
+</ul>
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#c09126623aeb382763653309d3eff0cf" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="c09126623aeb382763653309d3eff0cf" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">users</span>": <span class="hljs-value">[
+        {
+            "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+            "<span class="hljs-attribute">first_name</span>": <span class="hljs-value"><span class="hljs-string">"Bob"</span></span>,
+            "<span class="hljs-attribute">last_name</span>": <span class="hljs-value"><span class="hljs-string">"Smith"</span></span>,
+            "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"bob.smith@world.com"</span>
+        </span>}
+    ]</span>,
+    "<span class="hljs-attribute">links</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">first</span>": <span class="hljs-value"><span class="hljs-string">"/api/v1/users"</span></span>,
+        "<span class="hljs-attribute">previous</span>": <span class="hljs-value"><span class="hljs-string">"/api/v1/users?page=1"</span></span>,
+        "<span class="hljs-attribute">next</span>": <span class="hljs-value"><span class="hljs-string">"/api/v1/users?page=2"</span></span>,
+        "<span class="hljs-attribute">last</span>": <span class="hljs-value"><span class="hljs-string">"/api/v1/users?page=3"</span>
+    </span>}
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>401</code></strong><a data-toggle="collapse" data-target="#1606086b4ec034cef09c74e0e535c4a3" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="1606086b4ec034cef09c74e0e535c4a3" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">errors</span>": <span class="hljs-value">[
+        <span class="hljs-string">"You must provide a valid Authorization Token"</span>
+    ]
+</span>}
+</code></pre></li></ul></section><h4 id="users-user">User&nbsp;<a href="#users-user"><i class="fa fa-link"></i></a></h4><section id="users-user-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Single User</span></div><div style="float:left"><a href="#users-user-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/user/{id}</code></div></div><div class="panel-body"><ul>
+<li><p>Payload</p>
+<ul>
+<li><p>Headers</p>
+<p>Authorization: Token <TOKEN></p></li>
+</ul></li>
+</ul>
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>id</dt><dd><code>integer</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>ID of the User</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#6be829238deba2c829d6ef7a8692f05b" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="6be829238deba2c829d6ef7a8692f05b" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">first_name</span>": <span class="hljs-value"><span class="hljs-string">"Bob"</span></span>,
+        "<span class="hljs-attribute">last_name</span>": <span class="hljs-value"><span class="hljs-string">"Smith"</span></span>,
+        "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"bob.smith@world.com"</span>
+    </span>}
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>401</code></strong><a data-toggle="collapse" data-target="#2ea269f7279c669d762b83618aee6ac9" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="2ea269f7279c669d762b83618aee6ac9" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">errors</span>": <span class="hljs-value">[
+        <span class="hljs-string">"You must provide a valid Authorization Token"</span>
+    ]
+</span>}
+</code></pre></li></ul></section><h4 id="users-user">User&nbsp;<a href="#users-user"><i class="fa fa-link"></i></a></h4><p>Returns User object for the user identified by the Authorization Header</p>
+<section id="users-user-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Single User</span></div><div style="float:left"><a href="#users-user-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/user/me</code></div></div><div class="panel-body"><ul>
+<li><p>Payload</p>
+<ul>
+<li><p>Headers</p>
+<p>Authorization: Token <TOKEN></p></li>
+</ul></li>
+</ul>
+</div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#8d603fa2cc98be4df1d4079ce77ccb2c" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="8d603fa2cc98be4df1d4079ce77ccb2c" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+        "<span class="hljs-attribute">first_name</span>": <span class="hljs-value"><span class="hljs-string">"Bob"</span></span>,
+        "<span class="hljs-attribute">last_name</span>": <span class="hljs-value"><span class="hljs-string">"Smith"</span></span>,
+        "<span class="hljs-attribute">username</span>": <span class="hljs-value"><span class="hljs-string">"bob.smith"</span></span>,
+        "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"bob.smith@world.com"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">profile</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Bob Smith"</span></span>,
+        "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"bob.smith@world.com"</span></span>,
+        "<span class="hljs-attribute">telephone</span>": <span class="hljs-value"><span class="hljs-string">"0123456789"</span></span>,
+        "<span class="hljs-attribute">mobile</span>": <span class="hljs-value"><span class="hljs-string">"071234567"</span></span>,
+        "<span class="hljs-attribute">address</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">line1</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+            "<span class="hljs-attribute">line2</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+            "<span class="hljs-attribute">city</span>": <span class="hljs-value"><span class="hljs-string">""</span>
+            <span class="hljs-string">"postcode"</span>: <span class="hljs-string">""</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">PIN</span>": <span class="hljs-value"><span class="hljs-string">"1234"</span></span>,
+        "<span class="hljs-attribute">organisation_ids</span>": <span class="hljs-value">[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>]
+    </span>}</span>,
+    "<span class="hljs-attribute">roles</span>": <span class="hljs-value">[
+        <span class="hljs-string">"admin"</span>, <span class="hljs-string">"foo"</span>, <span class="hljs-string">"bar"</span>
+    ]
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>401</code></strong><a data-toggle="collapse" data-target="#2ea269f7279c669d762b83618aee6ac9" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="2ea269f7279c669d762b83618aee6ac9" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">errors</span>": <span class="hljs-value">[
+        <span class="hljs-string">"You must provide a valid Authorization Token"</span>
+    ]
+</span>}
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="organisations">Organisations&nbsp;<a href="#organisations"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><p>Organisations are logical groups of Users</p>
+<p>Organisations can be filtered by one or more type:</p>
+<ul>
+<li><p>custody_suite</p></li>
+<li><p>call_centre</p></li>
+<li><p>law_firm</p></li>
+<li><p>law_office</p></li>
+</ul>
+<h4 id="organisations-organisations-collection">Organisations Collection&nbsp;<a href="#organisations-organisations-collection"><i class="fa fa-link"></i></a></h4><section id="organisations-organisations-collection-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">List all Organisations</span></div><div style="float:left"><a href="#organisations-organisations-collection-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/organisations?types=xxx</code></div></div><div class="panel-body"><ul>
+<li><p>Payload</p>
+<ul>
+<li><p>Headers</p>
+<p>Authorization: Token <TOKEN></p></li>
+</ul></li>
+</ul>
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>types</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Filter types of Organisation, multiple by comma seperation</p>
+<p><strong>Choices:&nbsp;</strong><code>'custody_suite'</code> <code>'call_centre'</code> <code>'law_firm'</code> <code>'law_office'</code> </p></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#7973f0b40a1ade379deab2152f8dd2c6" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="7973f0b40a1ade379deab2152f8dd2c6" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-collection">{
+    <span class="hljs-string">"organisations:"</span> <span class="hljs-collection">[
+        <span class="hljs-collection">{
+            <span class="hljs-string">"id"</span>: <span class="hljs-number">1</span>, 
+            <span class="hljs-string">"name"</span>: <span class="hljs-string">"Tuckers"</span>,
+            <span class="hljs-string">"type: "</span>law_firm<span class="hljs-string">",
+            "</span>Profiles_ids<span class="hljs-string">": [1,2,3,5,6,7]
+        }, 
+        {
+            "</span>id<span class="hljs-string">": 2, 
+            "</span>name<span class="hljs-string">": "</span>Brighton<span class="hljs-string">",
+            "</span>type: <span class="hljs-string">"custody_suite"</span>,
+            <span class="hljs-string">"profiles_ids"</span>: <span class="hljs-collection">[<span class="hljs-number">5</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>]</span>
+
+        }</span>    
+    ]</span>,
+    <span class="hljs-string">"links"</span>: <span class="hljs-collection">{
+        <span class="hljs-string">"first"</span>: <span class="hljs-string">"/api/v1/organisations"</span>,
+        <span class="hljs-string">"previous"</span>: <span class="hljs-string">"/api/v1/organisations?page=1"</span>,
+        <span class="hljs-string">"next"</span>: <span class="hljs-string">"/api/v1/organisations?page=2"</span>,
+        <span class="hljs-string">"last"</span>: <span class="hljs-string">"/api/v1/organisations?page=3"</span>
+    }</span>
+}</span>
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>401</code></strong><a data-toggle="collapse" data-target="#c5b34677868b81da9cdffb43f2e1e4b1" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="c5b34677868b81da9cdffb43f2e1e4b1" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">errors</span>": <span class="hljs-value">[
+        <span class="hljs-string">"You must provide a valid Authorization Token"</span>
+    ]
+</span>}
+</code></pre></li></ul></section><h4 id="organisations-organisation">Organisation&nbsp;<a href="#organisations-organisation"><i class="fa fa-link"></i></a></h4><p>A single Organisation with all its details</p>
+<section id="organisations-organisation-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Single Organisation</span></div><div style="float:left"><a href="#organisations-organisation-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/organisation/{id}</code></div></div><div class="panel-body"><ul>
+<li><p>Payload</p>
+<ul>
+<li><p>Headers</p>
+<p>Authorization: Token <TOKEN></p></li>
+</ul></li>
+</ul>
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>id</dt><dd><code>integer</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>ID of the organisation</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#07dee0e2976cc72b6ce65b1559d0c9c4" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="07dee0e2976cc72b6ce65b1559d0c9c4" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">organisation</span>": <span class="hljs-value">{ 
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>, 
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Tuckers"</span></span>,
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"law_firm"</span></span>,
+        "<span class="hljs-attribute">profiles_ids</span>": <span class="hljs-value">[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>] 
+    </span>}
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>401</code></strong><a data-toggle="collapse" data-target="#bbc2478afc57dad4e858095cac887b15" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="bbc2478afc57dad4e858095cac887b15" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">errors</span>": <span class="hljs-value">[
+        <span class="hljs-string">"You must provide a valid Authorization Token"</span>
+    ]
+</span>}
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="profiles">Profiles&nbsp;<a href="#profiles"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><p>Profiles of people that may or may not have a login to Defence Request.</p>
+<p>Will eventually contain all Solicitors that have a Legal Aid Contract.</p>
+<p>Used to find contact details for Solicitors or Agents</p>
+<h4 id="profiles-profiles-collection">Profiles Collection&nbsp;<a href="#profiles-profiles-collection"><i class="fa fa-link"></i></a></h4><section id="profiles-profiles-collection-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">List all Profiles</span></div><div style="float:left"><a href="#profiles-profiles-collection-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/profiles?ids=1,2,3,4&amp;types=xxx</code></div></div><div class="panel-body"><ul>
+<li><p>Payload</p>
+<ul>
+<li><p>Headers</p>
+<p>Authorization: Token <TOKEN></p></li>
+</ul></li>
+</ul>
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>ids</dt><dd><code>integer</code>&nbsp;<span>(optional)</span>&nbsp;<p>Comma seperated list of User ids to load</p>
+</dd><dt>types</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<p>Filter types of Profile, multiple by comma seperation</p>
+<p><strong>Choices:&nbsp;</strong><code>'solicitor'</code> <code>'agent'</code> </p></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#6f5bae3e55db12d72534bdf14d0d2c16" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="6f5bae3e55db12d72534bdf14d0d2c16" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-collection">{
+    <span class="hljs-string">"profiles:"</span> <span class="hljs-collection">[
+        <span class="hljs-collection">{
+            <span class="hljs-string">"id"</span>: <span class="hljs-number">1</span>, 
+            <span class="hljs-string">"name"</span>: <span class="hljs-string">"Bob Smith"</span>,
+            <span class="hljs-string">"type: "</span>solicitor<span class="hljs-string">"
+        }, 
+        {
+            "</span>id<span class="hljs-string">": 2, 
+            "</span>name<span class="hljs-string">": "</span>Andy Brown<span class="hljs-string">",
+            "</span>type: <span class="hljs-string">"agent"</span>
+        }</span>    
+    ]</span>,
+    <span class="hljs-string">"links"</span>: <span class="hljs-collection">{
+        <span class="hljs-string">"first"</span>: <span class="hljs-string">"/api/v1/profiles"</span>,
+        <span class="hljs-string">"previous"</span>: <span class="hljs-string">"/api/v1/profiles?page=1"</span>,
+        <span class="hljs-string">"next"</span>: <span class="hljs-string">"/api/v1/profiles?page=2"</span>,
+        <span class="hljs-string">"last"</span>: <span class="hljs-string">"/api/v1/profiles?page=3"</span>
+    }</span>
+}</span>
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>401</code></strong><a data-toggle="collapse" data-target="#f39b4e034e18b879de6f2571e00181a8" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="f39b4e034e18b879de6f2571e00181a8" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">errors</span>": <span class="hljs-value">[
+        <span class="hljs-string">"You must provide a valid Authorization Token"</span>
+    ]
+</span>}
+</code></pre></li></ul></section><h4 id="profiles-profile">Profile&nbsp;<a href="#profiles-profile"><i class="fa fa-link"></i></a></h4><p>A single Profile with all its details</p>
+<section id="profiles-profile-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Single Profile</span></div><div style="float:left"><a href="#profiles-profile-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/profiles/{id}</code></div></div><div class="panel-body"><ul>
+<li><p>Payload</p>
+<ul>
+<li><p>Headers</p>
+<p>Authorization: Token <TOKEN></p></li>
+</ul></li>
+</ul>
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>id</dt><dd><code>integer</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>ID of the Profile</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#c8a8306525d9ed78b5e578970d13357a" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="c8a8306525d9ed78b5e578970d13357a" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">profile</span>": <span class="hljs-value">{ 
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>, 
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Bob Smith"</span></span>,
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"solicitor"</span> 
+    </span>}
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>401</code></strong><a data-toggle="collapse" data-target="#e8aa4a85bff0162b7e21f9626e6421cc" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="e8aa4a85bff0162b7e21f9626e6421cc" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">errors</span>": <span class="hljs-value">[
+        <span class="hljs-string">"You must provide a valid Authorization Token"</span>
+    ]
+</span>}
+</code></pre></li></ul></section><h4 id="profiles-profile-search">Profile Search&nbsp;<a href="#profiles-profile-search"><i class="fa fa-link"></i></a></h4><p>Search Profiles on Name, Firm (Organisation) Name, Firm Address</p>
+<p>No authorization is needed for this endpoint</p>
+<ul>
+<li><p>Response 200 (application/json)</p>
+<pre><code>  {
+      &quot;profiles&quot;: [
+          {
+              &quot;id&quot;: 1, 
+              &quot;name&quot;: &quot;Bob Smith&quot;,
+              &quot;type&quot;: &quot;solicitor&quot;
+          }
+      ],
+      &quot;links&quot;: {
+          &quot;first&quot;: &quot;/api/v1/profiles/search?q=xxx&quot;,
+          &quot;previous&quot;: &quot;/api/v1/profiles/search?q=xxx&amp;page=1&quot;,
+          &quot;next&quot;: &quot;/api/v1/profiles/search?q=xxx&amp;page=2&quot;,
+          &quot;last&quot;: &quot;/api/v1/profiles/search?q=xxx&amp;page=3&quot;
+      }
+  }
+</code></pre></li>
+<li><p>Response 401 (application/json)</p>
+<pre><code>  {
+      &quot;errors&quot;: [
+          &quot;You must provide a valid Authorization Token&quot;
+      ]
+  }</code></pre></li>
+</ul>
+</div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 26 Mar 2015</p><div id="localFile" style="display: none; position: absolute; top: 0; left: 0; width: 100%; color: white; background: red; font-size: 150%; text-align: center; padding: 1em;">This page may not display correctly when opened as a local file. Instead, view it from a web server.
+
+</div></body><script src="//code.jquery.com/jquery-1.11.0.min.js"></script><script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script>(function() {
+  if (location.protocol === 'file:') {
+    document.getElementById('localFile').style.display = 'block';
+  }
+
+}).call(this);
+</script><script>(function() {
+  $('table').addClass('table');
+
+}).call(this);
+</script></html>
