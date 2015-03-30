@@ -9,7 +9,6 @@
 User.where(email: "user@example.com").first_or_create(
   email: "user@example.com", password: "password")
 
-
 user2 = User.where(email: "user2@example.com").first_or_create(
   email: "user2@example.com", password: "password")
 
