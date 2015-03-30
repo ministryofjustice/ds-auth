@@ -4,8 +4,6 @@ ruby "2.2.1"
 
 gem "dotenv-rails", "~> 2.0.0", require: "dotenv/rails-now"
 
-gem 'rails_admin'
-
 gem "coffee-rails", "~> 4.1.0"
 gem "devise", "~> 3.4.1"
 gem "doorkeeper"
