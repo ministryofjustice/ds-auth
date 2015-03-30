@@ -1,6 +1,5 @@
 default: &default
   adapter: postgresql
-  database: <%= ENV.fetch("DS_AUTH_DATABASE_DATABASE", nil) %>
   host: <%= ENV.fetch("DS_AUTH_DATABASE_HOST", nil) %>
   password: <%= ENV.fetch("DS_AUTH_DATABASE_PASSWORD", nil) %>
   username: <%= ENV.fetch("DS_AUTH_DATABASE_USERNAME", nil) %>
@@ -8,9 +7,8 @@ default: &default
 
 development:
   <<: *default
+  database: defence-solicitor-service-auth_development
 
 test:
   <<: *default
-
-production:
-  <<: *default
+  database: defence-solicitor-service-auth_test
