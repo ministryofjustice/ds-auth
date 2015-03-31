@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -f /etc/default/defence-request-service-auth ] ; then source /etc/default/defence-request-service-auth; fi
+
+COMMIT_MESSAGE=`git log --pretty=format:"%cN %s %h" -n 1`
+TEXT="*Defence Request Auth* has been updated\nLast commit by ${COMMIT_MESSAGE}\n<http://auth.staging.defence-request.dsd.io>"
+
+curl -X POST --data-urlencode "payload={\"channel\": \"#moj-dsds\", \"username\": \"deploybot\", \"text\": \"${TEXT}\", \"icon_emoji\": \":white_check_mark:\"}" $SLACK_DEPLOY_NOTIFICATION_URL
