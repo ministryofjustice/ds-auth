@@ -9,6 +9,12 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
+  namespace :api do
+    namespace :v1 do
+      get "/me", to: "credentials#show"
+    end
+  end
+
   get '/status' => 'status#index'
   get '/help', controller: :static, action: :help, as: :help
   get '/maintenance', controller: :static, action: :maintenance, as: :maintenance
