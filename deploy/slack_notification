@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 if [ -f /etc/default/defence-request-service-auth ] ; then source /etc/default/defence-request-service-auth; fi
 
