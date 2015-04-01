@@ -1,0 +1,18 @@
+<%= form_for(@permission) do |f| %>
+
+  <%= f.label :user_id, t('user') %>
+  <%= f.select :user_id, options_from_collection_for_select(User.all, 'id', 'email') %>
+
+  <%= f.label :role_id, t('role') %>
+  <%= f.select :role_id, options_from_collection_for_select(Role.all, 'id', 'name') %>
+
+  <%= f.label :government_application_id, t('application') %>
+  <%= f.select :government_application_id, options_from_collection_for_select(GovernmentApplication.all, 'id', 'name') %>
+
+  <%= f.label :organisation_id, t('organisation') %>
+  <%= f.select :organisation_id, options_from_collection_for_select(Organisation.all, 'id', 'name')%>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

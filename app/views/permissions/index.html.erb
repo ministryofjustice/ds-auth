@@ -1,0 +1,25 @@
+<h1><%= t('permissions') %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="5"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @permissions.each do |permission| %>
+      <tr id='<%= permission.id %>-row'>
+        <td><%= permission.user.email %></td>
+        <td><%= permission.role.name %></td>
+        <td><%= permission.government_application.name %></td>
+        <td><%= permission.organisation.name %></td>
+        <td><%= link_to t("delete"), permission, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to t("new_permission"), new_permission_path %>
