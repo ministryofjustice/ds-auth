@@ -33,6 +33,7 @@ group :development, :test do
   gem "byebug"
   gem "factory_girl_rails"
   gem "faker"
+  gem "ffaker"
   gem "pry-rails"
   gem "quiet_assets", "~> 1.1"
   gem "rspec-rails", "~> 3.2.0"

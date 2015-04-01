@@ -120,9 +120,9 @@ RSpec.feature 'Users managing organisations' do
 
     click_link 'Show'
 
-    expect(page).to have_content 'Name: NAMBLA'
-    expect(page).to have_content 'Slug: north-american-marlon-brando-lookalikes'
-    expect(page).to have_content 'Organisation type: social'
+    expect(page).to have_content "Name: #{organisation.name}"
+    expect(page).to have_content "Slug: #{organisation.slug}"
+    expect(page).to have_content "Organisation type: social"
     expect(page).to have_content 'Searchable: true'
 
     expect(page).to have_content 'Members'
