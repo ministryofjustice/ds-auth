@@ -2,5 +2,5 @@ class Role < ActiveRecord::Base
   has_many :permissions
   has_many :users, through: :permissions
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 end

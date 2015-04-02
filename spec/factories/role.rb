@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :role do |role|
-    name { Faker::Role.name }
+    sequence(:name) { |n| "#{Faker::Role.name}-#{n}"  }
   end
 end
