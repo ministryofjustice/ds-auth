@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :organisation do |organisation|
-    organisation.name              'NAMBLA'
-    organisation.slug              'north-american-marlon-brando-lookalikes'
+    organisation.name              { Faker::Company.name }
+    organisation.slug              { Faker::Internet.slug name}
     organisation.organisation_type 'social'
     organisation.searchable         true
 

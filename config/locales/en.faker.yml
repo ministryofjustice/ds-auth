@@ -1,0 +1,11 @@
+en:
+  faker:
+    role:
+      name:
+        - super-danger-admin
+        - admin
+        - reader
+        - writer
+        - guest
+        - basic
+        - standard

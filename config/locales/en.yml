@@ -35,6 +35,7 @@ en:
   members: "Members"
   name: "Name"
   new_organisation: "New Organisation"
+  new_permission: "New Permission"
   new_profile: "New Profile"
   new_role: "New Role"
   new_user: "New User"
