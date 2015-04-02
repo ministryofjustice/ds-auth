@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :role do |role|
-    name { Faker::Internet.slug(FFaker::Job.title) }
+    name { Faker::Role.name }
   end
 end
