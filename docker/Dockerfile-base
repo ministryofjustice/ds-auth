@@ -1,0 +1,34 @@
+FROM ruby:2.2.1
+
+# **This always needs to be the very first step.**
+# If you 'date +%s > latest-security-upgrades' and commit it, the latest security updates
+# will be appplied, because every later step will be invalidated
+ENV HOME /root
+ENV DEBIAN_FRONTEND noninteractive
+ADD .latest-security-upgrades /.latest-security-upgrades
+RUN apt-get update && apt-get -y upgrade
+
+##############################################################################
+# Copy helper scripts into the container:
+##############################################################################
+# * clean-up-docker-container: Cleans up logs and other items that use space in the container.
+ADD docker/bin/clean-up-docker-container /usr/local/bin/clean-up-docker-container
+
+##############################################################################
+# Add packages required by the codebase
+##############################################################################
+# * NodeJS - Javascript runtime environment
+RUN apt-get update && apt-get install -y nodejs
+
+##############################################################################
+# Required Gems
+##############################################################################
+#
+# By copying only the Gemfile and Gemfile.lock, we make this step cacheable,
+# even if other items in the source directory have changed. See
+# http://ilikestuffblog.com/2014/01/06/how-to-skip-bundle-install-when-deploying-a-rails-app-to-docker/
+# for more details.
+#
+ADD Gemfile /tmp/gemfile-when-docker-image-built/Gemfile
+ADD Gemfile.lock /tmp/gemfile-when-docker-image-built/Gemfile.lock
+RUN bundle install --gemfile=/tmp/gemfile-when-docker-image-built/Gemfile

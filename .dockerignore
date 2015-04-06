@@ -1,0 +1,10 @@
+# Large local data directories
+.git
+.vagrant
+
+# Rails tmp and log files
+tmp/*
+log/*
+
+# Simplecov coverage report
+coverage/*

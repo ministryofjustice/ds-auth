@@ -1,0 +1,10 @@
+#!/bin/sh
+
+exec 2>&1
+export HOME=/usr/src/app
+export WEBUSER=www-data
+export WEBGROUP=www-data
+
+cd $HOME
+chown -R $WEBUSER:$WEBGROUP /usr/src/app
+exec chpst -u $WEBUSER:$WEBGROUP bundle exec unicorn -c config/unicorn.rb

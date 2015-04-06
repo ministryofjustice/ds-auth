@@ -1,0 +1,17 @@
+FROM defence-request-service-auth:base_localbuild
+
+# For developer use only
+ENV RAILS_ENV development
+
+# Base packages:
+#   - postgresql-client
+#
+RUN apt-get update && apt-get install -y postgresql-client
+
+###############################################################################
+# Defaults for executing container
+###############################################################################
+VOLUME /usr/src/app
+
+# We don't run /usr/local/bin/clean-up-docker-container here, since in development mode
+# users may want to quickly run 'apt-get install packagename'.
