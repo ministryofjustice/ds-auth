@@ -1,0 +1,10 @@
+<%= form_for [@organisation, @membership] do |f| %>
+  <p><%= "#{t('organisation')}: #{@organisation.name}" %></p>
+
+  <%= f.label :profile_id, t('member') %>
+  <%= f.select :profile_id, options_from_collection_for_select(Profile.all, 'id', 'name') %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

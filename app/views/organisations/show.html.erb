@@ -57,7 +57,7 @@
       <% @organisation.profiles.each do |profile| %>
         <tr id='<%= profile.id %>-row'>
           <td><%= profile.name %></td>
-          <td><%= link_to t('new_permission'), new_permission_path({ organisation_id: @organisation.id, user_id: profile.user.id }) %></td>
+          <td><%= link_to t('new_permission'), new_permission_path({ organisation_id: @organisation.id, user_id: profile.user.id })  if profile.user %></td>
         </tr>
       <% end %>
     <% else %>
@@ -70,3 +70,4 @@
 
 <%= link_to t('edit'), edit_organisation_path(@organisation) %> |
 <%= link_to t('back'), organisations_path %>
+<%= link_to t('new_member'), new_organisation_membership_path(@organisation) %>

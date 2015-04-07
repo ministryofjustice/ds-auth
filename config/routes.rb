@@ -4,7 +4,11 @@ Rails.application.routes.draw do
 
   resources :users, except: [:show]
   resources :profiles, except: [:show]
-  resources :organisations
+
+  resources :organisations do
+    resources :memberships, except: [:index, :edit, :update, :show]
+  end
+
   resources :permissions, only: [:new, :index, :create, :destroy]
 
   root 'welcome#index'

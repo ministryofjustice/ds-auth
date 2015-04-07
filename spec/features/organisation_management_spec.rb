@@ -132,6 +132,35 @@ RSpec.feature 'Users managing organisations' do
       expect(page).to have_content p.name
     end
   end
+
+  specify 'can add a new member from the show page' do
+    visit organisations_path
+
+    click_link 'Show'
+    click_link 'New Member'
+
+    select Profile.first.name
+    click_button 'Create Membership'
+
+    expect(page).to have_content "Membership successfully created"
+    expect(page).to have_content Profile.first.name
+  end
+
+  specify 'are shown errors if a member cannot be added' do
+    visit organisations_path
+
+    click_link 'Show'
+    click_link 'New Member'
+
+    profile = Profile.first
+    select profile.name
+    profile.delete
+
+    click_button 'Create Membership'
+
+    expect(page).to have_content "You need to fix the errors on this page before continuing."
+    expect(page).to have_content "Member: can't be blank"
+  end
 end
 
 def organisation_cannot_be_destroyed_for_some_reason organisation

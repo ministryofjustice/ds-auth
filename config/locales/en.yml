@@ -40,6 +40,7 @@ en:
   new_role: "New Role"
   new_user: "New User"
   organisation_type: "Organisation type"
+  organisation: "Organisation"
   searchable: "Searchable"
   show: "Show"
   slug: "Slug"
@@ -50,4 +51,9 @@ en:
     destroy: "%{model} successfully deleted"
     update: "%{model} successfully updated"
     failed_destroy: "%{model} was not deleted"
+
+  activerecord:
+    attributes:
+      membership:
+        profile: "Member"
 
