@@ -13,17 +13,20 @@ module ApplicationHelper
     end
   end
 
-  def object_error_messages(active_model_messages)
+  def object_error_messages(object)
+    active_model_messages = object.errors.messages
+
     content_tag(:ul) do
       active_model_messages.each do |field_name, field_messages|
-        concat errors_for_field(field_name, field_messages)
+        field_name_text = object.class.human_attribute_name field_name
+        concat errors_for_field(field_name_text, field_messages)
       end
     end
   end
 
   def errors_for_field field_name, field_messages
     content_tag :li do
-      "#{t(field_name)}: #{field_messages.join(', ')}".html_safe
+      "#{field_name}: #{field_messages.join(', ')}".html_safe
     end
   end
 end

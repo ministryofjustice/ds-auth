@@ -97,7 +97,7 @@ RSpec.feature 'Users managing users' do
     click_button 'Update User'
 
     expect(page).to have_content "You need to fix the errors on this page before continuing"
-    expect(page).to have_content "Password Confirmation: doesn't match Password"
+    expect(page).to have_content "Password confirmation: doesn't match Password"
 
     sign_out
 
