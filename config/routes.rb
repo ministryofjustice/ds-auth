@@ -4,8 +4,6 @@ Rails.application.routes.draw do
 
   resources :users, except: [:show]
   resources :profiles, except: [:show]
-  resources :roles, except: [:edit, :update, :show]
-
   resources :organisations
   resources :permissions, only: [:new, :index, :create, :destroy]
 
