@@ -12,6 +12,10 @@ RUN apt-get update && apt-get install -y postgresql-client
 # Defaults for executing container
 ###############################################################################
 VOLUME /usr/src/app
+WORKDIR /usr/src/app
 
 # We don't run /usr/local/bin/clean-up-docker-container here, since in development mode
 # users may want to quickly run 'apt-get install packagename'.
+
+# Open rails console by default
+CMD ["bin/bundle", "exec", "rails", "console"]
