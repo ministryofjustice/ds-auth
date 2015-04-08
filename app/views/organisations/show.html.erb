@@ -58,6 +58,7 @@
         <tr id='<%= profile.id %>-row'>
           <td><%= profile.name %></td>
           <td><%= link_to t('new_permission'), new_permission_path({ organisation_id: @organisation.id, user_id: profile.user.id })  if profile.user %></td>
+          <td><%= link_to t('remove_member'), organisation_membership_path(@organisation.id, profile.membership_for(@organisation)), method: :delete %></td>
         </tr>
       <% end %>
     <% else %>

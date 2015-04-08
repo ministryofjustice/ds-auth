@@ -161,9 +161,42 @@ RSpec.feature 'Users managing organisations' do
     expect(page).to have_content "You need to fix the errors on this page before continuing."
     expect(page).to have_content "Member: can't be blank"
   end
+
+  specify 'can remove members from the show page' do
+    organisation = Organisation.first
+    visit organisation_path(organisation)
+
+    first_member = organisation.profiles.first
+    within"##{first_member.id}-row" do
+      click_link 'Remove Member'
+    end
+
+    expect(page).to have_content "Membership successfully deleted"
+    expect(page).to_not have_content first_member.name
+  end
+
+  specify 'are shown errors if a member cannot be removed' do
+    organisation = Organisation.first
+    visit organisation_path(organisation)
+
+    first_member = organisation.profiles.first
+    membership = first_member.membership_for organisation
+    membership_cannot_be_destroyed_for_some_reason membership
+
+    within"##{first_member.id}-row" do
+      click_link 'Remove Member'
+    end
+
+    expect(page).to have_content "Membership was not deleted"
+  end
 end
 
 def organisation_cannot_be_destroyed_for_some_reason organisation
   expect(Organisation).to receive(:find).with(organisation.id.to_s) { organisation }
   expect(organisation).to receive(:destroy) { false }
+end
+
+def membership_cannot_be_destroyed_for_some_reason membership
+  expect(Membership).to receive(:find).with(membership.id.to_s) { membership }
+  expect(membership).to receive(:destroy) { false }
 end
