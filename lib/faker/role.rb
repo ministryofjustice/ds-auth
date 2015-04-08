@@ -8,7 +8,7 @@ module Faker
       end
 
       def by_index i
-        all_values.fetch(i) { require 'pry'; binding.pry }
+        all_values.fetch(i) { raise NotEnoughRoles, "You only have #{i} roles defined, and you tried to access number #{i+1}!" }
       end
 
       private
@@ -18,4 +18,6 @@ module Faker
       end
     end
   end
+
+  class NotEnoughRoles < StandardError; end
 end
