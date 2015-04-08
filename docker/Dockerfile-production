@@ -1,0 +1,52 @@
+FROM defence-request-service-auth:base_localbuild
+
+###############################################################################
+# Runit setup
+###############################################################################
+# Runit requires inittab
+RUN touch /etc/inittab
+
+# Add application server
+COPY ./docker/runit/application-server/run /etc/service/application-server/run
+RUN chmod +x /etc/service/application-server
+
+###############################################################################
+# Add code and set work directory. Generally everything from this
+# point on will be not-cacheable
+###############################################################################
+COPY . /usr/src/app
+WORKDIR /usr/src/app
+
+###############################################################################
+# Compile Assets
+###############################################################################
+# To run 'rake assets:precompile' we need a set of environment variables, since
+# the rake task loads rails to be able to function.
+#
+# Since we don't know the production config at the moment we start executing,
+# and we don't want to wait until boot time to run the asset precompile,
+# we use the environment variables in the .env.development file to run the precompile
+#
+COPY .env.development .env.local
+# Build assets, then clear all env files. including .env.local
+RUN bin/rake assets:clobber assets:precompile && rm -f .env.*
+
+###############################################################################
+# Defaults for executing container
+###############################################################################
+# Default environment variables for production runs
+ENV RAILS_ENV production
+ENV UNICORN_PORT 3000
+
+# Allow incoming connections on the Unicorn port
+EXPOSE $UNICORN_PORT
+
+# Add volumes for log files
+VOLUME /usr/src/app/logs
+VOLUME /var/log
+
+# Run all services by default
+CMD ["/usr/bin/runsvdir", "-P", "/etc/service"]
+
+# As the last step, clean up temporary files before committing the container
+RUN /usr/local/bin/clean-up-docker-container

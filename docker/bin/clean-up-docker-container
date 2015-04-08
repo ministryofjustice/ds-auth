@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "$0 - Clearing temporary files in preparation for container commit"
+
+apt-get -y autoremove --purge
+apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+truncate -s 0 /var/log/*log
+
+exit 0
