@@ -53,6 +53,7 @@ class OrganisationsController < ApplicationController
                   :organisation_type,
                   :searchable,
                   :tel,
+                  :mobile,
                   :address,
                   :postcode,
                   :email)

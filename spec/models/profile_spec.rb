@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Profile do
+
   describe 'validations' do
-    it { expect(subject).to validate_presence_of :name }
+    [:name, :address, :postcode, :email, :tel, :mobile].each do |field|
+      it { expect(subject).to validate_presence_of field }
+    end
   end
 
   describe 'associations' do

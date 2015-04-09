@@ -19,7 +19,8 @@ RSpec.feature "Users managing profiles" do
     click_link "New Profile"
 
     fill_in "Name", with: "Eamonn Holmes"
-    fill_in "Tel", with: "09011105010"
+    fill_in "Tel", with: "01632 960178"
+    fill_in "Mobile", with: "07700 900407"
     fill_in "Address", with: "123 Fake Street"
     fill_in "Postcode", with: "POSTCODE"
     fill_in "Email", with: "eamonn.holmes@example.xxx"
@@ -34,7 +35,8 @@ RSpec.feature "Users managing profiles" do
     click_link "New Profile"
 
     fill_in "Name", with: ""
-    fill_in "Tel", with: "09011105010"
+    fill_in "Tel", with: "01632 960178"
+    fill_in "Mobile", with: "07700 900407"
     fill_in "Address", with: "123 Fake Street"
     fill_in "Postcode", with: "POSTCODE"
     fill_in "Email", with: "eamonn.holmes@example.xxx"
