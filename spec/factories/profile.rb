@@ -4,7 +4,8 @@ FactoryGirl.define do
     address                     { Faker::Address.street_address }
     postcode                    "POSTCODE"
     sequence(:email)            { |n| "profile_#{n}@example.com" }
-    tel                         "09011105010"
+    tel                         "01632 960178"
+    mobile                      "07700 900407"
   end
 
   trait :with_user do

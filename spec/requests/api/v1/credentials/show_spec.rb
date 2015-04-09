@@ -59,6 +59,7 @@ RSpec.describe 'GET /api/v1/credentials/me' do
             "email" => user.profile.email,
             "name" => user.profile.name,
             "telephone" => user.profile.tel,
+            "mobile" => user.profile.mobile,
             "address" => {
               "full_address" => user.profile.address,
               "postcode" => user.profile.postcode,

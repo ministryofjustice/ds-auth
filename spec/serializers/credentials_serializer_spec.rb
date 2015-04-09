@@ -18,6 +18,7 @@ RSpec.describe CredentialsSerializer, "#call" do
           "email" => user.profile.email,
           "name" => user.profile.name,
           "telephone" => user.profile.tel,
+          "mobile" => user.profile.mobile,
           "address" => {
             full_address: user.profile.address,
             postcode: user.profile.postcode,
@@ -45,6 +46,7 @@ RSpec.describe CredentialsSerializer, "#call" do
           "email" => "",
           "name" => "",
           "telephone" => "",
+          "mobile" => "",
           "address" => {
             "full_address" => "",
             "postcode" => "",

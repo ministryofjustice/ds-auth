@@ -32,6 +32,7 @@ class CredentialsSerializer
       email: profile.email,
       name:  profile.name,
       telephone: profile.tel,
+      mobile: profile.mobile,
       address: {
         full_address: profile.address,
         postcode: profile.postcode,

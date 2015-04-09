@@ -51,6 +51,7 @@ class ProfilesController < ApplicationController
           .permit(:user_id,
                   :name,
                   :tel,
+                  :mobile,
                   :address,
                   :postcode,
                   :email)
