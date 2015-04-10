@@ -66,7 +66,7 @@ RSpec.describe 'GET /api/v1/credentials/me' do
             },
             "organisation_ids" => user.profile.organisations.map(&:id)
           },
-          "roles" => user.roles.map(&:name)
+          "roles" => user.roles_for(application: application).map(&:name)
         }
       )
     end

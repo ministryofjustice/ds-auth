@@ -3,7 +3,16 @@ module Api::V1
     respond_to :json
 
     def show
-      render json: CredentialsSerializer.new(user: current_resource_owner).call
+      render json: credentials_serializer.call
+    end
+
+    private
+
+    def credentials_serializer
+      CredentialsSerializer.new(
+        user: current_resource_owner, 
+        application: doorkeeper_token.application
+      )
     end
   end
 end

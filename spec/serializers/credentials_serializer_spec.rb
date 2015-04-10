@@ -4,8 +4,11 @@ RSpec.describe CredentialsSerializer, "#call" do
   it "serializes the credentials for the passed in user" do
     profile = build_stubbed :profile
     user = build_stubbed :user, profile: profile
+    application = build_stubbed :doorkeeper_application
+    role = build_stubbed :role
+    permission = build_stubbed :permission, application: application, user: user, role: role
 
-    serializer = CredentialsSerializer.new user: user
+    serializer = CredentialsSerializer.new user: user, application: application
 
     expect(serializer.call).to eq(
       {
@@ -25,15 +28,16 @@ RSpec.describe CredentialsSerializer, "#call" do
           },
           "organisation_ids" => user.profile.organisations.map(&:id)
         },
-        "roles" => user.roles.pluck(:name)
+        "roles" => user.roles_for(application: application).map(&:name)
       }.to_json
     )
   end
 
   it "returns empty profile keys if the user has no profile" do
     user = build_stubbed :user
+    application = build_stubbed :application
 
-    serializer = CredentialsSerializer.new user: user
+    serializer = CredentialsSerializer.new user: user, application: application
 
     expect(serializer.call).to eq(
       {

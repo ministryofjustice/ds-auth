@@ -1,6 +1,6 @@
 class CredentialsSerializer
-  def initialize(user: )
-    @user = user
+  def initialize(user: , application:)
+    @user, @application = user, application
   end
 
   def call
@@ -9,7 +9,7 @@ class CredentialsSerializer
 
   private
 
-  attr_reader :user
+  attr_reader :user, :application
 
   def serialize_credentials
     {
@@ -42,7 +42,7 @@ class CredentialsSerializer
   end
 
   def serialized_roles
-    user.roles.pluck(:name)
+    user.roles_for(application: application).map(&:name)
   end
 
   def profile
