@@ -7,23 +7,21 @@
 # Ignore bundler config.
 /.bundle
 
-# Coverage output directory
-/coverage
+# Ignore logfiles and tempfiles.
+/log/*
+/tmp/cache/*
+/tmp/capybara/*
+/tmp/sockets/*
+/tmp/pids/*
+/tmp/sessions/*
 
-# Ignore all logfiles and tempfiles.
-!.keep
-!/log/.keep
-<<<<<<< HEAD
-/tmp/*
-!/tmp/.keep
-=======
 *.DS_Store
 *.swo
 *.swp
 /coverage
-/log/*
-/tmp/*
->>>>>>> Configure .env
+
+# Add back any keep files that might have been excluded by the above
+!.keep
 
 # Dotenv 2.0 uses a .env.local instead of a plain .env
 # The .env file is now used for defaults, which are then overriden with per-environment .env.production style files
