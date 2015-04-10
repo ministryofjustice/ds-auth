@@ -5,7 +5,7 @@ RSpec.describe CredentialsSerializer, "#call" do
     profile = build_stubbed :profile
     user = build_stubbed :user, profile: profile
 
-    serializer = CredentialsSerializer.new user
+    serializer = CredentialsSerializer.new user: user
 
     expect(serializer.call).to eq(
       {
@@ -33,7 +33,7 @@ RSpec.describe CredentialsSerializer, "#call" do
   it "returns empty profile keys if the user has no profile" do
     user = build_stubbed :user
 
-    serializer = CredentialsSerializer.new user
+    serializer = CredentialsSerializer.new user: user
 
     expect(serializer.call).to eq(
       {
