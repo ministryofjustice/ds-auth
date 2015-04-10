@@ -25,6 +25,7 @@ RSpec.describe 'Users managing permissions' do
     click_button "Create Permission"
 
     expect(page).to have_content 'Permission successfully created'
+    expect(current_path).to eq organisation_path(organisation)
   end
 
   specify "are shown a message if the permission cannot be created (eg, trying to create a duplicate permission)" do

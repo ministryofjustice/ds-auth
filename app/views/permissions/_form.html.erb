@@ -1,4 +1,4 @@
-<%= form_for(@permission) do |f| %>
+<%= form_for @permission, url: permissions_path(redirect_path: @redirect_path), html: { method: :post } do |f| %>
 
   <%= f.label :user_id, t('user') %>
   <%= f.select :user_id, options_from_collection_for_select(User.all, 'id', 'email') %>
