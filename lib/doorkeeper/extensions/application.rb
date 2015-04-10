@@ -1,5 +1,4 @@
 require 'active_support/concern'
-# require 'doorkeeper/lib/application'
 
 module Doorkeeper
   module Extensions
