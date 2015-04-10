@@ -23,14 +23,14 @@ RSpec.describe 'GET /api/v1/credentials/me' do
     it "returns a 200 response with the user credentials" do
       application = create :application
       organisation = create :organisation
-      government_application = create :government_application
+      application = create :doorkeeper_application
       profile = create :profile, organisations: [organisation]
       role = create :role
       permissions = create_list(
         :permission,
         2,
         role: role,
-        government_application: government_application,
+        application: application,
         organisation: organisation
       )
       user = create :user, profile: profile, permissions: permissions

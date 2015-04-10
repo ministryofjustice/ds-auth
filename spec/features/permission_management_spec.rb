@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Users managing permissions' do
   let!(:user) { create(:user) }
   let!(:role) { create(:role) }
-  let!(:government_application) { create(:government_application) }
+  let!(:application) { create(:doorkeeper_application) }
   let!(:organisation) { create(:organisation, :with_profiles_and_users, profile_count: 3) }
   let!(:permission) { create(:permission) }
 
@@ -20,7 +20,7 @@ RSpec.describe 'Users managing permissions' do
 
     select organisation.profiles.first.user.email
     select role.name
-    select government_application.name
+    select application.name
     select organisation.name
     click_button "Create Permission"
 
@@ -36,7 +36,7 @@ RSpec.describe 'Users managing permissions' do
 
     select permission.user.email
     select permission.role.name
-    select permission.government_application.name
+    select permission.application.name
     select permission.organisation.name
     click_button "Create Permission"
 

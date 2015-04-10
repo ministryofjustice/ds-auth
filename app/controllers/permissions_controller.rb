@@ -38,7 +38,7 @@ class PermissionsController < ApplicationController
     params.require(:permission)
           .permit(:user_id,
                   :role_id,
-                  :government_application_id,
+                  :application_id,
                   :organisation_id)
   end
 end

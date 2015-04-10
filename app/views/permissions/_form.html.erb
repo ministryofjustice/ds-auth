@@ -6,8 +6,8 @@
   <%= f.label :role_id, t('role') %>
   <%= f.select :role_id, options_from_collection_for_select(Role.all, 'id', 'name') %>
 
-  <%= f.label :government_application_id, t('application') %>
-  <%= f.select :government_application_id, options_from_collection_for_select(GovernmentApplication.all, 'id', 'name') %>
+  <%= f.label :application_id, t('application') %>
+  <%= f.select :application_id, options_from_collection_for_select(Doorkeeper::Application.all, 'id', 'name') %>
 
   <%= f.label :organisation_id, t('organisation') %>
   <%= f.select :organisation_id, options_from_collection_for_select(Organisation.all, 'id', 'name')%>
