@@ -9,23 +9,6 @@ RSpec.describe User do
     specify { expect(subject).to have_many(:permissions) }
   end
 
-  describe "#permissions.for_application" do
-    let!(:application) { create :doorkeeper_application }
-    let!(:application2) { create :doorkeeper_application }
-    let!(:role) { create :role }
-
-    let!(:permission1) { create :permission, application: application, role: role, user: user }
-    let!(:permission2) { create :permission, application: application2, role: role, user: user }
-
-    it "returns an ActiveRecord::Relation" do
-      expect(user.permissions.for_application(application).class.ancestors).to include(ActiveRecord::AssociationRelation)
-    end
-
-    it "returns permissions only for the given application" do
-      expect(user.permissions.for_application(application)).to eq([permission1])
-    end
-  end
-
   describe "#roles_for" do
     let(:application) { build :doorkeeper_application }
     let(:role) { build :role }

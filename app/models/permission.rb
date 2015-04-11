@@ -6,4 +6,8 @@ class Permission < ActiveRecord::Base
 
   validates :user, :role, :application, presence: true
   validates_uniqueness_of :user_id, scope: [:role_id, :application_id, :organisation_id]
+
+  scope :for_application, ->(application) {
+    where(application: application)
+  }
 end

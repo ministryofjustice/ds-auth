@@ -20,4 +20,20 @@ RSpec.describe Permission do
         scoped_to(:role_id, :application_id, :organisation_id)
     end
   end
+
+  describe ".for_application" do
+    let!(:application) { create :doorkeeper_application }
+    let!(:application2) { create :doorkeeper_application }
+
+    let!(:permission1) { create :permission, application: application }
+    let!(:permission2) { create :permission, application: application2 }
+
+    it "returns an ActiveRecord::Relation" do
+      expect(Permission.for_application(application).class.ancestors).to include(ActiveRecord::Relation)
+    end
+
+    it "returns permissions only for the given application" do
+      expect(Permission.for_application(application)).to eq([permission1])
+    end
+  end
 end
