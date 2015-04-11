@@ -104,10 +104,14 @@ Users contain login information
             ]
         }
 
-## User [/api/v1/user/me]
-Returns User object for the user identified by the Authorization Header
+## User Profile [/api/v1/me]
+Returns Profile object for the user identified by the Authorization Header
 
-### Single User [GET]
+Used by consuming Applications to populate current_user
+
+Note: Roles returned in this response only apply in the context of the calling Application. Roles that apply to other Applications will not be returned.
+
+### Single User Profile [GET]
 + Request
 
     + Headers
