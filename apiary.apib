@@ -36,11 +36,12 @@ Users contain login information
 
 ## Users Collection [/api/v1/users]
 ### List all Users [GET]
-+ Payload
++ Request
 
     + Headers
         
-        Authorization: Token <TOKEN>
+            Accept: application/json
+            Authorization: Bearer <TOKEN>
 
 + Response 200 (application/json)
 
@@ -76,11 +77,12 @@ Users contain login information
         ID of the User
 
 ### Single User [GET]
-+ Payload
++ Request
 
     + Headers
         
-        Authorization: Token <TOKEN>
+            Accept: application/json
+            Authorization: Bearer <TOKEN>
 
 
 + Response 200 (application/json)
@@ -106,11 +108,12 @@ Users contain login information
 Returns User object for the user identified by the Authorization Header
 
 ### Single User [GET]
-+ Payload
++ Request
 
     + Headers
         
-        Authorization: Token <TOKEN>
+            Accept: application/json
+            Authorization: Bearer <TOKEN>
 
 + Response 200 (application/json)
 
@@ -160,11 +163,12 @@ Organisations can be filtered by one or more type:
 
 ## Organisations Collection [/api/v1/organisations?types=xxx]
 ### List all Organisations [GET]
-+ Payload
++ Request
 
     + Headers
         
-        Authorization: Token <TOKEN>
+            Accept: application/json
+            Authorization: Bearer <TOKEN>
 
 + Parameters
     + types (string)
@@ -217,11 +221,12 @@ A single Organisation with all its details
         ID of the organisation
 
 ### Single Organisation [GET]
-+ Payload
++ Request
 
     + Headers
         
-        Authorization: Token <TOKEN>
+            Accept: application/json
+            Authorization: Bearer <TOKEN>
 
 + Response 200 (application/json)
 
@@ -251,11 +256,12 @@ Used to find contact details for Solicitors or Agents
 
 ## Profiles Collection [/api/v1/profiles?ids=1,2,3,4&types=xxx]
 ### List all Profiles [GET]
-+ Payload
++ Request
 
     + Headers
         
-        Authorization: Token <TOKEN>
+            Accept: application/json
+            Authorization: Bearer <TOKEN>
 
 + Parameters
     + ids (integer, optional)
@@ -305,11 +311,12 @@ A single Profile with all its details
     ID of the Profile
 
 ### Single Profile [GET]
-+ Payload
++ Request
 
     + Headers
         
-        Authorization: Token <TOKEN>
+            Accept: application/json
+            Authorization: Bearer <TOKEN>
         
 + Response 200 (application/json)
 
