@@ -2,9 +2,7 @@ module Api::V1
   class CredentialsController < ApiController
 
     def show
-      respond_to do |format|
-        format.json { render json: credentials_serializer }
-      end
+      respond_with credentials_serializer
     end
 
     private
