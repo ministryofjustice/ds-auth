@@ -15,6 +15,9 @@ Every collection response will include a links object.
 
 The Links Object should contain links to both the first and last pages, optionally with next and previous links 
 
+## Linking
+Each object returned by the API can have a \"links\" child object that contains API urls to related objects
+
 # Group API Root [/]
 
 This resource does not have any attributes. Instead it offers the initial API affordances in the form of the links in the JSON body.
@@ -191,13 +194,17 @@ Organisations can be filtered by one or more type:
                     "id": 1, 
                     "name": "Tuckers",
                     "type: "law_firm",
-                    "Profiles_ids": [1,2,3,5,6,7]
+                    "links": {
+                        "profiles": "/api/v1/profiles?ids[]=1&ids[]=2&ids[]=3"
+                    }
                 }, 
                 {
                     "id": 2, 
                     "name": "Brighton",
                     "type: "custody_suite",
-                    "profiles_ids": [5,8,9]
+                    "links": {
+                        "profiles": "/api/v1/profiles?ids[]=4&ids[]=6"
+                    }
 
                 }    
             ],
@@ -239,7 +246,9 @@ A single Organisation with all its details
                 "id": 1, 
                 "name": "Tuckers",
                 "type": "law_firm",
-                "profiles_ids": [1,2,3,5,6,7] 
+                "links": {
+                    "profiles": "/api/v1/profiles?ids[]=6&ids[]=8&ids[]=9"
+                }
             }
         }
 
@@ -283,12 +292,18 @@ Used to find contact details for Solicitors or Agents
                 {
                     "id": 1, 
                     "name": "Bob Smith",
-                    "type: "solicitor"
+                    "type: "solicitor",
+                    "links": {
+                        "organisation": "/api/v1/organisation/1"
+                    }
                 }, 
                 {
                     "id": 2, 
                     "name": "Andy Brown",
-                    "type: "agent"
+                    "type: "agent",
+                    "links": {
+                        "organisation": "/api/v1/organisation/2"
+                    }
                 }    
             ],
             "links": {
@@ -328,7 +343,10 @@ A single Profile with all its details
             "profile": { 
                 "id": 1, 
                 "name": "Bob Smith",
-                "type": "solicitor" 
+                "type": "solicitor",
+                "links": {
+                    "organisation": "/api/v1/organisation/2"
+                } 
             }
         }
 
@@ -352,7 +370,10 @@ No authorization is needed for this endpoint
                 {
                     "id": 1, 
                     "name": "Bob Smith",
-                    "type": "solicitor"
+                    "type": "solicitor",
+                    "links": {
+                        "organisation": "/api/v1/organisation/2"
+                    } 
                 }
             ],
             "links": {
