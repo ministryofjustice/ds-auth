@@ -165,7 +165,7 @@ Organisations can be filtered by one or more type:
 * law_firm
 * law_office
 
-## Organisations Collection [/api/v1/organisations?types=xxx]
+## Organisations Collection [/api/v1/organisations?types[]=xxx]
 ### List all Organisations [GET]
 + Request
 
@@ -176,7 +176,7 @@ Organisations can be filtered by one or more type:
 
 + Parameters
     + types (string)
-        Filter types of Organisation, multiple by comma seperation
+        Params array of Organisation types to filter by
         + Values
             + `'custody_suite'`
             + `'call_centre'`
@@ -258,7 +258,7 @@ Will eventually contain all Solicitors that have a Legal Aid Contract.
 
 Used to find contact details for Solicitors or Agents
 
-## Profiles Collection [/api/v1/profiles?ids=1,2,3,4&types=xxx]
+## Profiles Collection [/api/v1/profiles?ids[]=1&ids[]=2&ids[]=3&ids[]=4&types[]=solicitor]
 ### List all Profiles [GET]
 + Request
 
@@ -269,9 +269,9 @@ Used to find contact details for Solicitors or Agents
 
 + Parameters
     + ids (integer, optional)
-        Comma seperated list of User ids to load
+        Params array of User ids to load
     + types (string, optional)
-        Filter types of Profile, multiple by comma seperation
+        Params array of Profile types to filter by
         + Values
             + `'solicitor'`
             + `'agent'`
