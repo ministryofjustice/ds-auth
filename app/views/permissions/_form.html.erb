@@ -1,16 +1,18 @@
 <%= form_for @permission, url: permissions_path(redirect_path: @redirect_path), html: { method: :post } do |f| %>
 
   <%= f.label :user_id, t('user') %>
-  <%= f.select :user_id, options_from_collection_for_select(User.all, 'id', 'email') %>
+  <p><%= @permission.user.email %></p>
+  <%= f.hidden_field :user_id, value: @permission.user_id %>
+
+  <%= f.label :organisation_id, t('organisation') %>
+  <p><%= @permission.organisation.name %></p>
+  <%= f.hidden_field :organisation_id, value: @permission.organisation.id %>
 
   <%= f.label :role_id, t('role') %>
   <%= f.select :role_id, options_from_collection_for_select(Role.all, 'id', 'name') %>
 
   <%= f.label :application_id, t('application') %>
   <%= f.select :application_id, options_from_collection_for_select(Doorkeeper::Application.all, 'id', 'name') %>
-
-  <%= f.label :organisation_id, t('organisation') %>
-  <%= f.select :organisation_id, options_from_collection_for_select(Organisation.all, 'id', 'name')%>
 
   <div class="actions">
     <%= f.submit %>
