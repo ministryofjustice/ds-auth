@@ -6,6 +6,7 @@ FactoryGirl.define do
     sequence(:email)            { |n| "profile_#{n}@example.com" }
     tel                         "01632 960178"
     mobile                      "07700 900407"
+    uid                         { SecureRandom.uuid }
   end
 
   trait :with_user do

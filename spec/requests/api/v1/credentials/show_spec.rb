@@ -12,15 +12,13 @@ RSpec.describe 'GET /api/v1/me' do
       create :profile, user: user, organisations: [organisation]
 
       get "/api/v1/me", nil, api_request_headers
-        
+
 
       expect(response.status).to eq(200)
       expect(response_json).to eq(
         {
           "user" => {
-            "id" => user.id,
             "email" => user.email,
-            "uid" => user.uid
           },
           "profile" => {
             "email" => user.profile.email,
@@ -31,7 +29,8 @@ RSpec.describe 'GET /api/v1/me' do
               "full_address" => user.profile.address,
               "postcode" => user.profile.postcode,
             },
-            "organisation_ids" => user.profile.organisations.map(&:id)
+            "organisation_ids" => user.profile.organisations.map(&:id),
+            "uid" => user.profile.uid
           },
           "roles" => user.roles_for(application: application).map(&:name)
         }
