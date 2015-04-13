@@ -7,7 +7,7 @@ RSpec.describe 'GET /api/v1/me' do
     include_context "logged in API User"
 
     it "returns a 200 response with the user credentials" do
-      application = create :oauth_application
+      organisation = create :organisation
       create :profile, user: user, organisations: [organisation]
 
       get "/api/v1/me", nil, api_request_headers
