@@ -6,7 +6,7 @@ module Api::V1
 
     private
 
-    def respond_with(serializer)
+    def respond_as_json(serializer)
       respond_to do |format|
         format.json { render json: serializer }
       end
