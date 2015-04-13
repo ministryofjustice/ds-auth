@@ -3,21 +3,21 @@ class CredentialsSerializer
     @user, @application = user, application
   end
 
-  def call
-    serialize_credentials
+  def serialize
+    {
+      user: serialized_user,
+      profile: serialized_profile,
+      roles: serialized_roles,
+    }
+  end
+
+  def to_json(opts = {})
+    serialize.to_json opts
   end
 
   private
 
   attr_reader :user, :application
-
-  def serialize_credentials
-    {
-      user: serialized_user,
-      profile: serialized_profile,
-      roles: serialized_roles,
-    }.to_json
-  end
 
   def serialized_user
     {
