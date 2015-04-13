@@ -26,4 +26,8 @@ class NullProfile
   def mobile
     ''
   end
+
+  def uid
+    ''
+  end
 end
