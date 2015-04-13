@@ -5,6 +5,8 @@ class Profile < ActiveRecord::Base
 
   validates :name, :address, :postcode, :email, :tel, :mobile, presence: true
 
+  validates :user_id, uniqueness: true, allow_nil: true
+
   # It is not valid to have multiple memberships for a single organisation
   # so we can safely always call .first as only one will be returned
   def membership_for organisation
