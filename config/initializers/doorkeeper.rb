@@ -95,3 +95,5 @@ Doorkeeper.configure do
   # WWW-Authenticate Realm (default "Doorkeeper").
   # realm "Doorkeeper"
 end
+
+require Rails.root.join("lib/doorkeeper/extensions/application")

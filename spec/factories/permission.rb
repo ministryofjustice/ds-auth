@@ -3,6 +3,6 @@ FactoryGirl.define do
     association :user
     association :organisation
     association :role
-    association :government_application
+    association :application, factory: :doorkeeper_application
   end
 end

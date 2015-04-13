@@ -6,6 +6,12 @@ module Api::V1
 
     private
 
+    def respond_as_json(serializer)
+      respond_to do |format|
+        format.json { render json: serializer }
+      end
+    end
+
     def current_resource_owner
       User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
     end

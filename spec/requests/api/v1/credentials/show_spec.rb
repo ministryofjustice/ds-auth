@@ -1,51 +1,18 @@
 require "rails_helper"
 
-RSpec.describe 'GET /api/v1/credentials/me' do
-  context 'with an invalid authentication token' do
-    it 'returns a 401 response with an error message' do
-
-      get "/api/v1/me", nil,
-        {
-          "Authorization": "Bearer foo",
-          "Content-Type": "application/json"
-        }
-
-      expect(response.status).to eq(401)
-      expect(response_json).to eq(
-        {
-          "errors" => ["Not authorized, please login"]
-        }
-      )
-    end
-  end
+RSpec.describe 'GET /api/v1/me' do
+  it_behaves_like "a protected endpoint", "/api/v1/me"
 
   context 'with a valid authentication token' do
-    it "returns a 200 response with the user credentials" do
-      application = create :application
-      organisation = create :organisation
-      government_application = create :government_application
-      profile = create :profile, organisations: [organisation]
-      role = create :role
-      permissions = create_list(
-        :permission,
-        2,
-        role: role,
-        government_application: government_application,
-        organisation: organisation
-      )
-      user = create :user, profile: profile, permissions: permissions
-      token = create(
-        :access_token,
-        application: application,
-        resource_owner_id: user.id,
-        scopes: "public"
-      )
+    include_context "logged in API User"
 
-      get "/api/v1/me", nil,
-        {
-        "Authorization": "Bearer #{token.token}",
-        "Content-Type": "application/json"
-        }
+    it "returns a 200 response with the user credentials" do
+
+      organisation = create :organisation
+      create :profile, user: user, organisations: [organisation]
+
+      get "/api/v1/me", nil, api_request_headers
+        
 
       expect(response.status).to eq(200)
       expect(response_json).to eq(
@@ -66,7 +33,7 @@ RSpec.describe 'GET /api/v1/credentials/me' do
             },
             "organisation_ids" => user.profile.organisations.map(&:id)
           },
-          "roles" => user.roles.map(&:name)
+          "roles" => user.roles_for(application: application).map(&:name)
         }
       )
     end

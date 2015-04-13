@@ -7,6 +7,23 @@ RSpec.describe User do
   describe 'associations' do
     specify { expect(subject).to have_one(:profile) }
     specify { expect(subject).to have_many(:permissions) }
-    specify { expect(subject).to have_many(:roles).through(:permissions) }
+  end
+
+  describe "#roles_for" do
+    let(:application) { build :doorkeeper_application }
+    let(:role) { build :role }
+
+    it "raises an error without an application" do
+      expect { subject.roles_for }.to raise_error(ArgumentError)
+    end
+
+    it "returns an empty array when user has no roles for the given application" do
+      expect(subject.roles_for(application: application)).to eq([])
+    end
+
+    it "returns the roles a user has for the given application" do
+      expect(subject.permissions).to receive(:for_application).with(application).and_return [double("Permission", role: role)]
+      expect(subject.roles_for(application: application)).to eq([role])
+    end
   end
 end

@@ -1,23 +1,23 @@
 class CredentialsSerializer
-  def initialize(user)
-    @user = user
+  def initialize(user: , application:)
+    @user, @application = user, application
   end
 
-  def call
-    serialize_credentials
-  end
-
-  private
-
-  attr_reader :user
-
-  def serialize_credentials
+  def serialize
     {
       user: serialized_user,
       profile: serialized_profile,
       roles: serialized_roles,
-    }.to_json
+    }
   end
+
+  def to_json(opts = {})
+    serialize.to_json opts
+  end
+
+  private
+
+  attr_reader :user, :application
 
   def serialized_user
     {
@@ -42,7 +42,7 @@ class CredentialsSerializer
   end
 
   def serialized_roles
-    user.roles.pluck(:name)
+    user.roles_for(application: application).map(&:name)
   end
 
   def profile

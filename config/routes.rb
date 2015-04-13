@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
-  namespace :api do
+  namespace :api, format: 'json' do
     namespace :v1 do
       get "/me", to: "credentials#show"
     end
