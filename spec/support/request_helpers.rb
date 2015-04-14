@@ -17,7 +17,7 @@ RSpec.shared_context "logged in API User" do
 end
 
 RSpec.shared_examples "a protected endpoint" do |url|
-  it 'returns a 401 response with an error message for unauthenticated requests' do
+  it "returns a 401 response with an error message for unauthenticated requests" do
 
     get url, nil,
       {
