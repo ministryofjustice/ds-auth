@@ -28,7 +28,7 @@ class ProfileSerializer
 
   def serialized_links
     {
-      "organisation" => "/api/v1/organisation/#{profile.organisations.first.id}"
+      "organisation" => "/api/v1/organisations/#{profile.organisations.first.id}"
     }
   end
 end

@@ -19,7 +19,7 @@ RSpec.describe "GET /api/v1/profiles/:uid" do
           "name" => profile.name,
           # "type" => profile.type,
           "links" => {
-            "organisation" => "/api/v1/organisation/#{organisation.id}"
+            "organisation" => "/api/v1/organisations/#{organisation.id}"
           }
         }
       )
