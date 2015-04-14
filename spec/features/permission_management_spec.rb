@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Users managing permissions' do
-  let!(:user) { create(:user) }
   let!(:role) { create(:role) }
   let!(:application) { create(:doorkeeper_application) }
   let!(:organisation) { create(:organisation, :with_profiles_and_users, profile_count: 3) }
-  let!(:permission) { create(:permission) }
+  let!(:user) { create(:user, profile: organisation.profiles.first) }
+  let!(:permission) { create(:permission, user: user, organisation: organisation) }
 
   before do
     login_as_user user.email
@@ -14,17 +14,26 @@ RSpec.describe 'Users managing permissions' do
   specify "can create a new permission for a profile that has a user" do
     visit organisation_path(organisation)
 
-    within "##{organisation.profiles.first.id}-row" do
+    within "##{user.profile.id}-row" do
       click_link "New Permission"
     end
 
-    select organisation.profiles.first.user.email
+    expect(page).to have_content organisation.name
+    expect(page).to have_content user.email
+
     select role.name
     select application.name
-    select organisation.name
+
     click_button "Create Permission"
 
     expect(page).to have_content 'Permission successfully created'
+    expect(current_path).to eq organisation_path(organisation)
+
+    within "##{user.profile.id}-row" do
+      expect(page).to have_content user.profile.name
+      expect(page).to have_content permission.application.name
+      expect(page).to have_content permission.role.name
+    end
   end
 
   specify "are shown a message if the permission cannot be created (eg, trying to create a duplicate permission)" do
@@ -34,10 +43,8 @@ RSpec.describe 'Users managing permissions' do
       click_link "New Permission"
     end
 
-    select permission.user.email
     select permission.role.name
     select permission.application.name
-    select permission.organisation.name
     click_button "Create Permission"
 
     expect(page).to have_content "You need to fix the errors on this page before continuing."

@@ -9,7 +9,7 @@ module Api::V1
 
     def credentials_serializer
       CredentialsSerializer.new(
-        user: current_resource_owner, 
+        user: current_resource_owner,
         application: doorkeeper_token.application
       )
     end

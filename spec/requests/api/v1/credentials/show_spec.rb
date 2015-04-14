@@ -7,12 +7,10 @@ RSpec.describe 'GET /api/v1/me' do
     include_context "logged in API User"
 
     it "returns a 200 response with the user credentials" do
-
       organisation = create :organisation
       create :profile, user: user, organisations: [organisation]
 
       get "/api/v1/me", nil, api_request_headers
-
 
       expect(response.status).to eq(200)
       expect(response_json).to eq(

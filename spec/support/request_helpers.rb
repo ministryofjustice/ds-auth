@@ -1,12 +1,11 @@
 RSpec.shared_context "logged in API User" do
-  let!(:application) { create :application }
+  let!(:application) { create :oauth_application }
   let!(:user) { create :user }
   let!(:permission) { create :permission, application: application, user: user }
   let!(:token) { create :access_token,
                           application: application,
                           resource_owner_id: user.id,
                           scopes: "public"
-                        
   }
 
   def api_request_headers

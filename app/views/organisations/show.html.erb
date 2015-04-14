@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong><%= t('name') %>:</strong>
   <%= @organisation.name %>
@@ -47,10 +45,10 @@
 
 <h3><%= t('members') %></h3>
 
-<table>
+<table class="members">
   <thead>
     <tr>
-      <th colspan="2"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -59,7 +57,18 @@
       <% @organisation.profiles.each do |profile| %>
         <tr id='<%= profile.id %>-row'>
           <td><%= profile.name %></td>
-          <td><%= link_to t('new_permission'), new_permission_path({ organisation_id: @organisation.id, user_id: profile.user.id }) %></td>
+          <td>
+            <%- if profile.user %>
+            <dl>
+              <%- profile.user.permissions.order(:application_id).each do |permission| %>
+                <dt><%= permission.application.name %> App:</dt>
+                <dd><%= permission.role.name%></dd>
+              <%- end %>
+            </dl>
+            <%- end %>
+          </td>
+          <td><%= link_to t('new_permission'), new_permission_path(organisation_id: @organisation.id, user_id: profile.user.id, redirect_path: organisation_path(@organisation))  if profile.user %></td>
+          <td><%= link_to t('remove_member'), organisation_membership_path(@organisation.id, profile.membership_for(@organisation)), method: :delete %></td>
         </tr>
       <% end %>
     <% else %>
@@ -72,3 +81,4 @@
 
 <%= link_to t('edit'), edit_organisation_path(@organisation) %> |
 <%= link_to t('back'), organisations_path %>
+<%= link_to t('new_member'), new_organisation_membership_path(@organisation) %>
