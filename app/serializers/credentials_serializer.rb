@@ -3,40 +3,40 @@ class CredentialsSerializer
     @user, @application = user, application
   end
 
-  def serialize
-    {
-      user: serialized_user,
-      profile: serialized_profile,
-      roles: serialized_roles,
-    }
-  end
-
-  def to_json(opts = {})
-    serialize.to_json opts
+  def as_json(opts = {})
+    serialize
   end
 
   private
 
   attr_reader :user, :application
 
+  def serialize
+    {
+      "user" => serialized_user,
+      "profile" => serialized_profile,
+      "roles" => serialized_roles,
+    }
+  end
+
   def serialized_user
     {
-      email: user.email,
+      "email" => user.email,
     }
   end
 
   def serialized_profile
     {
-      email: profile.email,
-      name:  profile.name,
-      telephone: profile.tel,
-      mobile: profile.mobile,
-      address: {
-        full_address: profile.address,
-        postcode: profile.postcode,
+      "email" => profile.email,
+      "name" => profile.name,
+      "telephone" => profile.tel,
+      "mobile" => profile.mobile,
+      "address" => {
+        "full_address" => profile.address,
+        "postcode" => profile.postcode,
       },
-      organisation_ids: profile.organisations.pluck(:id),
-      uid: profile.uid,
+      "organisation_ids" => profile.organisations.pluck(:id),
+      "uid" => profile.uid,
     }
   end
 

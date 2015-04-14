@@ -3,8 +3,8 @@ class ProfileSerializer
     @profile = profile
   end
 
-  def to_json(opts = {})
-    serialize.to_json opts
+  def as_json(opts = {})
+    serialize
   end
 
   private
@@ -13,22 +13,22 @@ class ProfileSerializer
 
   def serialize
     {
-      profile: serialized_profile
+      "profile" => serialized_profile
     }
   end
 
   def serialized_profile
     {
-      uid: profile.uid,
-      name: profile.name,
+      "uid" => profile.uid,
+      "name" => profile.name,
       # type: profile.type,
-      links: serialized_links
+      "links" => serialized_links
     }
   end
 
   def serialized_links
     {
-      organisation: "/api/v1/organisation/#{profile.organisations.first.id}"
+      "organisation" => "/api/v1/organisation/#{profile.organisations.first.id}"
     }
   end
 end
