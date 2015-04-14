@@ -92,7 +92,7 @@ Organisations are logical groups of users, and can be filtered by one or more ty
             ]
         }
 
-## Organisation [/api/v1/organisation/{uid}]
+## Organisation [/api/v1/organisations/{uid}]
 A single Organisation with all its details.
 
 ### Single Organisation [GET]
@@ -158,7 +158,7 @@ Used to find contact details for Solicitors or Agents.
                     "name": "Bob Smith",
                     "type: "solicitor",
                     "links": {
-                        "organisation": "/api/v1/organisation/1234567890abcdef"
+                        "organisation": "/api/v1/organisations/1234567890abcdef"
                     }
                 },
                 {
@@ -166,7 +166,7 @@ Used to find contact details for Solicitors or Agents.
                     "name": "Andy Brown",
                     "type: "agent",
                     "links": {
-                        "organisation": "/api/v1/organisation/2345678901bcdefa"
+                        "organisation": "/api/v1/organisations/2345678901bcdefa"
                     }
                 }
             ],
@@ -208,7 +208,7 @@ A single Profile with all its details
                 "name": "Bob Smith",
                 "type": "solicitor",
                 "links": {
-                    "organisation": "/api/v1/organisation/1234567890abcdef"
+                    "organisation": "/api/v1/organisations/1234567890abcdef"
                 }
             }
         }
@@ -240,7 +240,7 @@ No authorization is needed for this endpoint.
                     "name": "Bob Smith",
                     "type": "solicitor",
                     "links": {
-                   	     "organisation": "/api/v1/organisation/1234567890abcdef"
+                   	     "organisation": "/api/v1/organisations/1234567890abcdef"
                     }
                 }
             ],
