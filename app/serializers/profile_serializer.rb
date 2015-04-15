@@ -21,7 +21,7 @@ class ProfileSerializer
     {
       "uid" => profile.uid,
       "name" => profile.name,
-      # type: profile.type,
+      # "type" => profile.type,
       "links" => serialized_links
     }
   end

@@ -7,6 +7,8 @@ class Profile < ActiveRecord::Base
 
   validates :user_id, uniqueness: true, allow_nil: true
 
+  scope :by_name, -> { order(name: :asc) }
+
   # It is not valid to have multiple memberships for a single organisation
   # so we can safely always call .first as only one will be returned
   def membership_for organisation

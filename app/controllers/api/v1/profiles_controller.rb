@@ -1,6 +1,11 @@
 module Api::V1
   class ProfilesController < ApiController
 
+    def index
+      profiles = Profile.by_name
+      render json: profiles_serializer(profiles)
+    end
+
     def show
       profile = Profile.find_by(uid: params[:uid])
       if profile.present?
@@ -11,6 +16,12 @@ module Api::V1
     end
 
     private
+
+    def profiles_serializer(profiles)
+      ProfilesSerializer.new(
+        profiles: profiles
+      )
+    end
 
     def profile_serializer(profile)
       ProfileSerializer.new(
