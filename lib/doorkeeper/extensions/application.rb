@@ -5,8 +5,8 @@ module Doorkeeper
     module Application
       extend ActiveSupport::Concern
 
-      included do 
-        has_many :permissions  
+      included do
+        has_many :permissions
       end
     end
   end
