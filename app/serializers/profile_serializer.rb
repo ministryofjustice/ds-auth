@@ -7,15 +7,15 @@ class ProfileSerializer
     serialize
   end
 
-  private
-
-  attr_reader :profile
-
   def serialize
     {
       "profile" => serialized_profile
     }
   end
+
+  private
+
+  attr_reader :profile
 
   def serialized_profile
     {

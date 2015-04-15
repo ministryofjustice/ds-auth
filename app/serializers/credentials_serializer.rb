@@ -7,10 +7,6 @@ class CredentialsSerializer
     serialize
   end
 
-  private
-
-  attr_reader :user, :application
-
   def serialize
     {
       "user" => serialized_user,
@@ -18,6 +14,10 @@ class CredentialsSerializer
       "roles" => serialized_roles,
     }
   end
+
+  private
+
+  attr_reader :user, :application
 
   def serialized_user
     {

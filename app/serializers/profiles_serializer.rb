@@ -7,15 +7,16 @@ class ProfilesSerializer
     serialize
   end
 
-  private
-
-  attr_reader :profiles
-
   def serialize
     {
       "profiles" => serialized_profiles
     }
   end
+
+  private
+
+  attr_reader :profiles
+
 
   def serialized_profiles
     profiles.map do |p|

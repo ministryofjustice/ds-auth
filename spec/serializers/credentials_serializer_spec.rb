@@ -2,6 +2,19 @@ require "rails_helper"
 
 RSpec.describe CredentialsSerializer do
   describe "#as_json" do
+    subject { CredentialsSerializer.new user: double("User"), application: double("Application") }
+
+    it "calls serialize" do
+      credentials_hash = double("credentials")
+      opts = {}
+
+      expect(subject).to receive(:serialize).and_return(credentials_hash)
+
+      expect(subject.as_json(opts)).to eq(credentials_hash)
+    end
+  end
+
+  describe "#serialize" do
     let(:profile) { build_stubbed :profile }
     let(:application) { build_stubbed :doorkeeper_application }
     let(:role) { build_stubbed :role }
@@ -11,7 +24,7 @@ RSpec.describe CredentialsSerializer do
       user = build_stubbed :user, profile: profile
       serializer = CredentialsSerializer.new user: user, application: application
 
-      expect(serializer.as_json).to eq(
+      expect(serializer.serialize).to eq(
         {
           "user" => {
             "email" => user.email,
@@ -37,7 +50,7 @@ RSpec.describe CredentialsSerializer do
       user = build_stubbed :user
       serializer = CredentialsSerializer.new user: user, application: application
 
-      expect(serializer.as_json).to eq(
+      expect(serializer.serialize).to eq(
         {
           "user" => {
             "email" => user.email,
