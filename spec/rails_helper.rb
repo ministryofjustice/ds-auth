@@ -4,6 +4,7 @@ require File.expand_path("../../config/environment", __FILE__)
 
 require "rspec/rails"
 require "shoulda-matchers"
+require "capybara/poltergeist"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
@@ -20,3 +21,11 @@ RSpec.configure do |config|
 end
 
 ActiveRecord::Migration.maintain_test_schema!
+
+Capybara.javascript_driver = :poltergeist
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {
+                                         phantomjs_logger: File.open("#{Rails.root}/log/test_phantomjs.log", "a"),
+                                       })
+end

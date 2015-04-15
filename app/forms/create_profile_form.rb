@@ -2,6 +2,8 @@ class CreateProfileForm
   include Virtus.model
   include ActiveModel::Model
 
+  attr :associated_user
+
   attribute :name, String
   attribute :tel, String
   attribute :mobile, String
@@ -24,6 +26,10 @@ class CreateProfileForm
     else
       false
     end
+  end
+
+  def associated_user=(string_value)
+    @associated_user = (string_value == '1')
   end
 
   private

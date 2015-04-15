@@ -29,4 +29,8 @@ module ApplicationHelper
       "#{field_name}: #{field_messages.join(', ')}".html_safe
     end
   end
+
+  def js_partial
+    params[:controller] + '/js_partials/' + params[:controller] + '_' + params[:action] + '_js.html.erb'
+  end
 end

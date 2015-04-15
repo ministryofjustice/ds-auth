@@ -49,13 +49,13 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile)
-          .permit(:user_id,
-                  :name,
-                  :tel,
-                  :mobile,
-                  :address,
-                  :postcode,
-                  :email)
+      .permit(:user_id,
+              :name,
+              :tel,
+              :mobile,
+              :address,
+              :postcode,
+              :email)
   end
 
   def profile_form_params
@@ -70,6 +70,3 @@ class ProfilesController < ApplicationController
                                                 :password_confirmation)
   end
 end
-
-
-

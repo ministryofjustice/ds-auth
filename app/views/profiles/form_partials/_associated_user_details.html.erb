@@ -1,5 +1,5 @@
 <%= f.label :associated_user %>
-<%= f.check_box :associated_user, checked: false, class: "associated-user-check" %>
+<%= f.check_box :associated_user, checked: @profile_form.associated_user, class: "associated-user-check" %>
 
 <div id="associated-user-password-fields">
   <%= f.label :password %>

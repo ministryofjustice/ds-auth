@@ -1,0 +1,30 @@
+<script>
+  var associated_user_true = function () {
+    $('#create_profile_form_password').removeAttr("disabled");
+    $('#create_profile_form_password_confirmation').removeAttr("disabled");
+    $('#create_profile_form_password').removeAttr("disabled");
+    $('#create_profile_form_password_confirmation').removeAttr("disabled");
+    $('#associated-user-password-fields').show();
+  }
+
+  var associated_user_false = function () {
+    $('#create_profile_form_password').val("");
+    $('#create_profile_form_password').attr("disabled", "disabled");
+    $('#create_profile_form_password_confirmation').val("");
+    $('#create_profile_form_password_confirmation').attr("disabled", "disabled");
+    $('#associated-user-password-fields').hide();
+  }
+
+  var adjust_form_for_associated_user = function () {
+    var associated_user_checked = ($('#create_profile_form_associated_user').prop('checked'));
+
+    if (associated_user_checked) {
+      associated_user_true()
+    } else if (associated_user_checked == false) {
+      associated_user_false()
+    }
+  }
+
+  $('#create_profile_form_associated_user').change(adjust_form_for_associated_user)
+  adjust_form_for_associated_user()
+</script>

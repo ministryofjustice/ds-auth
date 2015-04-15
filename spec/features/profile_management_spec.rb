@@ -14,6 +14,19 @@ RSpec.feature "Users managing profiles" do
     expect(page).to have_content profile.name
   end
 
+  specify "Associated user toggles associated user password and confirmation", js: true do
+    visit profiles_path
+    click_link "New Profile"
+
+    expect(page).to_not have_css("#create_profile_form_password")
+    expect(page).to_not have_css("#create_profile_form_password_confirmation")
+
+    check "Associated user"
+
+    expect(page).to have_css("#create_profile_form_password")
+    expect(page).to have_css("#create_profile_form_password_confirmation")
+  end
+
   specify "can create a new profile without an assoicated user" do
     visit profiles_path
     click_link "New Profile"
