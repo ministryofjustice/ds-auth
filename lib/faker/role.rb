@@ -3,10 +3,6 @@ require 'faker'
 module Faker
   class Role < Base
     class << self
-      def name
-        fetch('role.name')
-      end
-
       def by_index i
         all_values.fetch(i) { raise NotEnoughRoles, "You only have #{i} roles defined, and you tried to access number #{i+1}!" }
       end
