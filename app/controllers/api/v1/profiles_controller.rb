@@ -2,7 +2,13 @@ module Api::V1
   class ProfilesController < ApiController
 
     def index
-      profiles = Profile.by_name
+      if params[:uids].present?
+        profiles = Profile.where(uid: params[:uids])
+      else
+        profiles = Profile.all
+      end
+      profiles = profiles.by_name
+
       render json: profiles_serializer(profiles)
     end
 
