@@ -3,23 +3,7 @@
 <h1><%= t('edit_profile') %></h1>
 
 <%= form_for(@profile) do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-
-  <%= f.label :tel %>
-  <%= f.text_field :tel %>
-
-  <%= f.label :mobile %>
-  <%= f.text_field :mobile %>
-
-  <%= f.label :address %>
-  <%= f.text_field :address %>
-
-  <%= f.label :postcode %>
-  <%= f.text_field :postcode %>
-
-  <%= f.label :email %>
-  <%= f.text_field :email %>
+  <%= render 'profiles/form_partials/profile_details', f: f %>
 
   <div class="actions">
     <%= f.submit %>
