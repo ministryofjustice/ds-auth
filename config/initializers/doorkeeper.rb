@@ -97,3 +97,4 @@ Doorkeeper.configure do
 end
 
 require Rails.root.join("lib/doorkeeper/extensions/application")
+require Rails.root.join("lib/doorkeeper/hooks/logout.rb")
