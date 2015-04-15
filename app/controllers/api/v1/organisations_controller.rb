@@ -1,6 +1,19 @@
 module Api::V1
   class OrganisationsController < ApiController
 
+    def index
+      if params[:types].present?
+        organisations = Organisation.where(organisation_type: params[:types])
+      else
+        organisations = Organisation.all
+      end
+      organisations = organisations.by_name
+
+      respond_to do |format|
+        format.json { render json: organisations_serializer(organisations) }
+      end
+    end
+
     def show
       organisation = Organisation.find_by(uid: params[:uid])
       if organisation.present?
@@ -15,6 +28,12 @@ module Api::V1
     end
 
     private
+
+    def organisations_serializer(organisations)
+      OrganisationsSerializer.new(
+        organisations: organisations
+      )
+    end
 
     def organisation_serializer(organisation)
       OrganisationSerializer.new(
