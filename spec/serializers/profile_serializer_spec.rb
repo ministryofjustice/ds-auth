@@ -23,11 +23,11 @@ RSpec.describe ProfileSerializer do
 
       expect(serializer.serialize).to eq(
         {
-          "profile" => {
-            "uid" => profile.uid,
-            "name" => profile.name,
-            "links" => {
-              "organisation" => "/api/v1/organisations/#{organisation.id}"
+          profile: {
+            uid: profile.uid,
+            name: profile.name,
+            links: {
+              organisation: "/api/v1/organisations/#{organisation.id}"
             }
           }
         }

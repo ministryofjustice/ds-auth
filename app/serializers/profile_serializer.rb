@@ -9,7 +9,7 @@ class ProfileSerializer
 
   def serialize
     {
-      "profile" => serialized_profile
+      profile: serialized_profile
     }
   end
 
@@ -19,16 +19,16 @@ class ProfileSerializer
 
   def serialized_profile
     {
-      "uid" => profile.uid,
-      "name" => profile.name,
-      # "type" => profile.type,
-      "links" => serialized_links
+      uid: profile.uid,
+      name: profile.name,
+      # type: profile.type,
+      links: serialized_links
     }
   end
 
   def serialized_links
     {
-      "organisation" => "/api/v1/organisations/#{profile.organisations.first.id}"
+      organisation: "/api/v1/organisations/#{profile.organisations.first.id}"
     }
   end
 end

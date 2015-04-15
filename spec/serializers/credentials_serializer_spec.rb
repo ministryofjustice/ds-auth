@@ -26,22 +26,22 @@ RSpec.describe CredentialsSerializer do
 
       expect(serializer.serialize).to eq(
         {
-          "user" => {
-            "email" => user.email,
+          user: {
+            email: user.email,
           },
-          "profile" => {
-            "email" => user.profile.email,
-            "name" => user.profile.name,
-            "telephone" => user.profile.tel,
-            "mobile" => user.profile.mobile,
-            "address" => {
-              "full_address" => user.profile.address,
-              "postcode" => user.profile.postcode,
+          profile: {
+            email: user.profile.email,
+            name: user.profile.name,
+            telephone: user.profile.tel,
+            mobile: user.profile.mobile,
+            address: {
+              full_address: user.profile.address,
+              postcode: user.profile.postcode,
             },
-            "organisation_ids" => user.profile.organisations.map(&:id),
-            "uid" => user.profile.uid
+            organisation_ids: user.profile.organisations.map(&:id),
+            uid: user.profile.uid
           },
-          "roles" => user.roles_for(application: application).map(&:name)
+          roles: user.roles_for(application: application).map(&:name)
         }
       )
     end
@@ -52,22 +52,22 @@ RSpec.describe CredentialsSerializer do
 
       expect(serializer.serialize).to eq(
         {
-          "user" => {
-            "email" => user.email,
+          user: {
+            email: user.email,
           },
-          "profile" => {
-            "email" => "",
-            "name" => "",
-            "telephone" => "",
-            "mobile" => "",
-            "address" => {
-              "full_address" => "",
-              "postcode" => "",
+          profile: {
+            email: "",
+            name: "",
+            telephone: "",
+            mobile: "",
+            address: {
+              full_address: "",
+              postcode: "",
             },
-            "organisation_ids" => [],
-            "uid" => ""
+            organisation_ids: [],
+            uid: ""
           },
-          "roles" => []
+          roles: []
         }
       )
     end

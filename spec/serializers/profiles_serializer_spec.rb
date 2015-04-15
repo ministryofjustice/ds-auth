@@ -23,19 +23,19 @@ RSpec.describe ProfilesSerializer do
       serializer = ProfilesSerializer.new profiles: [profile_1, profile_2]
 
       expect(serializer.serialize).to eq(
-        "profiles" => [
+        profiles: [
           {
-            "uid" => profile_1.uid,
-            "name" => profile_1.name,
-            "links" => {
-              "organisation" => "/api/v1/organisations/#{organisation.id}"
+            uid: profile_1.uid,
+            name: profile_1.name,
+            links: {
+              organisation: "/api/v1/organisations/#{organisation.id}"
             }
           },
           {
-            "uid" => profile_2.uid,
-            "name" => profile_2.name,
-            "links" => {
-              "organisation" => "/api/v1/organisations/#{organisation.id}"
+            uid: profile_2.uid,
+            name: profile_2.name,
+            links: {
+              organisation: "/api/v1/organisations/#{organisation.id}"
             }
           }
         ]

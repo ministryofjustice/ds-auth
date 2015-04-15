@@ -9,9 +9,9 @@ class CredentialsSerializer
 
   def serialize
     {
-      "user" => serialized_user,
-      "profile" => serialized_profile,
-      "roles" => serialized_roles,
+      user: serialized_user,
+      profile: serialized_profile,
+      roles: serialized_roles,
     }
   end
 
@@ -21,22 +21,22 @@ class CredentialsSerializer
 
   def serialized_user
     {
-      "email" => user.email,
+      email: user.email,
     }
   end
 
   def serialized_profile
     {
-      "email" => profile.email,
-      "name" => profile.name,
-      "telephone" => profile.tel,
-      "mobile" => profile.mobile,
-      "address" => {
-        "full_address" => profile.address,
-        "postcode" => profile.postcode,
+      email: profile.email,
+      name: profile.name,
+      telephone: profile.tel,
+      mobile: profile.mobile,
+      address: {
+        full_address: profile.address,
+        postcode: profile.postcode,
       },
-      "organisation_ids" => profile.organisations.pluck(:id),
-      "uid" => profile.uid,
+      organisation_ids: profile.organisations.pluck(:id),
+      uid: profile.uid,
     }
   end
 
