@@ -36,6 +36,15 @@ RSpec.describe "GET /api/v1/profiles" do
           ]
         )
       end
+
+      it "returns an empty 200 response if no profiles exist" do
+        get "/api/v1/profiles", nil, api_request_headers
+
+        expect(response.status).to eq(200)
+        expect(response_json).to eq(
+          "profiles" => []
+        )
+      end
     end
   end
 end
