@@ -30,15 +30,11 @@ module Api::V1
     private
 
     def organisations_serializer(organisations)
-      OrganisationsSerializer.new(
-        organisations: organisations
-      )
+      OrganisationsSerializer.new(organisations)
     end
 
     def organisation_serializer(organisation)
-      OrganisationSerializer.new(
-        organisation: organisation
-      )
+      OrganisationSerializer.new(organisation)
     end
 
   end

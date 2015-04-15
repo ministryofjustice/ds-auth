@@ -1,30 +1,15 @@
-class OrganisationSerializer
-  def initialize(organisation:)
-    @organisation = organisation
-  end
-
-  def as_json(opts = {})
-    serialize
-  end
+class OrganisationSerializer < BaseSerializer
 
   def serialize
     {
-      organisation: serialized_organisation
+      uid: object.uid,
+      name: object.name,
+      type: object.organisation_type,
+      links: serialized_links
     }
   end
 
   private
-
-  attr_reader :organisation
-
-  def serialized_organisation
-    {
-      uid: organisation.uid,
-      name: organisation.name,
-      type: organisation.organisation_type,
-      links: serialized_links
-    }
-  end
 
   def serialized_links
     {
@@ -33,7 +18,7 @@ class OrganisationSerializer
   end
 
   def serialized_profile_ids
-    organisation.profiles.by_name.map do |profile|
+    object.profiles.by_name.map do |profile|
       "uids[]=#{profile.uid}"
     end.join("&")
   end
