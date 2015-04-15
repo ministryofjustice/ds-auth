@@ -9,15 +9,21 @@ module Api::V1
       end
       profiles = profiles.by_name
 
-      render json: profiles_serializer(profiles)
+      respond_to do |format|
+        format.json { render json: profiles_serializer(profiles) }
+      end
     end
 
     def show
       profile = Profile.find_by(uid: params[:uid])
       if profile.present?
-        render json: profile_serializer(profile)
+        respond_to do |format|
+          format.json { render json: profile_serializer(profile) }
+        end
       else
-        render json: { "errors" => ["Resource not found"] }, status: 404
+        respond_to do |format|
+          format.json { render json: { "errors" => ["Resource not found"] }, status: 404 }
+        end
       end
     end
 
