@@ -34,4 +34,14 @@ RSpec.describe CollectionSerializer do
       expect { subject.serialize }.to raise_error(NotImplementedError)
     end
   end
+
+  describe "#root_key" do
+    let(:profiles) { double("profiles") }
+
+    subject { CollectionSerializer.new profiles }
+
+    it "should raise an error" do
+      expect { subject.send(:root_key) }.to raise_error(NotImplementedError)
+    end
+  end
 end
