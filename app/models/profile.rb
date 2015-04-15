@@ -14,4 +14,11 @@ class Profile < ActiveRecord::Base
   def membership_for organisation
     memberships.where(organisation: organisation).first
   end
+
+  attr :associated_user
+
+  def associated_user=(string_value)
+    @associated_user = (string_value == '1')
+  end
+
 end

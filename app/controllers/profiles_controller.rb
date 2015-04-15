@@ -9,12 +9,13 @@ class ProfilesController < ApplicationController
   end
 
   def new
-    @profile = Profile.new
+    @profile_form = ProfileForm.new
   end
 
   def create
-    @profile = Profile.new(profile_params)
-    if @profile.save
+    @profile_form = ProfileForm.new(profile_form_params)
+
+    if @profile_form.save
       redirect_to profiles_path, notice: flash_message(:create, Profile)
     else
       render :new
@@ -56,4 +57,10 @@ class ProfilesController < ApplicationController
                   :postcode,
                   :email)
   end
+
+  def profile_form_params
+    params.require(:profile_form).permit!
+  end
+
+
 end

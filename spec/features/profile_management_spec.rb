@@ -14,7 +14,7 @@ RSpec.feature "Users managing profiles" do
     expect(page).to have_content profile.name
   end
 
-  specify "can create a new profile" do
+  specify "can create a new profile without an assoicated user" do
     visit profiles_path
     click_link "New Profile"
 
@@ -27,7 +27,37 @@ RSpec.feature "Users managing profiles" do
 
     click_button "Create Profile"
 
-    expect(page).to have_content "Eamonn Holmes"
+    #expect(page).to have_content "Profile and associated user have been created"
+
+    within "#profile_#{Profile.last.id}" do
+      expect(page).to have_content "Eamonn Holmes"
+      expect(page).to_not have_link "User"
+    end
+  end
+
+  specify "can create a new profile with an assoicated user" do
+    visit profiles_path
+    click_link "New Profile"
+
+    fill_in "Name", with: "Eamonn Holmes"
+    fill_in "Tel", with: "01632 960178"
+    fill_in "Mobile", with: "07700 900407"
+    fill_in "Address", with: "123 Fake Street"
+    fill_in "Postcode", with: "POSTCODE"
+    fill_in "Email", with: "eamonn.holmes@example.xxx"
+    check "Associated user"
+
+    fill_in "Password", with: "passwordyword"
+    fill_in "Password confirmation", with: "passwordyword"
+
+    click_button "Create Profile"
+
+    #expect(page).to have_content "Profile and associated user have been created"
+
+    within "#profile_#{Profile.last.id}" do
+      expect(page).to have_content "Eamonn Holmes"
+      expect(page).to have_link "User"
+    end
   end
 
   specify "are shown errors if a profile cannot be created" do

@@ -19,6 +19,9 @@ gem "sdoc", "~> 0.4.0", group: :doc
 gem "uglifier", ">= 1.3.0"
 gem "unicorn"
 
+gem "virtus"
+
+
 # MOJ styles
 gem "moj_template", "~> 0.23.0"
 gem "govuk_frontend_toolkit", "~> 2.0.1"
