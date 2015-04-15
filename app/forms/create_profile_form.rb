@@ -1,9 +1,6 @@
-class ProfileForm
+class CreateProfileForm
   include Virtus.model
   include ActiveModel::Model
-
-  attr_reader :profile
-  attr_reader :user
 
   attribute :name, String
   attribute :tel, String
@@ -17,10 +14,8 @@ class ProfileForm
 
   validates :name, :tel, :mobile, :address, :postcode, :email, presence: true
   validates :password, :password_confirmation, presence: true, if: :associated_user?
-
-  def persisted?
-    false
-  end
+  validate :verify_unique_email
+  validate :matching_passwords
 
   def save
     if valid?
@@ -48,6 +43,18 @@ class ProfileForm
   end
 
   def associated_user?
-    associated_user != '0'
+    associated_user.present? && associated_user != '0'
+  end
+
+  def verify_unique_email
+    if Profile.exists? email: email
+      errors.add :email, "has already been taken"
+    end
+  end
+
+  def matching_passwords
+    if password != password_confirmation
+      errors.add :password, "does not match confirmation"
+    end
   end
 end

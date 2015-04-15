@@ -27,8 +27,6 @@ RSpec.feature "Users managing profiles" do
 
     click_button "Create Profile"
 
-    #expect(page).to have_content "Profile and associated user have been created"
-
     within "#profile_#{Profile.last.id}" do
       expect(page).to have_content "Eamonn Holmes"
       expect(page).to_not have_link "User"
@@ -51,8 +49,6 @@ RSpec.feature "Users managing profiles" do
     fill_in "Password confirmation", with: "passwordyword"
 
     click_button "Create Profile"
-
-    #expect(page).to have_content "Profile and associated user have been created"
 
     within "#profile_#{Profile.last.id}" do
       expect(page).to have_content "Eamonn Holmes"
