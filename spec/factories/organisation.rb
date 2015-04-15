@@ -4,6 +4,7 @@ FactoryGirl.define do
     organisation.slug              { Faker::Internet.slug name}
     organisation.organisation_type 'social'
     organisation.searchable         true
+    organisation.uid                { SecureRandom.uuid }
 
     trait :with_profiles_and_users do
       transient do
