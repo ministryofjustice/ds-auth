@@ -30,15 +30,11 @@ module Api::V1
     private
 
     def profiles_serializer(profiles)
-      ProfilesSerializer.new(
-        profiles: profiles
-      )
+      ProfilesSerializer.new(profiles)
     end
 
     def profile_serializer(profile)
-      ProfileSerializer.new(
-        profile: profile
-      )
+      ProfileSerializer.new(profile)
     end
 
   end

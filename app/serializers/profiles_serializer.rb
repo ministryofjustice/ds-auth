@@ -1,37 +1,14 @@
-class ProfilesSerializer
-  def initialize(profiles:)
-    @profiles = profiles
-  end
-
-  def as_json(opts = {})
-    serialize
-  end
+class ProfilesSerializer < CollectionSerializer
 
   def serialize
-    {
-      profiles: serialized_profiles
-    }
+    collection.map do |p|
+      ProfileSerializer.new(p).serialize
+    end
   end
 
   private
 
-  attr_reader :profiles
-
-
-  def serialized_profiles
-    profiles.map do |p|
-      {
-        uid: p.uid,
-        name: p.name,
-        # type: p.type,
-        links: serialized_links(p)
-      }
-    end
-  end
-
-  def serialized_links(profile)
-    {
-      organisation: "/api/v1/organisations/#{profile.organisations.first.id}"
-    }
+  def root_key
+    :profiles
   end
 end
