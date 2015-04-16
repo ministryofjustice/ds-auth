@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "GET /api/v1/me" do
-  it_behaves_like "a protected endpoint", "/api/v1/me"
+RSpec.describe "GET /api/v1/profiles/me" do
+  it_behaves_like "a protected endpoint", "/api/v1/profiles/me"
 
   context "with a valid authentication token" do
     include_context "logged in API User"
@@ -10,7 +10,7 @@ RSpec.describe "GET /api/v1/me" do
       organisation = create :organisation
       create :profile, user: user, organisations: [organisation]
 
-      get "/api/v1/me", nil, api_request_headers
+      get "/api/v1/profiles/me", nil, api_request_headers
 
       expect(response.status).to eq(200)
       expect(response_json).to eq(

@@ -15,9 +15,10 @@ Rails.application.routes.draw do
 
   namespace :api, format: 'json' do
     namespace :v1 do
-      get "/me", to: "credentials#show"
-      resources :profiles, only: [:index, :show], param: :uid
       resources :organisations, only: [:index, :show], param: :uid
+      resources :profiles, only: [:index, :show], param: :uid do
+        get "me", on: :collection
+      end
     end
   end
 
