@@ -65,7 +65,7 @@ RSpec.feature "Users managing profiles" do
 
     within "#profile_#{Profile.last.id}" do
       expect(page).to have_content "Eamonn Holmes"
-      expect(page).to have_link "User"
+      expect(page).to have_link "Change Password"
     end
   end
 

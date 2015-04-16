@@ -13,7 +13,7 @@
       <td><%= profile.name %></td>
       <td><%= link_to t('edit'), edit_profile_path(profile) %></td>
       <td><%= link_to t('delete'), profile, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %></td>
-      <td><%= link_to(t('user'), edit_user_path(profile.user.id)) if profile.user %></td>
+      <td><%= link_to(t('password'), edit_user_path(profile.user.id)) if profile.user %></td>
     <% end %>
   <% end %>
   </tbody>

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   use_doorkeeper
   devise_for :users, skip: [:registrations]
 
-  resources :users, except: [:show]
+  resources :users, only: [:edit, :update]
   resources :profiles, except: [:show]
 
   resources :organisations do
