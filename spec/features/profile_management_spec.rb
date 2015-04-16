@@ -86,13 +86,36 @@ RSpec.feature "Users managing profiles" do
     expect(page).to have_content "Name: can't be blank"
   end
 
-  specify "can delete a profile" do
-    visit profiles_path
+  context "destroy" do
+    specify "can delete a profile" do
+      visit profiles_path
 
-    click_link "Delete"
+      within "#profile_#{profile.id}" do
+        click_link "Delete"
+      end
 
-    expect(page).to have_content "Profile successfully deleted"
-    expect(page).to_not have_content profile.name
+      expect(page).to have_content "Profile successfully deleted"
+      expect(page).to_not have_content profile.name
+    end
+
+    let!(:profile_with_user) { create(:profile, :with_user) }
+
+    specify "deleting a profile with an associated user destroys the user" do
+      user_id = profile_with_user.user.id
+      profile_id = profile_with_user.id
+
+      visit profiles_path
+
+      within "#profile_#{profile_with_user.id}" do
+        click_link "Delete"
+      end
+
+      expect(Profile.where(id: profile_id)).to_not exist
+      expect(User.where(id: user_id)).to_not exist
+
+      expect(page).to have_content "Profile successfully deleted"
+      expect(page).to_not have_content profile_with_user.name
+    end
   end
 
   specify "are shown errors if an profile cannot be deleted" do
