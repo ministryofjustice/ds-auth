@@ -61,7 +61,7 @@ Organisations are logical groups of users, and can be filtered by one or more ty
                 {
                     "uid": "1234567890abcdef",
                     "name": "Tuckers",
-                    "type: "law_firm",
+                    "type": "law_firm",
                     "links": {
                         "profiles": "/api/v1/profiles?uids[]=1a2b3c&ids[]=4d5e6f&ids[]=a1b2c3"
                     }
@@ -69,7 +69,7 @@ Organisations are logical groups of users, and can be filtered by one or more ty
                 {
                     "uid": "0987654321fedcba",
                     "name": "Brighton",
-                    "type: "custody_suite",
+                    "type": "custody_suite",
                     "links": {
                         "profiles": "/api/v1/profiles?uids[]=0f9e8d&ids[]=7c6b5a"
                     }
@@ -92,7 +92,7 @@ Organisations are logical groups of users, and can be filtered by one or more ty
             ]
         }
 
-## Organisation [/api/v1/organisation/{uid}]
+## Organisation [/api/v1/organisations/{uid}]
 A single Organisation with all its details.
 
 ### Single Organisation [GET]
@@ -156,17 +156,17 @@ Used to find contact details for Solicitors or Agents.
                 {
                     "uid": "1a2b3c",
                     "name": "Bob Smith",
-                    "type: "solicitor",
+                    "type": "solicitor",
                     "links": {
-                        "organisation": "/api/v1/organisation/1234567890abcdef"
+                        "organisation": "/api/v1/organisations/1234567890abcdef"
                     }
                 },
                 {
-                    "id": "4d5e6f",
+                    "uid": "4d5e6f",
                     "name": "Andy Brown",
-                    "type: "agent",
+                    "type": "agent",
                     "links": {
-                        "organisation": "/api/v1/organisation/2345678901bcdefa"
+                        "organisation": "/api/v1/organisations/2345678901bcdefa"
                     }
                 }
             ],
@@ -204,11 +204,11 @@ A single Profile with all its details
 
         {
             "profile": {
-                "id": "1a2b3c",
+                "uid": "1a2b3c",
                 "name": "Bob Smith",
                 "type": "solicitor",
                 "links": {
-                    "organisation": "/api/v1/organisation/1234567890abcdef"
+                    "organisation": "/api/v1/organisations/1234567890abcdef"
                 }
             }
         }
@@ -240,7 +240,7 @@ No authorization is needed for this endpoint.
                     "name": "Bob Smith",
                     "type": "solicitor",
                     "links": {
-                   	     "organisation": "/api/v1/organisation/1234567890abcdef"
+                   	     "organisation": "/api/v1/organisations/1234567890abcdef"
                     }
                 }
             ],

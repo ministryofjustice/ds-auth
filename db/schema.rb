@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415131825) do
+ActiveRecord::Schema.define(version: 20150415132207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,8 @@ ActiveRecord::Schema.define(version: 20150415131825) do
     t.string   "mobile"
     t.uuid     "uid",        default: "uuid_generate_v4()"
   end
+
+  add_index "profiles", ["uid"], name: "index_profiles_on_uid", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name",       default: "", null: false

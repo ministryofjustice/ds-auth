@@ -163,20 +163,20 @@ a.list-group-item.heading:hover {
 </span>}
 </code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="organisations">Organisations&nbsp;<a href="#organisations"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><p>Organisations are logical groups of users, and can be filtered by one or more types.</p>
 <h4 id="organisations-organisations-collection">Organisations Collection&nbsp;<a href="#organisations-organisations-collection"><i class="fa fa-link"></i></a></h4><section id="organisations-organisations-collection-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">List all Organisations</span></div><div style="float:left"><a href="#organisations-organisations-collection-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/organisations?types[]=xxx</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>types</dt><dd><code>array[string]</code>&nbsp;<span>(optional)</span>&nbsp;<p>Params array of Organisation types to filter by</p>
-<p><strong>Choices:&nbsp;</strong><code>custody_suite</code> <code>call_centre</code> <code>law_firm</code> <code>law_office</code> </p></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#d05a14e66cf36c0609c3a2dfd1ef88d0" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d05a14e66cf36c0609c3a2dfd1ef88d0" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer &lt;TOKEN&gt;</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#9b8fb5295efac48978ad8bbd2a90f84d" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="9b8fb5295efac48978ad8bbd2a90f84d" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-collection">{
+<p><strong>Choices:&nbsp;</strong><code>custody_suite</code> <code>call_centre</code> <code>law_firm</code> <code>law_office</code> </p></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#d05a14e66cf36c0609c3a2dfd1ef88d0" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d05a14e66cf36c0609c3a2dfd1ef88d0" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer &lt;TOKEN&gt;</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#6b72438df906559dcfc0564b3e725fcd" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="6b72438df906559dcfc0564b3e725fcd" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-collection">{
     <span class="hljs-string">"organisations:"</span> <span class="hljs-collection">[
         <span class="hljs-collection">{
             <span class="hljs-string">"uid"</span>: <span class="hljs-string">"1234567890abcdef"</span>,
             <span class="hljs-string">"name"</span>: <span class="hljs-string">"Tuckers"</span>,
-            <span class="hljs-string">"type: "</span>law_firm<span class="hljs-string">",
-            "</span>links<span class="hljs-string">": {
-                "</span>profiles<span class="hljs-string">": "</span>/api/v1/profiles?uids<span class="hljs-collection">[]</span>=1a2b3c&amp;ids<span class="hljs-collection">[]</span>=4d5e6f&amp;ids<span class="hljs-collection">[]</span>=a1b2c3<span class="hljs-string">"
-            }
-        },
-        {
-            "</span>uid<span class="hljs-string">": "</span><span class="hljs-number">0987654321</span>fedcba<span class="hljs-string">",
-            "</span>name<span class="hljs-string">": "</span>Brighton<span class="hljs-string">",
-            "</span>type: <span class="hljs-string">"custody_suite"</span>,
+            <span class="hljs-string">"type"</span>: <span class="hljs-string">"law_firm"</span>,
+            <span class="hljs-string">"links"</span>: <span class="hljs-collection">{
+                <span class="hljs-string">"profiles"</span>: <span class="hljs-string">"/api/v1/profiles?uids[]=1a2b3c&amp;ids[]=4d5e6f&amp;ids[]=a1b2c3"</span>
+            }</span>
+        }</span>,
+        <span class="hljs-collection">{
+            <span class="hljs-string">"uid"</span>: <span class="hljs-string">"0987654321fedcba"</span>,
+            <span class="hljs-string">"name"</span>: <span class="hljs-string">"Brighton"</span>,
+            <span class="hljs-string">"type"</span>: <span class="hljs-string">"custody_suite"</span>,
             <span class="hljs-string">"links"</span>: <span class="hljs-collection">{
                 <span class="hljs-string">"profiles"</span>: <span class="hljs-string">"/api/v1/profiles?uids[]=0f9e8d&amp;ids[]=7c6b5a"</span>
             }</span>
@@ -196,7 +196,7 @@ a.list-group-item.heading:hover {
     ]
 </span>}
 </code></pre></li></ul></section><h4 id="organisations-organisation">Organisation&nbsp;<a href="#organisations-organisation"><i class="fa fa-link"></i></a></h4><p>A single Organisation with all its details.</p>
-<section id="organisations-organisation-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Single Organisation</span></div><div style="float:left"><a href="#organisations-organisation-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/organisation/{uid}</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>uid</dt><dd><code>uuid</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>UID of the organisation</p>
+<section id="organisations-organisation-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Single Organisation</span></div><div style="float:left"><a href="#organisations-organisation-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/organisations/{uid}</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>uid</dt><dd><code>uuid</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>UID of the organisation</p>
 </dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#c5c919ec212f25c16610aa680d96811f" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="c5c919ec212f25c16610aa680d96811f" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer &lt;TOKEN&gt;</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#5d91b4b43b1fa73d31bb3ae59a3c8422" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="5d91b4b43b1fa73d31bb3ae59a3c8422" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
     "<span class="hljs-attribute">organisation</span>": <span class="hljs-value">{
         "<span class="hljs-attribute">uid</span>": <span class="hljs-value"><span class="hljs-string">"1234567890abcdef"</span></span>,
@@ -217,22 +217,22 @@ a.list-group-item.heading:hover {
 <p>Used to find contact details for Solicitors or Agents.</p>
 <h4 id="profiles-profiles-collection">Profiles Collection&nbsp;<a href="#profiles-profiles-collection"><i class="fa fa-link"></i></a></h4><section id="profiles-profiles-collection-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">List all Profiles</span></div><div style="float:left"><a href="#profiles-profiles-collection-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/profiles?uids[]=xxx&amp;types[]=xxx</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>uids</dt><dd><code>array[uuid]</code>&nbsp;<span>(optional)</span>&nbsp;<p>User UIDs to load</p>
 </dd><dt>types</dt><dd><code>array[string]</code>&nbsp;<span>(optional)</span>&nbsp;<p>Profile types to filter by</p>
-<p><strong>Choices:&nbsp;</strong><code>solicitor</code> <code>agent</code> </p></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#d97950d04c7b47ebba1d84f8a3fbcc3c" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d97950d04c7b47ebba1d84f8a3fbcc3c" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer &lt;TOKEN&gt;</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#0028e5f754c2a11c23ed1c22cf037de7" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="0028e5f754c2a11c23ed1c22cf037de7" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-collection">{
+<p><strong>Choices:&nbsp;</strong><code>solicitor</code> <code>agent</code> </p></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#d97950d04c7b47ebba1d84f8a3fbcc3c" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d97950d04c7b47ebba1d84f8a3fbcc3c" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer &lt;TOKEN&gt;</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#8431d9a173817512bdb46900155ce8ae" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="8431d9a173817512bdb46900155ce8ae" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-collection">{
     <span class="hljs-string">"profiles:"</span> <span class="hljs-collection">[
         <span class="hljs-collection">{
             <span class="hljs-string">"uid"</span>: <span class="hljs-string">"1a2b3c"</span>,
             <span class="hljs-string">"name"</span>: <span class="hljs-string">"Bob Smith"</span>,
-            <span class="hljs-string">"type: "</span>solicitor<span class="hljs-string">",
-            "</span>links<span class="hljs-string">": {
-                "</span>organisation<span class="hljs-string">": "</span>/api/v1/organisation/1234567890abcdef<span class="hljs-string">"
-            }
-        },
-        {
-            "</span>id<span class="hljs-string">": "</span><span class="hljs-number">4</span>d5e6f<span class="hljs-string">",
-            "</span>name<span class="hljs-string">": "</span>Andy Brown<span class="hljs-string">",
-            "</span>type: <span class="hljs-string">"agent"</span>,
+            <span class="hljs-string">"type"</span>: <span class="hljs-string">"solicitor"</span>,
             <span class="hljs-string">"links"</span>: <span class="hljs-collection">{
-                <span class="hljs-string">"organisation"</span>: <span class="hljs-string">"/api/v1/organisation/2345678901bcdefa"</span>
+                <span class="hljs-string">"organisation"</span>: <span class="hljs-string">"/api/v1/organisations/1234567890abcdef"</span>
+            }</span>
+        }</span>,
+        <span class="hljs-collection">{
+            <span class="hljs-string">"uid"</span>: <span class="hljs-string">"4d5e6f"</span>,
+            <span class="hljs-string">"name"</span>: <span class="hljs-string">"Andy Brown"</span>,
+            <span class="hljs-string">"type"</span>: <span class="hljs-string">"agent"</span>,
+            <span class="hljs-string">"links"</span>: <span class="hljs-collection">{
+                <span class="hljs-string">"organisation"</span>: <span class="hljs-string">"/api/v1/organisations/2345678901bcdefa"</span>
             }</span>
         }</span>
     ]</span>,
@@ -250,13 +250,13 @@ a.list-group-item.heading:hover {
 </span>}
 </code></pre></li></ul></section><h4 id="profiles-profile">Profile&nbsp;<a href="#profiles-profile"><i class="fa fa-link"></i></a></h4><p>A single Profile with all its details</p>
 <section id="profiles-profile-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Single Profile</span></div><div style="float:left"><a href="#profiles-profile-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/profiles/{uid}</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>uid</dt><dd><code>uuid</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>UID of the Profile</p>
-</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#4152de5c210bdc548dad92bd6e69e1b9" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="4152de5c210bdc548dad92bd6e69e1b9" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer &lt;TOKEN&gt;</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#2875eb94aa9e238f05695ed069c78375" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="2875eb94aa9e238f05695ed069c78375" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#4152de5c210bdc548dad92bd6e69e1b9" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="4152de5c210bdc548dad92bd6e69e1b9" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer &lt;TOKEN&gt;</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#d8440a79f539f97150018f370a1e4537" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d8440a79f539f97150018f370a1e4537" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
     "<span class="hljs-attribute">profile</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"1a2b3c"</span></span>,
+        "<span class="hljs-attribute">uid</span>": <span class="hljs-value"><span class="hljs-string">"1a2b3c"</span></span>,
         "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Bob Smith"</span></span>,
         "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"solicitor"</span></span>,
         "<span class="hljs-attribute">links</span>": <span class="hljs-value">{
-            "<span class="hljs-attribute">organisation</span>": <span class="hljs-value"><span class="hljs-string">"/api/v1/organisation/1234567890abcdef"</span>
+            "<span class="hljs-attribute">organisation</span>": <span class="hljs-value"><span class="hljs-string">"/api/v1/organisations/1234567890abcdef"</span>
         </span>}
     </span>}
 </span>}
@@ -268,14 +268,14 @@ a.list-group-item.heading:hover {
 </code></pre></li></ul></section><h4 id="profiles-profile-search">Profile Search&nbsp;<a href="#profiles-profile-search"><i class="fa fa-link"></i></a></h4><p>Search Profiles on Name, Firm (Organisation) Name, Firm Address.</p>
 <p>No authorization is needed for this endpoint.</p>
 <section id="profiles-profile-search-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Profile Matches</span></div><div style="float:left"><a href="#profiles-profile-search-get" class="btn btn-xs btn-info">GET</a></div><div style="overflow:hidden"><code>/api/v1/profiles/search?q=xxx</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>q</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<p>query string</p>
-</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#a71adef978aba74e1c5c5fdf580e2b58" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="a71adef978aba74e1c5c5fdf580e2b58" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#08027290abfbb450bf702c0392d64658" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="08027290abfbb450bf702c0392d64658" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
     "<span class="hljs-attribute">profiles</span>": <span class="hljs-value">[
         {
             "<span class="hljs-attribute">uid</span>": <span class="hljs-value"><span class="hljs-string">"1a2b3c"</span></span>,
             "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Bob Smith"</span></span>,
             "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"solicitor"</span></span>,
             "<span class="hljs-attribute">links</span>": <span class="hljs-value">{
-                    "<span class="hljs-attribute">organisation</span>": <span class="hljs-value"><span class="hljs-string">"/api/v1/organisation/1234567890abcdef"</span>
+                    "<span class="hljs-attribute">organisation</span>": <span class="hljs-value"><span class="hljs-string">"/api/v1/organisations/1234567890abcdef"</span>
             </span>}
         </span>}
     ]</span>,
@@ -325,7 +325,7 @@ a.list-group-item.heading:hover {
         <span class="hljs-string">"You must provide a valid Authorization Token"</span>
     ]
 </span>}
-</code></pre></li></ul></section></div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 13 Apr 2015</p><div id="localFile" style="display: none; position: absolute; top: 0; left: 0; width: 100%; color: white; background: red; font-size: 150%; text-align: center; padding: 1em;">This page may not display correctly when opened as a local file. Instead, view it from a web server.
+</code></pre></li></ul></section></div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 15 Apr 2015</p><div id="localFile" style="display: none; position: absolute; top: 0; left: 0; width: 100%; color: white; background: red; font-size: 150%; text-align: center; padding: 1em;">This page may not display correctly when opened as a local file. Instead, view it from a web server.
 
 </div></body><script src="//code.jquery.com/jquery-1.11.0.min.js"></script><script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script>(function() {
   if (location.protocol === 'file:') {

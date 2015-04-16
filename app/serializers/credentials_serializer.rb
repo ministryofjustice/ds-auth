@@ -3,16 +3,16 @@ class CredentialsSerializer
     @user, @application = user, application
   end
 
+  def as_json(opts = {})
+    serialize
+  end
+
   def serialize
     {
       user: serialized_user,
       profile: serialized_profile,
       roles: serialized_roles,
     }
-  end
-
-  def to_json(opts = {})
-    serialize.to_json opts
   end
 
   private
@@ -28,7 +28,7 @@ class CredentialsSerializer
   def serialized_profile
     {
       email: profile.email,
-      name:  profile.name,
+      name: profile.name,
       telephone: profile.tel,
       mobile: profile.mobile,
       address: {

@@ -1,19 +1,16 @@
 require "rails_helper"
 
 RSpec.describe CredentialsSerializer do
-
-  describe "#to_json" do
+  describe "#as_json" do
     subject { CredentialsSerializer.new user: double("User"), application: double("Application") }
 
-    it "calls to_json with options on the serialized response" do
-      serialized_credentials_as_json = double("JsonizedCredentials")
-      serialized_credentials = double("Credentials")
+    it "calls serialize" do
+      credentials_hash = double("credentials")
       opts = {}
 
-      expect(serialized_credentials).to receive(:to_json).with(opts).and_return serialized_credentials_as_json
-      expect(subject).to receive(:serialize).and_return serialized_credentials
+      expect(subject).to receive(:serialize).and_return(credentials_hash)
 
-      expect(subject.to_json(opts)).to eq(serialized_credentials_as_json)
+      expect(subject.as_json(opts)).to eq(credentials_hash)
     end
   end
 
@@ -75,6 +72,4 @@ RSpec.describe CredentialsSerializer do
       )
     end
   end
-
-
 end
