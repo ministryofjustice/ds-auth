@@ -27,7 +27,7 @@ RSpec.describe "GET /api/v1/me" do
               "full_address" => user.profile.address,
               "postcode" => user.profile.postcode,
             },
-            "organisation_ids" => user.profile.organisations.map(&:id),
+            "organisation_uids" => user.profile.organisations.map(&:uid),
             "uid" => user.profile.uid
           },
           "roles" => user.roles_for(application: application).map(&:name)

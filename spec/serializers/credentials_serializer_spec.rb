@@ -15,7 +15,7 @@ RSpec.describe CredentialsSerializer do
   end
 
   describe "#serialize" do
-    let(:profile) { build_stubbed :profile }
+    let(:profile) { create :profile, :with_organisations }
     let(:application) { build_stubbed :doorkeeper_application }
     let(:role) { build_stubbed :role }
     let(:permission) { build_stubbed :permission, application: application, user: user, role: role }
@@ -38,7 +38,7 @@ RSpec.describe CredentialsSerializer do
               full_address: user.profile.address,
               postcode: user.profile.postcode,
             },
-            organisation_ids: user.profile.organisations.map(&:id),
+            organisation_uids: user.profile.organisations.map(&:uid),
             uid: user.profile.uid
           },
           roles: user.roles_for(application: application).map(&:name)
@@ -64,7 +64,7 @@ RSpec.describe CredentialsSerializer do
               full_address: "",
               postcode: "",
             },
-            organisation_ids: [],
+            organisation_uids: [],
             uid: ""
           },
           roles: []
