@@ -3,8 +3,8 @@ cso_role = Role.where(name: "cso").first_or_create
 cco_role = Role.where(name: "cco").first_or_create
 solicitor_role = Role.where(name: "solicitor").first_or_create
 
-rota_app    = GovernmentApplication.all.select { |ga| ga.oauth_application.name == "Rota" }.first
-service_app = GovernmentApplication.all.select { |ga| ga.oauth_application.name == "Service" }.first
+rota_app = Doorkeeper::Application.find_by(name: "Rota")
+service_app = Doorkeeper::Application.find_by(name: "Service")
 
 Permission.where(role: role,
                  user: User.where(email: "user2@example.com").first,
