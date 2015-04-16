@@ -15,14 +15,14 @@ RSpec.describe ProfilesSerializer do
             uid: profile_1.uid,
             name: profile_1.name,
             links: {
-              organisation: "/api/v1/organisations/#{organisation.id}"
+              organisation: "/api/v1/organisations/#{organisation.uid}"
             }
           },
           {
             uid: profile_2.uid,
             name: profile_2.name,
             links: {
-              organisation: "/api/v1/organisations/#{organisation.id}"
+              organisation: "/api/v1/organisations/#{organisation.uid}"
             }
           }
         ]

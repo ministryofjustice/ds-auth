@@ -12,7 +12,7 @@ class ProfileSerializer < BaseSerializer
 
   def serialized_links
     {
-      organisation: "/api/v1/organisations/#{object.organisations.first.id}"
+      organisation: "/api/v1/organisations/#{object.organisations.first.uid}"
     }
   end
 end

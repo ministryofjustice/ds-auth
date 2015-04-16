@@ -22,7 +22,7 @@ RSpec.describe "GET /api/v1/profiles" do
               "name" => "Barry Evans",
               # "type" => another_profile.type,
               "links" => {
-                "organisation" => "/api/v1/organisations/#{organisation.id}"
+                "organisation" => "/api/v1/organisations/#{organisation.uid}"
               }
             },
             {
@@ -30,7 +30,7 @@ RSpec.describe "GET /api/v1/profiles" do
               "name" => "Eamonn Holmes",
               # "type" => users_profile.type,
               "links" => {
-                "organisation" => "/api/v1/organisations/#{organisation.id}"
+                "organisation" => "/api/v1/organisations/#{organisation.uid}"
               }
             }
           ]
@@ -63,7 +63,7 @@ RSpec.describe "GET /api/v1/profiles" do
               "name" => matching_profile.name,
               # "type" => matching_profile.type,
               "links" => {
-                "organisation" => "/api/v1/organisations/#{organisation.id}"
+                "organisation" => "/api/v1/organisations/#{organisation.uid}"
               }
             }
           ]
@@ -86,7 +86,7 @@ RSpec.describe "GET /api/v1/profiles" do
               "name" => "Barry Evans",
               # "type" => match_2.type,
               "links" => {
-                "organisation" => "/api/v1/organisations/#{organisation.id}"
+                "organisation" => "/api/v1/organisations/#{organisation.uid}"
               }
             },
             {
@@ -94,7 +94,7 @@ RSpec.describe "GET /api/v1/profiles" do
               "name" => "Barry Scott",
               # "type" => match_1.type,
               "links" => {
-                "organisation" => "/api/v1/organisations/#{organisation.id}"
+                "organisation" => "/api/v1/organisations/#{organisation.uid}"
               }
             }
           ]
