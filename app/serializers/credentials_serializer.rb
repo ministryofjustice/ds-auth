@@ -35,7 +35,7 @@ class CredentialsSerializer
         full_address: profile.address,
         postcode: profile.postcode,
       },
-      organisation_ids: profile.organisations.pluck(:id),
+      organisation_uids: profile.organisations.pluck(:uid),
       uid: profile.uid,
     }
   end

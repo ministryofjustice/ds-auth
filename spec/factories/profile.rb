@@ -9,6 +9,18 @@ FactoryGirl.define do
     uid                         { SecureRandom.uuid }
   end
 
+  trait :with_organisations do
+    transient do
+      number_of_organisations 2
+    end
+
+    after(:create) do |profile, evaluator|
+      (1..evaluator.number_of_organisations).each do
+        create :membership, profile: profile
+      end
+    end
+  end
+
   trait :with_user do
     association :user
   end
