@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe CreateProfileForm do
-  subject { CreateProfileForm }
+RSpec.describe ProfileForm do
+  let (:profile) { create(:profile) }
+  subject { ProfileForm.new(profile) }
 
-  describe "save" do
+  describe "submit" do
 
     let (:profile_params) { { name: 'Dave Smith',
                               tel: '999999',
@@ -17,9 +18,13 @@ RSpec.describe CreateProfileForm do
       context "with valid params" do
 
         it "returns true, and has no errors" do
-          form = subject.new(profile_params)
-          expect(form.save).to eql true
-          expect(form.errors).to be_blank
+          expect(subject.submit(profile_params)).to eql true
+          expect(subject.errors).to be_blank
+        end
+
+        it "saves and doesnt creates a new User" do
+          subject.submit(profile_params)
+          expect(User.count).to eq 0
         end
       end
 
@@ -33,10 +38,8 @@ RSpec.describe CreateProfileForm do
                                                               email: '' }) }
 
         it "returns false, and has errors" do
-          form = subject.new(invalid_profile_params)
-          expect(form.save).to eql false
-          expect(form.errors.keys).to eq [:name, :tel, :mobile, :address, :postcode, :email]
-          expect(form).to be_invalid
+          expect(subject.submit(invalid_profile_params)).to eql false
+          expect(subject.errors.keys).to match_array([:name, :tel, :mobile, :address, :postcode, :email])
         end
       end
 
@@ -49,53 +52,53 @@ RSpec.describe CreateProfileForm do
                                          email: 'dave@example.com') }
 
         it "returns false, and has errors" do
-          form = subject.new(profile_params)
-          expect(form.save).to eql false
-          expect(form.errors.keys).to eq [:email]
-          expect(form).to be_invalid
+          expect(subject.submit(profile_params)).to eql false
+          expect(subject.errors.keys).to eq [:email]
         end
       end
     end
 
     context "profile and user" do
       let (:profile_and_user_params) { profile_params.merge({ associated_user: '1',
-                                                              password: 'password',
-                                                              password_confirmation: 'password' }) }
+                                                              user_attributes:
+                                                                { password: 'password',
+                                                                  password_confirmation: 'password' }
+                                                               }) }
 
       context "with valid params" do
         it "returns true, and has no errors" do
-          form = subject.new(profile_and_user_params)
-          expect(form.save).to eql true
-          expect(form.errors).to be_blank
+          expect(subject.submit(profile_and_user_params)).to eql true
+          expect(subject.errors).to be_blank
         end
 
-        it "saves creates a new User" do
-          subject.new(profile_and_user_params).save
+        it "saves and creates a new User" do
+          subject.submit(profile_and_user_params)
           expect(User.count).to eq 1
           expect(User.last.email).to eq Profile.last.email
         end
       end
 
       context "with invalid params" do
+        let(:blank_passwords) { profile_params.merge({ associated_user: '1',
+                                                       user_attributes:
+                                                         { password: '',
+                                                           password_confirmation: '' }
+                                                     }) }
 
-        let(:blank_passwords) { profile_and_user_params.merge({ password: '',
-                                                                password_confirmation: '' }) }
-
-        let(:different_passwords) { profile_and_user_params.merge({ password: 'onepassword',
-                                                                    password_confirmation: 'twopassword' }) }
+        let(:different_passwords) { profile_params.merge({ associated_user: '1',
+                                                           user_attributes:
+                                                             { password: 'password_1',
+                                                               password_confirmation: 'password_2' }
+                                                         }) }
 
         it "with blank password and confirmation returns false, and has errors" do
-          form = subject.new(blank_passwords)
-          expect(form.save).to eql false
-          expect(form.errors.keys).to eq [:password, :password_confirmation]
-          expect(form).to be_invalid
+          expect(subject.submit(blank_passwords)).to eql false
+          expect(subject.errors.keys).to match_array([:"user.password"])
         end
 
         it "with different password and confirmation returns false, and has errors" do
-          form = subject.new(different_passwords)
-          expect(form.save).to eql false
-          expect(form.errors.keys).to eq [:password]
-          expect(form).to be_invalid
+          expect(subject.submit(different_passwords)).to eql false
+          expect(subject.errors.keys).to match_array([:"user.password_confirmation"])
         end
       end
     end

@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, except: [:index, :new, :create]
+  before_action :find_profile, except: [:index, :new, :create]
+  before_action :new_profile_form, only: [:show, :new, :create, :edit, :update]
 
   def index
     @profiles = Profile.all
@@ -9,13 +10,10 @@ class ProfilesController < ApplicationController
   end
 
   def new
-    @profile_form = CreateProfileForm.new
   end
 
   def create
-    @profile_form = CreateProfileForm.new(profile_form_params)
-
-    if @profile_form.save
+    if @profile_form.submit(profile_params)
       redirect_to profiles_path, notice: flash_message(:create, Profile)
     else
       render :new
@@ -43,30 +41,28 @@ class ProfilesController < ApplicationController
 
   private
 
-  def set_profile
+  def profile
+    @profile ||= Profile.new
+  end
+
+  def find_profile
     @profile = Profile.find(params[:id])
   end
 
-  def profile_params
-    params.require(:profile)
-      .permit(:user_id,
-              :name,
-              :tel,
-              :mobile,
-              :address,
-              :postcode,
-              :email)
+  def new_profile_form
+    @profile_form ||= ProfileForm.new profile
   end
 
-  def profile_form_params
-    params.require(:create_profile_form).permit(:name,
-                                                :tel,
-                                                :mobile,
-                                                :address,
-                                                :postcode,
-                                                :email,
-                                                :associated_user,
-                                                :password,
-                                                :password_confirmation)
+
+  def profile_params
+    params.require(:profile).permit(:user_id,
+                                    :name,
+                                    :tel,
+                                    :mobile,
+                                    :address,
+                                    :postcode,
+                                    :email,
+                                    :associated_user,
+                                    user_attributes: [:password, :password_confirmation])
   end
 end

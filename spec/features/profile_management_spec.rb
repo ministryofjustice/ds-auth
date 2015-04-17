@@ -18,13 +18,13 @@ RSpec.feature "Users managing profiles" do
     visit profiles_path
     click_link "New Profile"
 
-    expect(page).to_not have_css("#create_profile_form_password")
-    expect(page).to_not have_css("#create_profile_form_password_confirmation")
+    expect(page).to_not have_css("#profile_user_attributes_password")
+    expect(page).to_not have_css("#profile_user_attributes_password_confirmation")
 
     check "Associated user"
 
-    expect(page).to have_css("#create_profile_form_password")
-    expect(page).to have_css("#create_profile_form_password_confirmation")
+    expect(page).to have_css("#profile_user_attributes_password")
+    expect(page).to have_css("#profile_user_attributes_password_confirmation")
   end
 
   specify "can create a new profile without an assoicated user" do
