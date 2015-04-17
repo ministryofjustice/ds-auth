@@ -35,16 +35,22 @@ class CreateProfileForm
   private
 
   def persist!
-    @profile = Profile.create!(name: name,
-                               tel: tel,
-                               mobile: mobile,
-                               address: address,
-                               postcode: postcode,
-                               email: email)
-    if associated_user?
-      @user = @profile.create_user!(email: email,
-                                    password: password,
-                                    password_confirmation: password_confirmation)
+    Profile.transaction do
+      profile = Profile.create!(name: name,
+                                tel: tel,
+                                mobile: mobile,
+                                address: address,
+                                postcode: postcode,
+                                email: email)
+      User.transaction do
+        if associated_user?
+          profile.create_user!(email: email,
+                               password: password,
+                               password_confirmation: password_confirmation)
+        end
+        raise ActiveRecord::Rollback
+      end
+
     end
   end
 
