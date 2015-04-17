@@ -24,8 +24,8 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    if @profile.update_attributes profile_params
-      redirect_to profiles_path, notice: flash_message(:update, Profile)
+    if @profile_form.submit(profile_params)
+      redirect_to(profiles_path, notice: flash_message(:update, Profile))
     else
       render :edit
     end

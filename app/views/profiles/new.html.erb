@@ -2,7 +2,7 @@
 
 <h1>New Profile</h1>
 
-<%= form_for(@profile_form, url: { action: 'create' }) do |f| %>
+<%= form_for(@profile_form) do |f| %>
   <%= render 'profiles/form_partials/profile_details', f: f %>
 
   <%= render 'profiles/form_partials/associated_user_details', f: f %>

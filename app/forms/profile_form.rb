@@ -24,13 +24,7 @@ class ProfileForm
   end
 
   def submit(params)
-    if params[:associated_user] == '1'
-      params[:user_attributes].merge!(email: params[:email])
-    else
-      params.except!(:user_attributes)
-    end
-
-    @profile.assign_attributes params
+    @profile.assign_attributes correct_associated_user_params(params)
 
     if @profile.valid?
       @profile.save!
@@ -45,6 +39,22 @@ class ProfileForm
     @profile.errors.messages.each do |field_name, error_message|
       self.errors[field_name] = error_message.join ", "
     end
+  end
+
+  private
+
+  def correct_associated_user_params(params)
+    if associated_user?(params)
+      params[:user_attributes].merge!(email: params[:email])
+    else
+      params.except!(:user_attributes)
+    end
+    params
+  end
+
+  def associated_user?(params)
+    associated_user = params[:associated_user]
+    associated_user.present? && associated_user != '0'
   end
 end
 
