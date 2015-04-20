@@ -27,12 +27,15 @@ class ProfileForm
     @profile.assign_attributes correct_associated_user_params(params)
 
     if @profile.valid?
-      @profile.save!
-      true
+      unless @profile.save
+        self.errors[:profile] = "could not be saved"
+        return false
+      end
     else
       add_errors_to_form
-      false
+      return false
     end
+    true
   end
 
   def add_errors_to_form
