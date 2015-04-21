@@ -1,3 +1,4 @@
+require 'drs/auth_client/client'
 require 'drs/auth_client/version'
 
 module Drs
