@@ -56,6 +56,7 @@ class OrganisationsController < ApplicationController
                   :mobile,
                   :address,
                   :postcode,
-                  :email)
+                  :email,
+                  :parent_organisation_id)
   end
 end

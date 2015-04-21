@@ -43,6 +43,13 @@
   <%= @organisation.email %>
 </p>
 
+<% if @organisation.parent_organisation %>
+  <p>
+    <strong><%= t('parent_organisation') %>:</strong>
+    <%= @organisation.parent_organisation.name %>
+  </p>
+<% end %>
+
 <h3><%= t('members') %></h3>
 
 <table class="members">
