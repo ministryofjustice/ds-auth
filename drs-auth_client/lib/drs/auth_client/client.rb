@@ -25,11 +25,24 @@ module Drs
         single_resource_get("organisations/#{uid}", Models::Organisation)
       end
 
+      def organisations
+        collection_resource_get("organisations", Models::Organisation)
+      end
+
       private
 
+      def resource_get(path)
+        JSON.parse(get(path)).deep_symbolize_keys
+      end
+
       def single_resource_get(path, model)
-        hash = JSON.parse(get(path)).deep_symbolize_keys
+        hash = resource_get(path)
         model.from_hash(hash)
+      end
+
+      def collection_resource_get(path, model)
+        hash = resource_get(path)
+        model.collection_from_hash(hash) 
       end
 
       def conn

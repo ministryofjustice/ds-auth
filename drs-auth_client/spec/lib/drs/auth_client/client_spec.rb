@@ -102,4 +102,58 @@ RSpec.describe Drs::AuthClient::Client do
       let(:response_code) { 404 }
     end
   end
+
+  describe '#organisations' do
+    let(:path) { 'organisations'}
+    let(:response_code) { 200 }
+    let(:response_body) { -> (env) {{}.to_json} }
+
+    subject { client.organisations }
+
+    it 'makes the correct request' do
+      subject
+
+      stubbed_calls.verify_stubbed_calls
+    end
+
+    context 'when multiple organisations exist' do
+      let(:response_hash) do
+        {
+            organisations: [
+                {
+                    uid: 'UID 1',
+                    name: 'NAME 1'
+                }, {
+                    uid: 'UID 2',
+                    name: 'NAME 2'
+                }
+            ]
+        }
+      end
+      let(:response_body) { -> (env) {response_hash.to_json} }
+
+      it 'returns all organisations' do
+        expect(subject.size).to be(2)
+      end
+
+      it 'all returned object are organisations' do
+        expect(subject.all? {|o| o.is_a?(Drs::AuthClient::Models::Organisation)}).to be true
+      end
+
+      it 'the collection contains the returned data' do
+        expect(subject[0].uid).to eql('UID 1')
+        expect(subject[1].uid).to eql('UID 2')
+      end
+
+    end
+
+    context 'when no organisations exist' do
+      let(:response_hash) { {organisations: []} }
+      let(:response_body) { -> (env) {response_hash.to_json} }
+
+      it 'returns empty array' do
+        is_expected.to eql([])
+      end
+    end
+  end
 end
