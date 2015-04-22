@@ -2,6 +2,87 @@ require 'spec_helper'
 
 require 'json'
 
+RSpec.shared_examples 'available resource' do |name|
+  plural_name = name.pluralize
+  path_prefix = name.pluralize
+  single_resource_method = single_hash_prefix = name.to_sym
+  collection_resource_method = collection_hash_prefix = name.pluralize.to_sym
+  model = "Drs::AuthClient::Models::#{name.classify}".constantize
+
+  describe "\##{single_resource_method}" do
+    let(:uid) { 'SOME-UID' }
+    let(:path) { "#{path_prefix}/#{uid}" }
+    let(:response_code) { 200 }
+    let(:response_body) { -> (env) {{}.to_json} }
+
+    subject { client.send(single_resource_method, uid) }
+
+    it 'makes the correct request' do
+      subject
+
+      stubbed_calls.verify_stubbed_calls
+    end
+
+    context "for existing #{name}" do
+      let(:response_hash) { Hash[single_hash_prefix, {uid: uid, other: 'OTHER'}] }
+      let(:response_body) { -> (env) {response_hash.to_json} }
+
+      it "returns new #{model} object" do
+        is_expected.to be_a(model)
+      end
+      it "the #{name} contains the returned data" do
+        expect(subject.uid).to eql(uid)
+      end
+    end
+
+    context "for non-existing #{name}" do
+      let(:response_code) { 404 }
+    end
+  end
+
+  describe "\##{collection_resource_method}" do
+    let(:path) { path_prefix }
+    let(:response_code) { 200 }
+    let(:response_body) { -> (env) {{}.to_json} }
+
+    subject { client.send(collection_resource_method) }
+
+    it 'makes the correct request' do
+      subject
+
+      stubbed_calls.verify_stubbed_calls
+    end
+
+    context "when multiple #{plural_name} exist" do
+      let(:response_hash) { Hash[collection_hash_prefix, [{uid: 'UID 1', other: 'NAME 1'}, {uid: 'UID 2', other: 'NAME 2'}]] }
+      let(:response_body) { -> (env) {response_hash.to_json} }
+
+      it "returns all #{plural_name}" do
+        expect(subject.size).to be(2)
+      end
+
+      it "all returned object are #{plural_name}" do
+        expect(subject.all? {|o| o.is_a?(model)}).to be true
+      end
+
+      it 'the collection contains the returned data' do
+        expect(subject.map(&:uid)).to match_array(['UID 1', 'UID 2'])
+      end
+
+    end
+
+    context 'when no organisations exist' do
+      let(:response_hash) { {organisations: []} }
+      let(:response_body) { -> (env) {response_hash.to_json} }
+
+      it 'returns empty array' do
+        is_expected.to eql([])
+      end
+    end
+  end
+
+end
+
 RSpec.describe Drs::AuthClient::Client do
 
   let(:host) { 'HOST' }
@@ -65,95 +146,6 @@ RSpec.describe Drs::AuthClient::Client do
     end
   end
 
-  describe '#organisation' do
-    let(:uid) { 'SOME-UID' }
-    let(:path) { "organisations/#{uid}" }
-    let(:response_code) { 200 }
-    let(:response_body) { -> (env) {{}.to_json} }
-
-    subject { client.organisation(uid) }
-
-    it 'makes the correct request' do
-      subject
-
-      stubbed_calls.verify_stubbed_calls
-    end
-
-    context 'for existing organisation' do
-      let(:response_hash) do
-        {
-            organisation: {
-                uid: uid,
-                name: 'NAME'
-            }
-        }
-      end
-      let(:response_body) { -> (env) {response_hash.to_json} }
-
-      it 'returns new Organisation object' do
-        is_expected.to be_a(Drs::AuthClient::Models::Organisation)
-      end
-      it 'the organisation contains the returned data' do
-        expect(subject.uid).to eql(uid)
-      end
-    end
-
-    context 'for non-existing organisation' do
-      let(:response_code) { 404 }
-    end
-  end
-
-  describe '#organisations' do
-    let(:path) { 'organisations'}
-    let(:response_code) { 200 }
-    let(:response_body) { -> (env) {{}.to_json} }
-
-    subject { client.organisations }
-
-    it 'makes the correct request' do
-      subject
-
-      stubbed_calls.verify_stubbed_calls
-    end
-
-    context 'when multiple organisations exist' do
-      let(:response_hash) do
-        {
-            organisations: [
-                {
-                    uid: 'UID 1',
-                    name: 'NAME 1'
-                }, {
-                    uid: 'UID 2',
-                    name: 'NAME 2'
-                }
-            ]
-        }
-      end
-      let(:response_body) { -> (env) {response_hash.to_json} }
-
-      it 'returns all organisations' do
-        expect(subject.size).to be(2)
-      end
-
-      it 'all returned object are organisations' do
-        expect(subject.all? {|o| o.is_a?(Drs::AuthClient::Models::Organisation)}).to be true
-      end
-
-      it 'the collection contains the returned data' do
-        expect(subject[0].uid).to eql('UID 1')
-        expect(subject[1].uid).to eql('UID 2')
-      end
-
-    end
-
-    context 'when no organisations exist' do
-      let(:response_hash) { {organisations: []} }
-      let(:response_body) { -> (env) {response_hash.to_json} }
-
-      it 'returns empty array' do
-        is_expected.to eql([])
-      end
-    end
-  end
+  include_examples 'available resource', 'organisation'
+  include_examples 'available resource', 'profile'
 end

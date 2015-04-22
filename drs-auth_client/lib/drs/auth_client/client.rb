@@ -29,6 +29,14 @@ module Drs
         collection_resource_get("organisations", Models::Organisation)
       end
 
+      def profile(uid)
+        single_resource_get("profiles/#{uid}", Models::Profile)
+      end
+
+      def profiles
+        collection_resource_get("profiles", Models::Profile)
+      end
+
       private
 
       def resource_get(path)
