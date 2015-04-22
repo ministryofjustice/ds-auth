@@ -6,37 +6,37 @@ RSpec.describe Drs::AuthClient::Client do
   let(:version) { :v5 }
   let(:auth_token) { 'OAUTH ACCESS TOKEN'}
 
+  let(:stubbed_calls) do
+    Faraday::Adapter::Test::Stubs.new do |stub|
+      stub.get(path) do |env|
+        [response_code, {}, response_body.call(env)]
+      end
+    end
+  end
+
+  let(:stubbed_connection) do
+    Faraday.new do |builder|
+      builder.adapter :test, stubbed_calls
+    end
+  end
+
   before do
     Drs::AuthClient.host = host
     Drs::AuthClient.version = version
+
+    allow(Faraday).to receive(:new).and_return(stubbed_connection)
   end
 
   subject(:client) { described_class.new(auth_token) }
 
   describe '#get' do
     let(:path) { 'resources/ID' }
+    let(:response_code) { 200 }
+    let(:response_body) { -> (env) {"successful response with authorization: #{env.request_headers['Authorization']}"} }
 
     subject { client.get(path) }
 
-    let(:stubbed_calls) do
-      Faraday::Adapter::Test::Stubs.new do |stub|
-        stub.get(path) do |env|
-          [200, {}, "successful response with authorization: #{env.request_headers['Authorization']}"]
-        end
-      end
-    end
-
-    let(:stubbed_connection) do
-      Faraday.new do |builder|
-        builder.adapter :test, stubbed_calls
-      end
-    end
-
-    before do
-      allow(Faraday).to receive(:new).and_return(stubbed_connection)
-
-      subject
-    end
+    before { subject }
 
     it 'makes a GET request based on the client configuration' do
       expect(Faraday).to have_received(:new).with("#{host}/api/#{version}")
@@ -57,11 +57,7 @@ RSpec.describe Drs::AuthClient::Client do
     end
 
     context 'when the request is invalid' do
-      let(:stubbed_calls) do
-        Faraday::Adapter::Test::Stubs.new do |stub|
-          stub.get(path) { |env| [400, {}, ''] }
-        end
-      end
+      let(:response_code) { 400 }
 
       it { is_expected.to be nil }
     end
