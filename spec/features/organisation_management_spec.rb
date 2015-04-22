@@ -77,6 +77,7 @@ RSpec.feature 'Users managing organisations' do
 
     expect(page).to have_content "Name: Sub Organisation"
     expect(page).to have_content "Parent Organisation: #{organisation.name}"
+    expect(page).to have_link organisation.name, href: organisation_path(organisation)
   end
 
   specify 'are shown errors if an organisation cannot be created' do
@@ -162,6 +163,24 @@ RSpec.feature 'Users managing organisations' do
     expect(page).to have_content 'Members'
     organisation.profiles.each do |p|
       expect(page).to have_content p.name
+    end
+  end
+
+  specify 'can view members, and parent and child organisations and links on a show page' do
+    parent = create :organisation
+    org = create :organisation, parent_organisation: parent
+    create_list :organisation, 3, parent_organisation: org
+
+    visit organisation_path(org)
+
+    expect(page).to have_content "Name: #{org.name}"
+    expect(page).to have_content "Parent Organisation: #{parent.name}"
+    expect(page).to have_link parent.name, href: organisation_path(parent)
+
+    expect(page).to have_content "Suborganisations:"
+    org.sub_organisations.each do |so|
+      expect(page).to have_content so.name
+      expect(page).to have_link so.name, href: organisation_path(so)
     end
   end
 
