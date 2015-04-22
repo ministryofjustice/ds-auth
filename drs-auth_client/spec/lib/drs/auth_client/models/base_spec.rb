@@ -5,7 +5,7 @@ RSpec.describe Drs::AuthClient::Models::Base do
     attr_accessor :title, :age
   end
 
-  let(:attributes) { {title: 'SOME TITLE', non_existent: 'NON EXISTENT'} }
+  let(:attributes) { {uid: 'UID', title: 'SOME TITLE', non_existent: 'NON EXISTENT'} }
   subject(:model) { SampleModel.new(attributes) }
 
   describe '#initialize' do
@@ -14,6 +14,7 @@ RSpec.describe Drs::AuthClient::Models::Base do
     end
 
     it 'assigns valid attributes to the new model' do
+      expect(subject.uid).to eql(attributes[:uid])
       expect(subject.title).to eql(attributes[:title])
     end
   end
@@ -27,6 +28,7 @@ RSpec.describe Drs::AuthClient::Models::Base do
       it { is_expected.to be_a(described_class) }
 
       it 'assigns the valid attributes to the returned organisation' do
+        expect(subject.uid).to eql(attributes[:uid])
         expect(subject.title).to eql(attributes[:title])
       end
     end
@@ -41,7 +43,7 @@ RSpec.describe Drs::AuthClient::Models::Base do
     subject { SampleModel.collection_from_hash(hash) }
 
     context 'when the data is correctly prefixed based on the model name' do
-      let(:other_attributes) { {title: 'OTHER UID'}}
+      let(:other_attributes) { {uid: 'OTHER UID', title: 'OTHER TITLE'}}
       let(:hash) { {sample_models: [attributes, other_attributes]} }
 
       it { is_expected.to be_a(Array) }
@@ -51,8 +53,8 @@ RSpec.describe Drs::AuthClient::Models::Base do
       end
 
       it 'all models have their attributes assigned' do
-        expect(subject[0].title).to eql(attributes[:title])
-        expect(subject[1].title).to eql(other_attributes[:title])
+        expect(subject[0].uid).to eql(attributes[:uid])
+        expect(subject[1].uid).to eql(other_attributes[:uid])
       end
     end
 

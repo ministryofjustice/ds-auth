@@ -4,6 +4,8 @@ module Drs
   module AuthClient
     module Models
       class Base
+        attr_accessor :uid
+
         def initialize(attributes)
           attributes.each do |key, value|
             writer = "#{key}="
