@@ -9,6 +9,12 @@ RSpec.describe Profile do
     end
 
     specify { expect(subject).to validate_uniqueness_of(:user_id).allow_nil }
+    specify { expect(subject).to validate_uniqueness_of(:email) }
+
+    specify { expect(subject).to allow_value("email@example.com").for(:email) }
+    specify { expect(subject).to_not allow_value("email@example").for(:email) }
+    specify { expect(subject).to_not allow_value("email-example.com").for(:email) }
+    specify { expect(subject).to_not allow_value("hello***@example.com").for(:email) }
   end
 
   describe "associations" do

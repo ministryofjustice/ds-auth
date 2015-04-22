@@ -9,7 +9,7 @@ class Profile < ActiveRecord::Base
 
   validates :user_id, uniqueness: true, allow_nil: true
 
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, email: { strict_mode: true }
 
   scope :by_name, -> { order(name: :asc) }
 
