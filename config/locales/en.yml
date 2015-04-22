@@ -22,6 +22,9 @@
 en:
   are_you_sure: "Are you sure?"
   back: "Back"
+  create_membership: "Create Membership"
+  create_permission: "Create Permission"
+  create_profile: "Create Profile"
   edit: "Edit"
   edit_organisation: "Edit Organisation"
   edit_profile: "Edit Profile"
@@ -46,6 +49,8 @@ en:
   show: "Show"
   slug: "Slug"
   update: "Update"
+  update_profile: "Update Profile"
+  update_user: "Update User"
 
   models:
     create: "%{model} successfully created"
