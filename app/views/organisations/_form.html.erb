@@ -26,6 +26,9 @@
   <%= f.label :email %>
   <%= f.text_field :email %>
 
+  <%= f.label :parent_organisation_id %>
+  <%= f.select :parent_organisation_id, options_for_parent_organisation, include_blank: "---" %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

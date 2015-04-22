@@ -5,11 +5,46 @@ RSpec.describe Organisation do
     it { expect(subject).to validate_presence_of :name }
     it { expect(subject).to validate_presence_of :slug }
     it { expect(subject).to validate_presence_of :organisation_type }
+
+    context "circular references" do
+      let!(:organisation)       { create :organisation }
+      let!(:child_organisation) { create :organisation,
+                                         parent_organisation: organisation }
+
+      it 'invalid if two organisations reference each other' do
+        organisation.parent_organisation = child_organisation
+        expect(organisation).to be_invalid
+        expect(child_organisation).to be_invalid
+      end
+
+      it 'valid if 3 organisations are hierarchical' do
+        grandchild_organisation = create :organisation,
+                                         parent_organisation: child_organisation
+        expect(organisation).to be_valid
+        expect(child_organisation).to be_valid
+        expect(grandchild_organisation).to be_valid
+      end
+
+      it 'invalid if 3 organisations are circular' do
+        grandchild_organisation = create :organisation,
+                                         parent_organisation: child_organisation
+        organisation.parent_organisation = grandchild_organisation
+        expect(organisation).to be_invalid
+        expect(child_organisation).to be_invalid
+        expect(grandchild_organisation).to be_invalid
+      end
+    end
   end
 
   describe 'associations' do
     specify { expect(subject).to have_many(:permissions) }
     specify { expect(subject).to have_many(:profiles).through(:memberships) }
+
+    specify { expect(subject).to have_many(:sub_organisations).
+              class_name("Organisation").
+              with_foreign_key("parent_organisation_id") }
+    specify { expect(subject).to belong_to(:parent_organisation).
+              class_name("Organisation") }
   end
 
   describe "scopes" do

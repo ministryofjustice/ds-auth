@@ -43,6 +43,22 @@
   <%= @organisation.email %>
 </p>
 
+<% if @organisation.parent_organisation %>
+  <p>
+    <strong><%= t('parent_organisation') %>:</strong>
+    <%= link_to @organisation.parent_organisation.name,
+      organisation_path(@organisation.parent_organisation) %>
+  </p>
+<% end %>
+
+<% if @organisation.sub_organisations.present? %>
+  <p>
+    <strong><%= t('suborganisations') %>:</strong>
+    <% @organisation.sub_organisations.each do |so| %>
+      <%= link_to so.name, organisation_path(so) %>
+    <% end %>
+<% end %>
+
 <h3><%= t('members') %></h3>
 
 <table class="members">

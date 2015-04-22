@@ -47,6 +47,39 @@ RSpec.feature 'Users managing organisations' do
     expect(page).to have_content "Email: imperial@example.com"
   end
 
+  specify "can create a sub-organisation" do
+    visit organisations_path
+
+    click_link "New Organisation"
+
+    fill_in "Name", with: "Sub Organisation"
+    fill_in "Slug", with: "sub-organisation"
+    fill_in "Organisation type", with: "social"
+    check "Searchable"
+    fill_in "Tel", with: "01234 567890"
+    fill_in "Mobile", with: "01234 567890"
+    fill_in "Address", with: "123 Fake Street"
+    fill_in "Postcode", with: "POSTCODE"
+    fill_in "Email", with: "suborganisation@example.com"
+
+    expect(page).to have_select("Parent organisation", options: ["---", organisation.name])
+
+    select organisation.name, from: "Parent organisation"
+
+    click_button "Create Organisation"
+
+    expect(page).to have_content "Organisation successfully created"
+    expect(page).to have_content "Sub Organisation"
+
+    within "#sub-organisation-row" do
+      click_link "Show"
+    end
+
+    expect(page).to have_content "Name: Sub Organisation"
+    expect(page).to have_content "Parent Organisation: #{organisation.name}"
+    expect(page).to have_link organisation.name, href: organisation_path(organisation)
+  end
+
   specify 'are shown errors if an organisation cannot be created' do
     visit organisations_path
 
@@ -130,6 +163,24 @@ RSpec.feature 'Users managing organisations' do
     expect(page).to have_content 'Members'
     organisation.profiles.each do |p|
       expect(page).to have_content p.name
+    end
+  end
+
+  specify 'can view members, and parent and child organisations and links on a show page' do
+    parent = create :organisation
+    org = create :organisation, parent_organisation: parent
+    create_list :organisation, 3, parent_organisation: org
+
+    visit organisation_path(org)
+
+    expect(page).to have_content "Name: #{org.name}"
+    expect(page).to have_content "Parent Organisation: #{parent.name}"
+    expect(page).to have_link parent.name, href: organisation_path(parent)
+
+    expect(page).to have_content "Suborganisations:"
+    org.sub_organisations.each do |so|
+      expect(page).to have_content so.name
+      expect(page).to have_link so.name, href: organisation_path(so)
     end
   end
 
