@@ -9,6 +9,10 @@ RSpec.describe User do
     specify { expect(subject).to have_many(:permissions) }
   end
 
+  describe 'delegation' do
+    specify { expect(subject).to delegate_method(:name).to(:profile) }
+  end
+
   describe "#roles_for" do
     let(:application) { build :doorkeeper_application }
     let(:role) { build :role }

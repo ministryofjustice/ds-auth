@@ -1,7 +1,15 @@
-<%= render 'shared/error_messages', object: @profile %>
+<%= render 'shared/error_messages', object: @profile_form %>
 
-<h1>New Profile</h1>
+<h1><%= t('new_profile') %></h1>
 
-<%= render 'form' %>
+<%= form_for(@profile_form) do |f| %>
+  <%= render 'profiles/form_partials/profile_details', f: f %>
 
-<%= link_to 'Back', profiles_path %>
+  <%= render 'profiles/form_partials/associated_user_details', f: f %>
+
+  <div class="actions">
+    <%= f.submit t('create_profile') %>
+  </div>
+<% end %>
+
+<%= link_to t('back'), profiles_path %>

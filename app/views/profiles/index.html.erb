@@ -2,19 +2,20 @@
 
 <table>
   <thead>
-    <tr>
-      <th colspan="4"></th>
-    </tr>
+  <tr>
+    <th colspan="4"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @profiles.each do |profile| %>
-      <tr>
-        <td><%= profile.name %></td>
-        <td><%= link_to t('edit'), edit_profile_path(profile) %></td>
-        <td><%= link_to t('delete'), profile, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %></td>
-      </tr>
+  <% @profiles.each do |profile| %>
+    <%= content_tag_for(:tr, profile) do %>
+      <td><%= profile.name %></td>
+      <td><%= link_to t('edit'), edit_profile_path(profile) %></td>
+      <td><%= link_to t('delete'), profile, method: :delete, data: { confirm: t('are_you_sure') } %></td>
+      <td><%= link_to(t('password'), edit_user_path(profile.user.id)) if profile.user %></td>
     <% end %>
+  <% end %>
   </tbody>
 </table>
 

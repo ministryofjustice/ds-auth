@@ -1,7 +1,13 @@
-<%= render 'shared/error_messages', object: @profile %>
+<%= render 'shared/error_messages', object: @profile_form %>
 
 <h1><%= t('edit_profile') %></h1>
 
-<%= render 'form' %>
+<%= form_for(@profile) do |f| %>
+  <%= render 'profiles/form_partials/profile_details', f: f %>
+
+  <div class="actions">
+    <%= f.submit t('update_profile') %>
+  </div>
+<% end %>
 
 <%= link_to t('back'), profiles_path %>

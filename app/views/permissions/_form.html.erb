@@ -15,6 +15,6 @@
   <%= f.select :application_id, options_from_collection_for_select(Doorkeeper::Application.all, 'id', 'name') %>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t('create_permission') %>
   </div>
 <% end %>
