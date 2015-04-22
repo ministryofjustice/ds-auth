@@ -5,12 +5,8 @@ RSpec.describe ProfileForm do
   subject { ProfileForm.new(profile) }
 
   describe "submit" do
-    let (:profile_params) { { name: 'Dave Smith',
-                              tel: '999999',
-                              mobile: '8888888',
-                              address: 'a street',
-                              postcode: 'XX1 1XX',
-                              email: 'dave@example.com'} }
+    let (:profile_params) { attributes_for :profile,
+                                           email: 'dave@example.com' }
 
     context "profile" do
       context "with valid params" do
@@ -48,8 +44,8 @@ RSpec.describe ProfileForm do
 
       context "with duplicate email address" do
         let!(:existing_profile) { Profile.create(name: 'John Jones',
-                                                 tel: '111111',
-                                                 mobile: '2222222',
+                                                 tel: '01234567890',
+                                                 mobile: '01234567890',
                                                  address: 'another street',
                                                  postcode: 'XX1 1XX',
                                                  email: 'dave@example.com') }

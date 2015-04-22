@@ -15,6 +15,12 @@ RSpec.describe Profile do
     specify { expect(subject).to_not allow_value("email@example").for(:email) }
     specify { expect(subject).to_not allow_value("email-example.com").for(:email) }
     specify { expect(subject).to_not allow_value("hello***@example.com").for(:email) }
+
+    [:tel, :mobile].each do |phone_field|
+      specify { expect(subject).to allow_value("01234567890").for(phone_field) }
+      specify { expect(subject).to_not allow_value("01234abcdef").for(phone_field) }
+      specify { expect(subject).to allow_value("+441234567890").for(phone_field) }
+    end
   end
 
   describe "associations" do
