@@ -1,3 +1,4 @@
+require 'active_support/core_ext/hash/keys'
 require 'faraday'
 
 module Drs
@@ -20,7 +21,16 @@ module Drs
         end
       end
 
+      def organisation(uid)
+        single_resource_get("organisations/#{uid}", Models::Organisation)
+      end
+
       private
+
+      def single_resource_get(path, model)
+        hash = JSON.parse(get(path)).deep_symbolize_keys
+        model.from_hash(hash)
+      end
 
       def conn
         api_url = "#{AuthClient.host}/api/#{AuthClient.version}"

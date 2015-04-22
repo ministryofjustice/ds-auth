@@ -17,6 +17,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(spec)/}) }
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'activesupport', '~> 4.2.0'
   spec.add_dependency 'faraday', '~> 0.9.1'
 
   spec.add_development_dependency 'bundler', '~> 1.8'
