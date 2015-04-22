@@ -14,7 +14,7 @@
         <td><%= permission.role.name %></td>
         <td><%= permission.application.name %></td>
         <td><%= permission.organisation.name %></td>
-        <td><%= link_to t("delete"), permission, method: :delete, onclick: "return confirm('#{t('are_you_sure')}')}" %></td>
+        <td><%= link_to t("delete"), permission, method: :delete, data: { confirm: t('are_you_sure') } %></td>
       </tr>
     <% end %>
   </tbody>
