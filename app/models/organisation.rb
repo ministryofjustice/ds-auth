@@ -1,4 +1,11 @@
 class Organisation < ActiveRecord::Base
+  ORGANISATION_TYPES = {
+    "Call centre" => "call_centre",
+    "Custody suite" => "custody_suite",
+    "Law firm" => "law_firm",
+    "Law office" => "law_office"
+  }
+
   has_many :permissions
   has_many :memberships
   has_many :profiles, through: :memberships
