@@ -1,6 +1,6 @@
-require 'drs/auth_client'
+require "drs/auth_client"
 
-require 'rspec'
+require "rspec"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

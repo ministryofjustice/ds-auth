@@ -1,9 +1,9 @@
-require 'active_support/core_ext/hash/keys'
-require 'active_support/core_ext/string/inflections'
-require 'faraday'
+require "active_support/core_ext/hash/keys"
+require "active_support/core_ext/string/inflections"
+require "faraday"
 
-require 'drs/auth_client/models/organisation'
-require 'drs/auth_client/models/profile'
+require "drs/auth_client/models/organisation"
+require "drs/auth_client/models/profile"
 
 module Drs
   module AuthClient

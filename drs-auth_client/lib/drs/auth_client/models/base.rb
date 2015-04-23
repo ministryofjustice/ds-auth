@@ -1,4 +1,4 @@
-require 'active_support/core_ext/string/inflections'
+require "active_support/core_ext/string/inflections"
 
 module Drs
   module AuthClient
@@ -38,7 +38,7 @@ module Drs
         end
 
         def self.resource_data_key
-          self.name.split('::').last.underscore
+          self.name.split("::").last.underscore
         end
       end
     end
