@@ -1,6 +1,6 @@
 example_org = Organisation.where(slug: "example-org").first_or_create(
   name: "Example Org",
-  organisation_type: "social")
+  organisation_type: "law_office")
 
 Membership.create(organisation: example_org, profile: Profile.where(email: "jeff@example").first)
 
