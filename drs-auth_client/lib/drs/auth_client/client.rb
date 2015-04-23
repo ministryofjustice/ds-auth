@@ -1,5 +1,9 @@
 require 'active_support/core_ext/hash/keys'
+require 'active_support/core_ext/string/inflections'
 require 'faraday'
+
+require 'drs/auth_client/models/organisation'
+require 'drs/auth_client/models/profile'
 
 module Drs
   module AuthClient
@@ -21,21 +25,35 @@ module Drs
         end
       end
 
-      def organisation(uid)
-        single_resource_get("organisations/#{uid}", Models::Organisation)
+      (Models.constants - [:Base]).each do |model_name|
+        model = Models.const_get(model_name)
+        single_resource_name = model_name.to_s.underscore.downcase
+        collection_resource_name = single_resource_name.pluralize
+
+        define_method(single_resource_name) do |uid|
+          single_resource_get("#{collection_resource_name}/#{uid}", model)
+        end
+
+        define_method(collection_resource_name) do
+          collection_resource_get(collection_resource_name, model)
+        end
       end
 
-      def organisations
-        collection_resource_get("organisations", Models::Organisation)
-      end
-
-      def profile(uid)
-        single_resource_get("profiles/#{uid}", Models::Profile)
-      end
-
-      def profiles
-        collection_resource_get("profiles", Models::Profile)
-      end
+      # def organisation(uid)
+      #   single_resource_get("organisations/#{uid}", Models::Organisation)
+      # end
+      #
+      # def organisations
+      #   collection_resource_get("organisations", Models::Organisation)
+      # end
+      #
+      # def profile(uid)
+      #   single_resource_get("profiles/#{uid}", Models::Profile)
+      # end
+      #
+      # def profiles
+      #   collection_resource_get("profiles", Models::Profile)
+      # end
 
       private
 
