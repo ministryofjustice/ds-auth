@@ -14,6 +14,7 @@ class Organisation < ActiveRecord::Base
   belongs_to :parent_organisation, class_name: "Organisation"
 
   validates :slug, :name, :organisation_type, presence: true
+  validates :organisation_type, inclusion: { in: ORGANISATION_TYPES.values }
   validate :no_circular_references
 
   scope :by_name, -> { order(name: :asc) }
