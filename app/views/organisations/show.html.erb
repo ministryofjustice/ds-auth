@@ -10,7 +10,7 @@
 
 <p>
   <strong><%= t('organisation_type') %>:</strong>
-  <%= Organisation::ORGANISATION_TYPES.index(@organisation.organisation_type) %>
+  <%= Organisation::ORGANISATION_TYPES.key(@organisation.organisation_type) || "Not found" %>
 </p>
 
 <p>
