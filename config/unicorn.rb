@@ -1,5 +1,8 @@
 APP_PATH = File.expand_path("../..", __FILE__)
-FOREMAN = ENV.key? 'FOREMAN'
+
+FOREMAN = ENV.key? "FOREMAN"
+UNICORN_NO_PID = ENV.key? "UNICORN_NO_PID"
+UNICORN_NO_SOCKET = ENV.key? "UNICORN_NO_SOCKET"
 
 worker_processes Integer(ENV.fetch("WEB_CONCURRENCY", 3))
 listen Integer(ENV.fetch("UNICORN_PORT", 3000))
@@ -7,8 +10,8 @@ listen Integer(ENV.fetch("UNICORN_PORT", 3000))
 stderr_path File.join(APP_PATH, "log", "unicorn.stderr.log") unless FOREMAN
 stdout_path File.join(APP_PATH, "log", "unicorn.stderr.log") unless FOREMAN
 
-pid File.join(APP_PATH, "tmp", "pids", "unicorn.pid")
-listen File.join(APP_PATH, "tmp", "sockets", "unicorn.sock"), backlog: 64
+pid File.join(APP_PATH, "tmp", "pids", "unicorn.pid") unless UNICORN_NO_PID
+listen(File.join(APP_PATH, "tmp", "sockets", "unicorn.sock"), backlog: 64) unless UNICORN_NO_SOCKET
 
 timeout 15
 preload_app true
