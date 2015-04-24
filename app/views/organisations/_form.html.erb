@@ -6,7 +6,7 @@
   <%= f.text_field :slug %>
 
   <%= f.label :organisation_type %>
-  <%= f.select :organisation_type, options_for_organisation_type, prompt: "-- Select an organisation type --" %>
+  <%= f.select :organisation_type, options_for_organisation_type, prompt: t('select_organisation_type') %>
 
   <%= f.label :searchable %>
   <%= f.check_box :searchable %>

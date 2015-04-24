@@ -46,6 +46,7 @@ en:
   organisation: "Organisation"
   password: "Change Password"
   searchable: "Searchable"
+  select_organisation_type: "-- Select an organisation type --"
   show: "Show"
   slug: "Slug"
   update: "Update"
