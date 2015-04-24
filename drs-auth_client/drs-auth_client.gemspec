@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "drs-auth_client"
   spec.version       = Drs::AuthClient::VERSION
   spec.authors       = ["Jakub Novotny"]
-  spec.email         = ["novotny.jakub@gmail.com"]
+  spec.email         = ["jakub.novotny@digital.justice.gov.uk"]
 
   spec.summary       = "Defence Request Service Auth service API wrapper"
   spec.description   = ""
