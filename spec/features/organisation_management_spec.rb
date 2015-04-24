@@ -21,7 +21,16 @@ RSpec.feature 'Users managing organisations' do
 
     fill_in "Name", with: "Imperial College London"
     fill_in "Slug", with: "imperial-college-london"
-    fill_in "Organisation type", with: "social"
+
+    expect(page).to have_select("Organisation type",
+                                options: ["-- Select an organisation type --",
+                                          "Call centre",
+                                          "Custody suite",
+                                          "Law firm",
+                                          "Law office"])
+
+    select "Call centre", from: "Organisation type"
+
     check "Searchable"
     fill_in "Tel", with: "01632 960178"
     fill_in "Mobile", with: "07700 900407"
@@ -54,7 +63,7 @@ RSpec.feature 'Users managing organisations' do
 
     fill_in "Name", with: "Sub Organisation"
     fill_in "Slug", with: "sub-organisation"
-    fill_in "Organisation type", with: "social"
+    select "Law firm", from: "Organisation type"
     check "Searchable"
     fill_in "Tel", with: "01234 567890"
     fill_in "Mobile", with: "01234 567890"
@@ -143,11 +152,11 @@ RSpec.feature 'Users managing organisations' do
     visit organisations_path
 
     click_link 'Edit'
-    fill_in "Organisation type", with: ""
+    fill_in "Name", with: ""
     click_button 'Update Organisation'
 
     expect(page).to have_content "You need to fix the errors on this page before continuing"
-    expect(page).to have_content "Organisation type: can't be blank"
+    expect(page).to have_content "Name: can't be blank"
   end
 
   specify 'can view relevant details on a show page' do
@@ -157,7 +166,7 @@ RSpec.feature 'Users managing organisations' do
 
     expect(page).to have_content "Name: #{organisation.name}"
     expect(page).to have_content "Slug: #{organisation.slug}"
-    expect(page).to have_content "Organisation type: social"
+    expect(page).to have_content "Organisation type: Law firm"
     expect(page).to have_content 'Searchable: true'
 
     expect(page).to have_content 'Members'
