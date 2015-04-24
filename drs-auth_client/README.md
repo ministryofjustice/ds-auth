@@ -2,6 +2,16 @@
 
 This gem is a part of the *Defence Request Service Auth* project. It's a thin wrapper to provide abstraction of the RESTful api the Auth service provides.
 
+## Instalation
+
+At the moment there's only the Github version available, which can be added to `Gemfile`:
+
+```ruby
+
+gem "drs-auth_client", github: "ministryofjustice/defence-request-service-auth"
+
+```
+
 ## Configuration
 
 There are 2 configuration options:
@@ -14,7 +24,7 @@ The client is currently only configured globally, ie. in Rails initializer:
 ```Ruby
 
 Drs::AuthClient.configure do |client|
-  client.host = 'http://localhost:45454'
+  client.host = "http://localhost:45454"
   client.version = :v1
 end
 
