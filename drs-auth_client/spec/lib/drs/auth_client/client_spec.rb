@@ -13,7 +13,7 @@ RSpec.shared_examples "available resource" do |name|
     let(:uid) { "SOME-UID" }
     let(:path) { "#{path_prefix}/#{uid}" }
     let(:response_code) { 200 }
-    let(:response_body) { -> (env) {{}.to_json} }
+    let(:response_body) { -> (_) {{}.to_json} }
 
     subject { client.send(single_resource_method, uid) }
 
@@ -25,7 +25,7 @@ RSpec.shared_examples "available resource" do |name|
 
     context "for existing #{name}" do
       let(:response_hash) { Hash[single_hash_prefix, {uid: uid, other: "OTHER"}] }
-      let(:response_body) { -> (env) {response_hash.to_json} }
+      let(:response_body) { -> (_) {response_hash.to_json} }
 
       it "returns new #{model} object" do
         is_expected.to be_a(model)
@@ -37,13 +37,17 @@ RSpec.shared_examples "available resource" do |name|
 
     context "for non-existing #{name}" do
       let(:response_code) { 404 }
+
+      it "returns nil" do
+        is_expected.to be nil
+      end
     end
   end
 
   describe "\##{collection_resource_method}" do
     let(:path) { path_prefix }
     let(:response_code) { 200 }
-    let(:response_body) { -> (env) {{}.to_json} }
+    let(:response_body) { -> (_) {{}.to_json} }
 
     subject { client.send(collection_resource_method) }
 
@@ -55,7 +59,7 @@ RSpec.shared_examples "available resource" do |name|
 
     context "when multiple #{plural_name} exist" do
       let(:response_hash) { Hash[collection_hash_prefix, [{uid: "UID 1", other: "NAME 1"}, {uid: "UID 2", other: "NAME 2"}]] }
-      let(:response_body) { -> (env) {response_hash.to_json} }
+      let(:response_body) { -> (_) {response_hash.to_json} }
 
       it "returns all #{plural_name}" do
         expect(subject.size).to be(2)
@@ -73,7 +77,7 @@ RSpec.shared_examples "available resource" do |name|
 
     context "when no organisations exist" do
       let(:response_hash) { {organisations: []} }
-      let(:response_body) { -> (env) {response_hash.to_json} }
+      let(:response_body) { -> (_) {response_hash.to_json} }
 
       it "returns empty array" do
         is_expected.to eql([])

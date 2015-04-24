@@ -31,44 +31,28 @@ module Drs
         collection_resource_name = single_resource_name.pluralize
 
         define_method(single_resource_name) do |uid|
-          single_resource_get("#{collection_resource_name}/#{uid}", model)
+          path = "#{collection_resource_name}/#{uid}"
+          get_resource(path, model, :from_hash, nil)
         end
 
         define_method(collection_resource_name) do
-          collection_resource_get(collection_resource_name, model)
+          get_resource(collection_resource_name, model, :collection_from_hash, [])
         end
       end
 
-      # def organisation(uid)
-      #   single_resource_get("organisations/#{uid}", Models::Organisation)
-      # end
-      #
-      # def organisations
-      #   collection_resource_get("organisations", Models::Organisation)
-      # end
-      #
-      # def profile(uid)
-      #   single_resource_get("profiles/#{uid}", Models::Profile)
-      # end
-      #
-      # def profiles
-      #   collection_resource_get("profiles", Models::Profile)
-      # end
-
       private
 
-      def resource_get(path)
-        JSON.parse(get(path)).deep_symbolize_keys
+      def parse_response(response)
+        JSON.parse(response).deep_symbolize_keys
       end
 
-      def single_resource_get(path, model)
-        hash = resource_get(path)
-        model.from_hash(hash)
-      end
-
-      def collection_resource_get(path, model)
-        hash = resource_get(path)
-        model.collection_from_hash(hash) 
+      def get_resource(path, model, model_method, default_result)
+        response = get(path)
+        if response
+          model.send(model_method, parse_response(response))
+        else
+          default_result
+        end
       end
 
       def conn
