@@ -1,10 +1,10 @@
 class Organisation < ActiveRecord::Base
-  ORGANISATION_TYPES = {
-    "Call centre" => "call_centre",
-    "Custody suite" => "custody_suite",
-    "Law firm" => "law_firm",
-    "Law office" => "law_office"
-  }
+  ORGANISATION_TYPES = [
+    "call_centre",
+    "custody_suite",
+    "law_firm",
+    "law_office"
+  ]
 
   has_many :permissions
   has_many :memberships
@@ -14,7 +14,7 @@ class Organisation < ActiveRecord::Base
   belongs_to :parent_organisation, class_name: "Organisation"
 
   validates :slug, :name, :organisation_type, presence: true
-  validates :organisation_type, inclusion: { in: ORGANISATION_TYPES.values }
+  validates :organisation_type, inclusion: { in: ORGANISATION_TYPES }
   validate :no_circular_references
 
   scope :by_name, -> { order(name: :asc) }

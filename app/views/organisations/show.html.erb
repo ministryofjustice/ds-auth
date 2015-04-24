@@ -10,7 +10,7 @@
 
 <p>
   <strong><%= t('organisation_type') %>:</strong>
-  <%= Organisation::ORGANISATION_TYPES.key(@organisation.organisation_type) %>
+  <%= t("organisation_types.#{@organisation.organisation_type}") %>
 </p>
 
 <p>
