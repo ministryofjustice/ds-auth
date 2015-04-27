@@ -24,19 +24,23 @@ module Drs
         process_response(response)
       end
 
-      (Models.constants - [:Base]).each do |model_name|
-        model = Models.const_get(model_name)
-        single_resource_name = model_name.to_s.underscore.downcase
-        collection_resource_name = single_resource_name.pluralize
+      #
+      # Resource access methods
+      #
+      def organisation(id)
+        get_resource("organisations/#{id}", Models::Organisation, :from_hash, nil)
+      end
 
-        define_method(single_resource_name) do |uid|
-          path = "#{collection_resource_name}/#{uid}"
-          get_resource(path, model, :from_hash, nil)
-        end
+      def organisations
+        get_resource("organisations", Models::Organisation, :collection_from_hash, [])
+      end
 
-        define_method(collection_resource_name) do
-          get_resource(collection_resource_name, model, :collection_from_hash, [])
-        end
+      def profile(id)
+        get_resource("profiles/#{id}", Models::Profile, :from_hash, nil)
+      end
+
+      def profiles
+        get_resource("profiles", Models::Profile, :collection_from_hash, [])
       end
 
       private
