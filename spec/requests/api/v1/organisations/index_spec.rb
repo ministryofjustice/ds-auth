@@ -9,6 +9,7 @@ RSpec.describe "GET /api/v1/organisations" do
     context "with no filtering parameters" do
       it "returns a 200 response with all organisations in name order" do
         tuckers  = create :organisation, name: "Tuckers", organisation_type: "law_firm"
+        tuckers_office  = create :organisation, name: "Tuckers Office", organisation_type: "law_office", parent_organisation: tuckers
         brighton = create :organisation, name: "Brighton", organisation_type: "custody_suite"
         tuckers_profile  = create :profile, user: user, organisations: [tuckers]
         brighton_profile = create :profile, organisations: [brighton]
@@ -23,7 +24,9 @@ RSpec.describe "GET /api/v1/organisations" do
               "name" => "Brighton",
               "type" => brighton.organisation_type,
               "links" => {
-                "profiles" => "/api/v1/profiles/uids[]=#{brighton_profile.uid}"
+                "profiles" => "/api/v1/profiles?uids[]=#{brighton_profile.uid}",
+                "parent_organisation" => nil,
+                "sub_organisations" => nil
               }
             },
             {
@@ -31,7 +34,19 @@ RSpec.describe "GET /api/v1/organisations" do
               "name" => "Tuckers",
               "type" => tuckers.organisation_type,
               "links" => {
-                "profiles" => "/api/v1/profiles/uids[]=#{tuckers_profile.uid}"
+                "profiles" => "/api/v1/profiles?uids[]=#{tuckers_profile.uid}",
+                "parent_organisation" => nil,
+                "sub_organisations" => "/api/v1/organisations?uids[]=#{tuckers_office.uid}"
+              }
+            },
+            {
+              "uid" => tuckers_office.uid,
+              "name" => "Tuckers Office",
+              "type" => tuckers_office.organisation_type,
+              "links" => {
+                "profiles" => nil,
+                "parent_organisation" => "/api/v1/organisation/#{tuckers.uid}",
+                "sub_organisations" => nil
               }
             }
           ]
@@ -64,7 +79,9 @@ RSpec.describe "GET /api/v1/organisations" do
               "name" => "Tuckers",
               "type" => tuckers.organisation_type,
               "links" => {
-                "profiles" => "/api/v1/profiles/uids[]=#{tuckers_profile.uid}"
+                "profiles" => "/api/v1/profiles?uids[]=#{tuckers_profile.uid}",
+                "parent_organisation" => nil,
+                "sub_organisations" => nil
               }
             }
           ]
@@ -88,7 +105,9 @@ RSpec.describe "GET /api/v1/organisations" do
               "name" => "Capita",
               "type" => capita.organisation_type,
               "links" => {
-                "profiles" => "/api/v1/profiles/uids[]=#{capita_profile.uid}"
+                "profiles" => "/api/v1/profiles?uids[]=#{capita_profile.uid}",
+                "parent_organisation" => nil,
+                "sub_organisations" => nil
               }
             },
             {
@@ -96,7 +115,9 @@ RSpec.describe "GET /api/v1/organisations" do
               "name" => "Tuckers",
               "type" => tuckers.organisation_type,
               "links" => {
-                "profiles" => "/api/v1/profiles/uids[]=#{tuckers_profile.uid}"
+                "profiles" => "/api/v1/profiles?uids[]=#{tuckers_profile.uid}",
+                "parent_organisation" => nil,
+                "sub_organisations" => nil
               }
             }
           ]

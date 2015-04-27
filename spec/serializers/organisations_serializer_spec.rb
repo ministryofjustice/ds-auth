@@ -17,7 +17,9 @@ RSpec.describe OrganisationsSerializer do
             name: org_1.name,
             type: org_1.organisation_type,
             links: {
-              profiles: "/api/v1/profiles/uids[]=#{org_1_member.uid}"
+              profiles: "/api/v1/profiles?uids[]=#{org_1_member.uid}",
+              parent_organisation: nil,
+              sub_organisations: nil
             }
           },
           {
@@ -25,7 +27,9 @@ RSpec.describe OrganisationsSerializer do
             name: org_2.name,
             type: org_2.organisation_type,
             links: {
-              profiles: "/api/v1/profiles/uids[]=#{org_2_member.uid}"
+              profiles: "/api/v1/profiles?uids[]=#{org_2_member.uid}",
+              parent_organisation: nil,
+              sub_organisations: nil
             }
           }
         ]

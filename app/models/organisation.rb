@@ -8,9 +8,9 @@ class Organisation < ActiveRecord::Base
 
   has_many :permissions
   has_many :memberships
-  has_many :profiles, through: :memberships
+  has_many :profiles, -> { order :name }, through: :memberships
 
-  has_many :sub_organisations, class_name: "Organisation", foreign_key: "parent_organisation_id"
+  has_many :sub_organisations, -> { order :id }, class_name: "Organisation", foreign_key: "parent_organisation_id"
   belongs_to :parent_organisation, class_name: "Organisation"
 
   validates :slug, :name, :organisation_type, presence: true

@@ -13,13 +13,25 @@ class OrganisationSerializer < BaseSerializer
 
   def serialized_links
     {
-      profiles: "/api/v1/profiles/" + serialized_profile_ids
+      profiles: profiles_link,
+      parent_organisation: parent_organisation_link,
+      sub_organisations: sub_organisations_link,
     }
   end
 
-  def serialized_profile_ids
-    object.profiles.by_name.map do |profile|
-      "uids[]=#{profile.uid}"
-    end.join("&")
+  def serialize_uids(collection)
+    collection.map { |obj| "uids[]=#{obj.uid}" }.join("&")
+  end
+
+  def profiles_link
+    "/api/v1/profiles?#{serialize_uids(object.profiles)}" unless object.profiles.empty?
+  end
+
+  def parent_organisation_link
+    "/api/v1/organisation/#{object.parent_organisation.uid}" if object.parent_organisation.try(:uid)
+  end
+
+  def sub_organisations_link
+    "/api/v1/organisations?#{serialize_uids(object.sub_organisations)}" unless object.sub_organisations.empty?
   end
 end

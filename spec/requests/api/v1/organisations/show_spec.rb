@@ -20,10 +20,40 @@ RSpec.describe "GET /api/v1/organisations/:uid" do
           "name" => organisation.name,
           "type" => organisation.organisation_type,
           "links" => {
-            "profiles" => "/api/v1/profiles/uids[]=#{member_2.uid}&uids[]=#{member_1.uid}"
+            "profiles" => "/api/v1/profiles?uids[]=#{member_2.uid}&uids[]=#{member_1.uid}",
+            "parent_organisation" => nil,
+            "sub_organisations" => nil
           }
         }
       )
+    end
+
+    context "with a parent organisation and sub organisations" do
+      it "returns a 200 response with sub_organisations link" do
+        parent_organisation = create :organisation
+        organisation = create :organisation, parent_organisation: parent_organisation
+        member_1 = create :profile, name: "Eamonn Holmes", user: user, organisations: [organisation]
+        member_2 = create :profile, name: "Barry Evans", organisations: [organisation]
+
+        sub_organisation1 = create :organisation, parent_organisation: organisation
+        sub_organisation2 = create :organisation, parent_organisation: organisation
+
+        get "/api/v1/organisations/#{organisation.uid}", nil, api_request_headers
+
+        expect(response.status).to eq(200)
+        expect(response_json).to eq(
+          "organisation" => {
+            "uid" => organisation.uid,
+            "name" => organisation.name,
+            "type" => organisation.organisation_type,
+            "links" => {
+              "profiles" => "/api/v1/profiles?uids[]=#{member_2.uid}&uids[]=#{member_1.uid}",
+              "parent_organisation" => "/api/v1/organisation/#{parent_organisation.uid}",
+              "sub_organisations" => "/api/v1/organisations?uids[]=#{sub_organisation1.uid}&uids[]=#{sub_organisation2.uid}"
+            }
+          }
+        )
+      end
     end
 
     it "returns a 404 response with an error with an invalid UID" do
