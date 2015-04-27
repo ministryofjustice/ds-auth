@@ -11,9 +11,9 @@ Rails.application.routes.draw do
 
   resources :permissions, only: [:new, :index, :create, :destroy]
 
-  root 'welcome#index'
+  root "welcome#index"
 
-  namespace :api, format: 'json' do
+  namespace :api, format: "json" do
     namespace :v1 do
       resources :organisations, only: [:index, :show], param: :uid
       resources :profiles, only: [:index, :show], param: :uid do
@@ -22,11 +22,11 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/status' => 'status#index'
-  get '/help', controller: :static, action: :help, as: :help
-  get '/maintenance', controller: :static, action: :maintenance, as: :maintenance
-  get '/cookies', controller: :static, action: :cookies, as: :cookies
-  get '/accessibility', controller: :static, action: :accessibility, as: :accessibility
-  get '/terms', controller: :static, action: :terms, as: :terms
-  get '/expired', controller: :static, action: :expired, as: :expired
+  get "/status" => "status#index"
+  get "/help", controller: :static, action: :help, as: :help
+  get "/maintenance", controller: :static, action: :maintenance, as: :maintenance
+  get "/cookies", controller: :static, action: :cookies, as: :cookies
+  get "/accessibility", controller: :static, action: :accessibility, as: :accessibility
+  get "/terms", controller: :static, action: :terms, as: :terms
+  get "/expired", controller: :static, action: :expired, as: :expired
 end

@@ -25,6 +25,6 @@ class Profile < ActiveRecord::Base
   attr :associated_user
 
   def associated_user=(string_value)
-    @associated_user = (string_value == '1')
+    @associated_user = (string_value == "1")
   end
 end

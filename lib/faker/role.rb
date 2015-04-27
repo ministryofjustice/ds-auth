@@ -1,4 +1,4 @@
-require 'faker'
+require "faker"
 
 module Faker
   class Role < Base
@@ -10,7 +10,7 @@ module Faker
       private
 
       def all_values
-        @values ||= translate('faker.role.name')
+        @values ||= translate("faker.role.name")
       end
     end
   end

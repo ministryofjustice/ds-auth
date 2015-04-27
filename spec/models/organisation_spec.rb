@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Organisation do
-  describe 'validations' do
+  describe "validations" do
     it { expect(subject).to validate_presence_of :name }
     it { expect(subject).to validate_presence_of :slug }
     it { expect(subject).to validate_presence_of :organisation_type }
@@ -13,13 +13,13 @@ RSpec.describe Organisation do
       let!(:child_organisation) { create :organisation,
                                          parent_organisation: organisation }
 
-      it 'invalid if two organisations reference each other' do
+      it "invalid if two organisations reference each other" do
         organisation.parent_organisation = child_organisation
         expect(organisation).to be_invalid
         expect(child_organisation).to be_invalid
       end
 
-      it 'valid if 3 organisations are hierarchical' do
+      it "valid if 3 organisations are hierarchical" do
         grandchild_organisation = create :organisation,
                                          parent_organisation: child_organisation
         expect(organisation).to be_valid
@@ -27,7 +27,7 @@ RSpec.describe Organisation do
         expect(grandchild_organisation).to be_valid
       end
 
-      it 'invalid if 3 organisations are circular' do
+      it "invalid if 3 organisations are circular" do
         grandchild_organisation = create :organisation,
                                          parent_organisation: child_organisation
         organisation.parent_organisation = grandchild_organisation
@@ -38,7 +38,7 @@ RSpec.describe Organisation do
     end
   end
 
-  describe 'associations' do
+  describe "associations" do
     specify { expect(subject).to have_many(:permissions) }
     specify { expect(subject).to have_many(:profiles).through(:memberships) }
 

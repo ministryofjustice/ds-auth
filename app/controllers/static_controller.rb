@@ -2,22 +2,22 @@ class StaticController < ApplicationController
   protect_from_forgery except: :expired
 
   def help
-    render 'help'
+    render "help"
   end
 
   def accessibility
-    render 'accessibility'
+    render "accessibility"
   end
 
   def cookies
-    render 'cookies'
+    render "cookies"
   end
 
   def expired
-    render 'expired'
+    render "expired"
   end
 
   def terms
-    render 'terms'
+    render "terms"
   end
 end

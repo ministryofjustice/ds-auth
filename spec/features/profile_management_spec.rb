@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.feature "Users managing profiles" do
   let(:user) { create(:user) }

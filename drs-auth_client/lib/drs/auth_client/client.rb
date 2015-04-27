@@ -18,7 +18,7 @@ module Drs
 
         response = conn.get do |request|
           request.url path
-          request.headers['Authorization'] = "Bearer #{@auth_token}"
+          request.headers["Authorization"] = "Bearer #{@auth_token}"
         end
 
         process_response(response)
