@@ -23,7 +23,7 @@ class Organisation < ActiveRecord::Base
 
   def no_circular_references(organisation=self)
     if organisation.parent_organisation == self
-      errors.add(:parent_organisation, 'cannot cause circular references')
+      errors.add(:parent_organisation, "cannot cause circular references")
     elsif organisation.parent_organisation.present?
       no_circular_references(organisation.parent_organisation)
     end

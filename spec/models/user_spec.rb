@@ -1,15 +1,15 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe User do
   let(:user){ create :user }
-  let(:role) { Role.create(name: 'super-danger-admin') }
+  let(:role) { Role.create(name: "super-danger-admin") }
 
-  describe 'associations' do
+  describe "associations" do
     specify { expect(subject).to have_one(:profile) }
     specify { expect(subject).to have_many(:permissions) }
   end
 
-  describe 'delegation' do
+  describe "delegation" do
     specify { expect(subject).to delegate_method(:name).to(:profile) }
   end
 

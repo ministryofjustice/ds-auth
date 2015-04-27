@@ -16,7 +16,7 @@ class ProfileForm
   end
 
   def self.model_name
-    ActiveModel::Name.new(self, nil, 'Profile')
+    ActiveModel::Name.new(self, nil, "Profile")
   end
 
   def initialize(profile)
@@ -57,7 +57,7 @@ class ProfileForm
 
   def associated_user?(params)
     associated_user = params[:associated_user]
-    associated_user.present? && associated_user != '0'
+    associated_user.present? && associated_user != "0"
   end
 end
 

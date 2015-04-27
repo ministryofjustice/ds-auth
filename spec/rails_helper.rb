@@ -9,7 +9,7 @@ require "capybara/poltergeist"
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
 
-WebMock.disable_net_connect!(allow_localhost: true, allow: ['codeclimate.com'])
+WebMock.disable_net_connect!(allow_localhost: true, allow: ["codeclimate.com"])
 
 RSpec.configure do |config|
   config.include HelperMethods

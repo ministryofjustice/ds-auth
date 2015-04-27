@@ -31,6 +31,6 @@ module ApplicationHelper
   end
 
   def js_partial
-    params[:controller] + '/js_partials/' + params[:controller] + '_' + params[:action] + '_js.html.erb'
+    params[:controller] + "/js_partials/" + params[:controller] + "_" + params[:action] + "_js.html.erb"
   end
 end

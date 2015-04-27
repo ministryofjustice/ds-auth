@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.feature 'Users managing users' do
+RSpec.feature "Users managing users" do
   let!(:profile) { create(:profile, :with_user) }
   let!(:other_user) { create(:user) }
 
@@ -16,10 +16,10 @@ RSpec.feature 'Users managing users' do
       click_link "Change Password"
     end
 
-    fill_in 'Password', with: "NEW PASSWORD"
-    fill_in 'Password confirmation', with: "NEW PASSWORD"
+    fill_in "Password", with: "NEW PASSWORD"
+    fill_in "Password confirmation", with: "NEW PASSWORD"
 
-    click_button 'Update User'
+    click_button "Update User"
 
     expect(page).to have_content "User successfully updated"
 
@@ -27,20 +27,20 @@ RSpec.feature 'Users managing users' do
 
     login_as_user profile.user.email, "NEW PASSWORD"
 
-    expect(page).to have_content('You made it...')
+    expect(page).to have_content("You made it...")
   end
 
-  specify 'are shown errors if the password cannot be changed' do
+  specify "are shown errors if the password cannot be changed" do
     visit profiles_path
 
     within "#profile_#{profile.id}" do
       click_link "Change Password"
     end
 
-    fill_in 'Password', with: "NEW PASSWORD"
-    fill_in 'Password confirmation', with: "NEW kuafhsdf"
+    fill_in "Password", with: "NEW PASSWORD"
+    fill_in "Password confirmation", with: "NEW kuafhsdf"
 
-    click_button 'Update User'
+    click_button "Update User"
 
     expect(page).to have_content "You need to fix the errors on this page before continuing"
     expect(page).to have_content "Password confirmation: doesn't match Password"

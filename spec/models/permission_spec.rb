@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Permission do
-  describe 'associations' do
+  describe "associations" do
     specify { expect(subject).to belong_to(:user) }
     specify { expect(subject).to belong_to(:role) }
 
@@ -9,7 +9,7 @@ RSpec.describe Permission do
     specify { expect(subject).to belong_to(:organisation) }
   end
 
-  describe 'validations' do
+  describe "validations" do
     specify { expect(subject).to validate_presence_of(:user) }
     specify { expect(subject).to validate_presence_of(:application) }
     specify { expect(subject).to validate_presence_of(:role) }
