@@ -21,3 +21,7 @@ CaseIndentation:
   - case
   - end
   IndentOneStep: true
+
+Style/StringLiteralsInInterpolation:
+  Description: Checks if uses of quotes inside expressions in interpolated strings.
+  Enabled: false
