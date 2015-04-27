@@ -12,3 +12,12 @@ AllCops:
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+CaseIndentation:
+  Description: Indentation of when in a case/when/[else/]end.
+  Enabled: true
+  IndentWhenRelativeTo: case
+  SupportedStyles:
+  - case
+  - end
+  IndentOneStep: true

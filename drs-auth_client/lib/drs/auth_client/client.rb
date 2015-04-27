@@ -55,8 +55,6 @@ module Drs
             raise Errors::Internal
           when 200
             response.body
-          else
-            nil
         end
       end
 
