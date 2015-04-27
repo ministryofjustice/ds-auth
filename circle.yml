@@ -1,0 +1,8 @@
+machine:
+  ruby:
+    version: 2.2.1
+
+test:
+  override:
+    - bundle exec rspec
+    - cd drs-auth_client && bundle install && bundle exec rspec
