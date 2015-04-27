@@ -1,0 +1,27 @@
+inherit_from:
+  - rubocop/gds-ruby-styleguide.yml
+  - rubocop/other-lint.yml
+  - rubocop/other-rails.yml
+  - rubocop/other-style.yml
+  - .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/schema.rb'
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+CaseIndentation:
+  Description: Indentation of when in a case/when/[else/]end.
+  Enabled: true
+  IndentWhenRelativeTo: case
+  SupportedStyles:
+  - case
+  - end
+  IndentOneStep: true
+
+Style/StringLiteralsInInterpolation:
+  Description: Checks if uses of quotes inside expressions in interpolated strings.
+  Enabled: false
