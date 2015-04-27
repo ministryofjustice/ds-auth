@@ -123,13 +123,15 @@ RSpec.describe Drs::AuthClient::Client do
 
     subject { client.get(path) }
 
-    before { subject }
-
     it "makes a GET request based on the client configuration" do
+      subject
+
       expect(Faraday).to have_received(:new).with("#{host}/api/#{version}")
     end
 
     it "makes the GET request for the given resource" do
+      subject
+
       stubbed_calls.verify_stubbed_calls
     end
 
@@ -147,6 +149,27 @@ RSpec.describe Drs::AuthClient::Client do
       let(:response_code) { 400 }
 
       it { is_expected.to be nil }
+    end
+
+    context "when the auth token is empty" do
+      let(:auth_token) { nil }
+
+      it { expect { subject }.to raise_error(Drs::AuthClient::Errors::Unauthorised) }
+    end
+    context "when the auth token is invalid or expired" do
+      let(:response_code) { 401 }
+
+      it { expect { subject }.to raise_error(Drs::AuthClient::Errors::Unauthorised) }
+    end
+    context "when access to the requested recourse is prohibited" do
+      let(:response_code) { 403 }
+
+      it { expect { subject }.to raise_error(Drs::AuthClient::Errors::Forbidden) }
+    end
+    context "when the server fails to respond" do
+      let(:response_code) { 500 }
+
+      it { expect { subject }.to raise_error(Drs::AuthClient::Errors::Internal) }
     end
   end
 

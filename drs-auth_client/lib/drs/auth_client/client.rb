@@ -1,4 +1,5 @@
 require "active_support/core_ext/hash/keys"
+require "active_support/core_ext/object/blank"
 require "active_support/core_ext/string/inflections"
 require "faraday"
 
@@ -13,16 +14,14 @@ module Drs
       end
 
       def get(path)
+        raise Errors::Unauthorised if @auth_token.blank?
+
         response = conn.get do |request|
           request.url path
           request.headers['Authorization'] = "Bearer #{@auth_token}"
         end
 
-        if response.status == 200
-          response.body
-        else
-          nil
-        end
+        process_response(response)
       end
 
       (Models.constants - [:Base]).each do |model_name|
@@ -41,6 +40,21 @@ module Drs
       end
 
       private
+
+      def process_response(response)
+        case (response.status)
+          when 401
+            raise Errors::Unauthorised
+          when 403
+            raise Errors::Forbidden
+          when 500
+            raise Errors::Internal
+          when 200
+            response.body
+          else
+            nil
+        end
+      end
 
       def parse_response(response)
         JSON.parse(response).deep_symbolize_keys
