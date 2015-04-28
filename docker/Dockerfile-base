@@ -1,4 +1,4 @@
-FROM ruby:2.2.1
+FROM ruby:2.2.2
 
 # **This always needs to be the very first step.**
 # If you 'date +%s > latest-security-upgrades' and commit it, the latest security updates
