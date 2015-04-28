@@ -1,9 +1,7 @@
 machine:
   ruby:
-    version: 2.2.1
-
+    version: 2.2.2
 test:
   override:
     - bundle exec rake --trace
     - cd drs-auth_client && bundle install && bundle exec rspec
-

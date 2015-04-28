@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "2.2.1"
+ruby "2.2.2"
 
 gem "dotenv-rails", "~> 2.0.0", require: "dotenv/rails-now"
 
