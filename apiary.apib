@@ -36,7 +36,7 @@ It is recommended to follow the “url” link values, [Link](https://tools.ietf
 # Group Organisations
 Organisations are logical groups of users, and can be filtered by one or more types.
 
-## Organisations Collection [/api/v1/organisations?types[]=xxx]
+## Organisations Collection [/api/v1/organisations?uids[]=xxx&types[]=xxx]
 
 ### List all Organisations [GET]
 + Request
@@ -47,6 +47,7 @@ Organisations are logical groups of users, and can be filtered by one or more ty
             Authorization: Bearer <TOKEN>
 
 + Parameters
+    + uids (array[uuid], optional) - Organisation UIDs to load
     + types (array[string], optional) - Params array of Organisation types to filter by
         + Members
             + `custody_suite`
@@ -149,7 +150,7 @@ Used to find contact details for Solicitors or Agents.
             Authorization: Bearer <TOKEN>
 
 + Parameters
-    + uids (array[uuid], optional) - User UIDs to load
+    + uids (array[uuid], optional) - Profile UIDs to load
     + types (array[string], optional) - Profile types to filter by
         + Members
             + `solicitor`
