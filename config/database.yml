@@ -13,3 +13,7 @@ development:
 test:
   <<: *default
   database: defence-solicitor-service-auth_test
+
+production:
+  <<: *default
+  database: defence-solicitor-service-auth_production

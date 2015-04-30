@@ -1,12 +1,4 @@
-FROM ruby:2.2.2
-
-# **This always needs to be the very first step.**
-# If you 'date +%s > latest-security-upgrades' and commit it, the latest security updates
-# will be appplied, because every later step will be invalidated
-ENV HOME /root
-ENV DEBIAN_FRONTEND noninteractive
-ADD .latest-security-upgrades /.latest-security-upgrades
-RUN apt-get update && apt-get -y upgrade
+FROM ministryofjustice/docker-moj-base:latest
 
 ##############################################################################
 # Copy helper scripts into the container:
@@ -15,10 +7,38 @@ RUN apt-get update && apt-get -y upgrade
 ADD docker/bin/clean-up-docker-container /usr/local/bin/clean-up-docker-container
 
 ##############################################################################
+# Apply Security Upgrades
+##############################################################################
+# **This always needs to be the very first step after installing the helper scripts.**
+# If you 'date +%s > latest-security-upgrades' and commit it, the latest security updates
+# will be appplied, because every later step will be invalidated
+ENV HOME /root
+ENV DEBIAN_FRONTEND noninteractive
+ADD .latest-security-upgrades /.latest-security-upgrades
+RUN apt-get update && apt-get -y upgrade && /usr/local/bin/clean-up-docker-container
+
+# FIXME: Currently we're using brightbox's ruby 2.2.2 release, since we don't have
+# a repo.dsd.io release of ruby 2.2.2. See story #93634238
+# Instructions: https://www.brightbox.com/docs/ruby/ubuntu/
+RUN echo "deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main" > /etc/apt/sources.list.d/brightbox-ruby-ng-trusty.list \
+  && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6 \
+  && apt-get update && apt-get -y upgrade \
+  && apt-get install -y --no-install-recommends git ruby2.2 ruby2.2-dev \
+  && gem install bundler \
+  && /usr/local/bin/clean-up-docker-container
+
+##############################################################################
 # Add packages required by the codebase
 ##############################################################################
-# * NodeJS - Javascript runtime environment
-RUN apt-get update && apt-get install -y nodejs
+# * build-essential - To compile code
+# * libpq-dev - for connecting to a postgresql database
+# * libxslt1.1 - for nokogiri
+# * libyaml-0-2 - faster yaml parsing
+# * nodejs - Javascript runtime environment
+# * zlib1g-dev - for nokogiri
+RUN apt-get update \
+  && apt-get install -y build-essential libpq-dev libxslt1.1 libyaml-0-2 nodejs \
+  && /usr/local/bin/clean-up-docker-container
 
 ##############################################################################
 # Required Gems
@@ -31,4 +51,4 @@ RUN apt-get update && apt-get install -y nodejs
 #
 ADD Gemfile /tmp/gemfile-when-docker-image-built/Gemfile
 ADD Gemfile.lock /tmp/gemfile-when-docker-image-built/Gemfile.lock
-RUN bundle install --gemfile=/tmp/gemfile-when-docker-image-built/Gemfile
+RUN bundle install --gemfile=/tmp/gemfile-when-docker-image-built/Gemfile && /usr/local/bin/clean-up-docker-container
