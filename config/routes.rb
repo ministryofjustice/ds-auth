@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   use_doorkeeper do
     # it accepts :authorizations, :tokens, :applications and :authorized_applications
-    controllers :authorizations => 'doorkeeper/authorizations_with_role_check'
+    controllers authorizations: "doorkeeper/authorizations_with_role_check"
   end
   devise_for :users, skip: [:registrations]
 
