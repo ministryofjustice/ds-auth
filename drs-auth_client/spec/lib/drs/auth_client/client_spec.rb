@@ -83,6 +83,19 @@ RSpec.shared_examples "available resource" do |name|
         is_expected.to eql([])
       end
     end
+
+    context "with params" do
+      let(:params) { { key: "value" } }
+      let(:path) { "#{path_prefix}?key=value" }
+
+      subject { client.send(collection_resource_method, params) }
+
+      it "makes the correct request with params" do
+        subject
+
+        stubbed_calls.verify_stubbed_calls
+      end
+    end
   end
 
 end
