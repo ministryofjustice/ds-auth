@@ -25,6 +25,7 @@ RSpec.feature "Users managing organisations" do
     expect(page).to have_select("Organisation type",
                                 options: ["-- Select an organisation type --",
                                           "Call centre",
+                                          "Court",
                                           "Custody suite",
                                           "Law firm",
                                           "Law office"])

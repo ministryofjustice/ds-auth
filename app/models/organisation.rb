@@ -1,10 +1,11 @@
 class Organisation < ActiveRecord::Base
-  ORGANISATION_TYPES = [
-    "call_centre",
-    "custody_suite",
-    "law_firm",
-    "law_office"
-  ]
+  ORGANISATION_TYPES = %w{
+    call_centre
+    court
+    custody_suite
+    law_firm
+    law_office
+  }
 
   has_many :permissions
   has_many :memberships
