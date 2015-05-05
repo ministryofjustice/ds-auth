@@ -1,6 +1,7 @@
 class Organisation < ActiveRecord::Base
   ORGANISATION_TYPES = [
     "call_centre",
+    "court",
     "custody_suite",
     "law_firm",
     "law_office"
