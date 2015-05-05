@@ -84,11 +84,11 @@ RSpec.shared_examples "available resource" do |name|
       end
     end
 
-    context "with options" do
-      let(:options) { { key: "value" } }
+    context "with params" do
+      let(:params) { { key: "value" } }
       let(:path) { "#{path_prefix}?key=value" }
 
-      subject { client.send(collection_resource_method, options) }
+      subject { client.send(collection_resource_method, params) }
 
       it "makes the correct request with params" do
         subject

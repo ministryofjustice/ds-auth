@@ -13,13 +13,13 @@ module Drs
         @auth_token = auth_token
       end
 
-      def get(path, options = {})
+      def get(path, params = {})
         raise Errors::Unauthorised if @auth_token.blank?
 
         response = conn.get do |request|
           request.url path
           request.headers["Authorization"] = "Bearer #{@auth_token}"
-          request.params = options
+          request.params = params
         end
 
         process_response(response)
@@ -32,16 +32,16 @@ module Drs
         get_resource("organisations/#{id}", Models::Organisation, :from_hash, nil)
       end
 
-      def organisations(options = {})
-        get_resource("organisations", Models::Organisation, :collection_from_hash, [], options)
+      def organisations(params = {})
+        get_resource("organisations", Models::Organisation, :collection_from_hash, [], params)
       end
 
       def profile(id)
         get_resource("profiles/#{id}", Models::Profile, :from_hash, nil)
       end
 
-      def profiles(options = {})
-        get_resource("profiles", Models::Profile, :collection_from_hash, [], options)
+      def profiles(params = {})
+        get_resource("profiles", Models::Profile, :collection_from_hash, [], params)
       end
 
       private
@@ -63,8 +63,8 @@ module Drs
         JSON.parse(response).deep_symbolize_keys
       end
 
-      def get_resource(path, model, model_method, default_result, options = {})
-        response = get(path, options)
+      def get_resource(path, model, model_method, default_result, params = {})
+        response = get(path, params)
         if response
           model.send(model_method, parse_response(response))
         else
