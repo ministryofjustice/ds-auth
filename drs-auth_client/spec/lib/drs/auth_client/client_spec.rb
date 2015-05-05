@@ -87,8 +87,6 @@ RSpec.shared_examples "available resource" do |name|
     context "with options" do
       let(:options) { { key: "value" } }
       let(:path) { "#{path_prefix}?key=value" }
-      let(:response_hash) { Hash[collection_hash_prefix, [{uid: "UID 7", other: "NAME 7"}]] }
-      let(:response_body) { -> (_) {response_hash.to_json} }
 
       subject { client.send(collection_resource_method, options) }
 
@@ -96,10 +94,6 @@ RSpec.shared_examples "available resource" do |name|
         subject
 
         stubbed_calls.verify_stubbed_calls
-      end
-
-      it "returns only matching #{plural_name}" do
-        expect(subject.map(&:uid)).to match_array(["UID 7"])
       end
     end
   end
