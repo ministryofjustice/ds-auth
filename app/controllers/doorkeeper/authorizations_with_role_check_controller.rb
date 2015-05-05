@@ -1,8 +1,6 @@
 module Doorkeeper
   class AuthorizationsWithRoleCheckController < Doorkeeper::AuthorizationsController
     def new
-      # current_resource_owner == current_user
-      # server.client_via_uid.application == OAuth::Applications
       if resource_owner_has_role_for_application?
         super
       else
