@@ -16,7 +16,7 @@ RSpec.describe "GET /oauth/authorize" do
       client_id: doorkeeper_app.uid,
       redirect_uri: doorkeeper_app.redirect_uri,
       response_type: "code",
-      state: "c987b113ab6ea39c642f712ba587e8975c05d4fa7bd36fd7"
+      state: "TEST_VALUE"
     )
   end
 
