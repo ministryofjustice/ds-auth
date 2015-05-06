@@ -1,7 +1,26 @@
 machine:
   ruby:
     version: 2.2.2
+  services:
+    - docker
 test:
   override:
     - bundle exec rake --trace
     - cd drs-auth_client && bundle install && bundle exec rspec
+deployment:
+  create_containers:
+    branch: master
+    commands:
+      # Log into the docker container. Note that this requires these environment variables
+      # to be stored in the CircleCI environment config
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      # Ensure that the docker container built contains absolutely nothing unexpected
+      # that might have been installed by CircleCI (eg an updated database.yml)
+      #
+      # We delete vendor/bundle and .bundle here individually, since the
+      # vendor/bundle/ruby/2.2.0/bundler/gems/defence-request-service-omniauth-dsds-ad15dbb76c9e git checkout
+      # isn't deleted by git clean as it's a submodule
+      - rm -rf vendor/bundle .bundle
+      - git clean --force -d
+      - git reset --hard
+      - DOCKER_IMAGE_TAG=$CIRCLE_BUILD_NUM annotate-output make

@@ -8,7 +8,7 @@ RUN touch /etc/inittab
 
 # Add application server
 COPY ./docker/runit/application-server/run /etc/service/application-server/run
-RUN chmod +x /etc/service/application-server
+RUN chmod +x /etc/service/application-server/run
 
 ###############################################################################
 # Add code and set work directory. Generally everything from this
@@ -16,6 +16,13 @@ RUN chmod +x /etc/service/application-server
 ###############################################################################
 COPY . /usr/src/app
 WORKDIR /usr/src/app
+
+###############################################################################
+# Defaults for executing container
+###############################################################################
+# Default environment variables for production runs
+ENV RAILS_ENV production
+ENV UNICORN_PORT 3000
 
 ###############################################################################
 # Compile Assets
@@ -27,16 +34,8 @@ WORKDIR /usr/src/app
 # and we don't want to wait until boot time to run the asset precompile,
 # we use the environment variables in the .env.development file to run the precompile
 #
-COPY .env.development .env.local
 # Build assets, then clear all env files. including .env.local
-RUN bin/rake assets:clobber assets:precompile && rm -f .env.*
-
-###############################################################################
-# Defaults for executing container
-###############################################################################
-# Default environment variables for production runs
-ENV RAILS_ENV production
-ENV UNICORN_PORT 3000
+RUN cp .env.development .env.local && bin/rake assets:clobber assets:precompile && rm -f .env.*
 
 # Allow incoming connections on the Unicorn port
 EXPOSE $UNICORN_PORT
@@ -44,6 +43,9 @@ EXPOSE $UNICORN_PORT
 # Add volumes for log files
 VOLUME /usr/src/app/logs
 VOLUME /var/log
+
+# Don't run logstash, statsd, or sshd
+RUN rm -rf /etc/service/logstash /etc/service/statsd /etc/service/sshd
 
 # Run all services by default
 CMD ["/usr/bin/runsvdir", "-P", "/etc/service"]
