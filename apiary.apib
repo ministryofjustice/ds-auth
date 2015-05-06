@@ -63,6 +63,8 @@ Organisations are logical groups of users, and can be filtered by one or more ty
                     "uid": "1234567890abcdef",
                     "name": "Tuckers",
                     "type": "law_firm",
+                    "parent_organisation_uid": null,
+                    "sub_organisation_uids": [],
                     "links": {
                         "profiles": "/api/v1/profiles?uids[]=1a2b3c&uids[]=4d5e6f&uids[]=a1b2c3",
                         "parent_organisation": null,
@@ -73,6 +75,8 @@ Organisations are logical groups of users, and can be filtered by one or more ty
                     "uid": "0987654321fedcba",
                     "name": "Brighton",
                     "type": "custody_suite",
+                    "parent_organisation_uid": "3c3aedd3",
+                    "sub_organisation_uids": ["4eb3dc", "a5b2ecc"],
                     "links": {
                         "profiles": null,
                         "parent_organisation": "/api/v1/organisation/3c3aedd3",
@@ -118,6 +122,8 @@ A single Organisation with all its details.
                 "uid": "1234567890abcdef",
                 "name": "Tuckers",
                 "type": "law_firm",
+                "parent_organisation_uid": "3c3aedd3",
+                "sub_organisation_uids": ["4eb3dc", "a5b2ecc"],
                 "links": {
                     "profiles": "/api/v1/profiles?uids[]=1a2b3c&uids[]=4d5e6f&uids[]=a1b2c3",
                     "parent_organisation": "/api/v1/organisation/3c3aedd3",
