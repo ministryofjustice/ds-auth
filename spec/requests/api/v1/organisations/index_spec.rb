@@ -23,6 +23,8 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => brighton.uid,
               "name" => "Brighton",
               "type" => brighton.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
               "links" => {
                 "profiles" => "/api/v1/profiles?uids[]=#{brighton_profile.uid}",
                 "parent_organisation" => nil,
@@ -33,6 +35,8 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => tuckers.uid,
               "name" => "Tuckers",
               "type" => tuckers.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [tuckers_office.uid],
               "links" => {
                 "profiles" => "/api/v1/profiles?uids[]=#{tuckers_profile.uid}",
                 "parent_organisation" => nil,
@@ -43,6 +47,8 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => tuckers_office.uid,
               "name" => "Tuckers Office",
               "type" => tuckers_office.organisation_type,
+              "parent_organisation_uid" => tuckers.uid,
+              "sub_organisation_uids" => [],
               "links" => {
                 "profiles" => nil,
                 "parent_organisation" => "/api/v1/organisation/#{tuckers.uid}",
@@ -78,6 +84,8 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => brighton.uid,
               "name" => "Brighton",
               "type" => brighton.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
               "links" => {
                 "profiles" => nil,
                 "parent_organisation" => nil,
@@ -88,6 +96,8 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => london.uid,
               "name" => "London",
               "type" => london.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
               "links" => {
                 "profiles" => nil,
                 "parent_organisation" => nil,
@@ -125,6 +135,8 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => tuckers.uid,
               "name" => "Tuckers",
               "type" => tuckers.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
               "links" => {
                 "profiles" => "/api/v1/profiles?uids[]=#{tuckers_profile.uid}",
                 "parent_organisation" => nil,
@@ -151,6 +163,8 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => capita.uid,
               "name" => "Capita",
               "type" => capita.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
               "links" => {
                 "profiles" => "/api/v1/profiles?uids[]=#{capita_profile.uid}",
                 "parent_organisation" => nil,
@@ -161,6 +175,8 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => tuckers.uid,
               "name" => "Tuckers",
               "type" => tuckers.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
               "links" => {
                 "profiles" => "/api/v1/profiles?uids[]=#{tuckers_profile.uid}",
                 "parent_organisation" => nil,
@@ -197,6 +213,8 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => london.uid,
               "name" => "London",
               "type" => london.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
               "links" => {
                 "profiles" => nil,
                 "parent_organisation" => nil,

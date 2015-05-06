@@ -19,6 +19,8 @@ RSpec.describe "GET /api/v1/organisations/:uid" do
           "uid" => organisation.uid,
           "name" => organisation.name,
           "type" => organisation.organisation_type,
+          "parent_organisation_uid" => nil,
+          "sub_organisation_uids" => [],
           "links" => {
             "profiles" => "/api/v1/profiles?uids[]=#{member_2.uid}&uids[]=#{member_1.uid}",
             "parent_organisation" => nil,
@@ -46,6 +48,8 @@ RSpec.describe "GET /api/v1/organisations/:uid" do
             "uid" => organisation.uid,
             "name" => organisation.name,
             "type" => organisation.organisation_type,
+            "parent_organisation_uid" => parent_organisation.uid,
+            "sub_organisation_uids" => [sub_organisation1.uid, sub_organisation2.uid],
             "links" => {
               "profiles" => "/api/v1/profiles?uids[]=#{member_2.uid}&uids[]=#{member_1.uid}",
               "parent_organisation" => "/api/v1/organisation/#{parent_organisation.uid}",
