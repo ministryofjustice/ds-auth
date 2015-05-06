@@ -19,19 +19,29 @@ law_firm = Organisation.where(slug: "law-firm").first_or_create(
   organisation_type: "law_firm"
 )
 
+laa = Organisation.where(slug: "laa").first_or_create(
+  name: "Legal Aid Agency",
+  organisation_type: "civil",
+)
+
 (1..5).each do |i|
   Membership.create(
     organisation: custody_suite,
-    profile: Profile.where(email: "cso#{i}@example.com").first,
+    profile: Profile.where(email: "cso#{i}@example.com").first
   )
 
   Membership.create(
     organisation: call_centre,
-    profile: Profile.where(email: "cco#{i}@example.com").first,
+    profile: Profile.where(email: "cco#{i}@example.com").first
   )
 
   Membership.create(
     organisation: law_firm,
-    profile: Profile.where(email: "solicitor#{i}@example.com").first,
+    profile: Profile.where(email: "solicitor#{i}@example.com").first
+  )
+
+  Membership.create(
+    organisation: laa,
+    profile: Profile.where(email: "laa#{i}@example.com").first
   )
 end
