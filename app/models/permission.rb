@@ -10,4 +10,6 @@ class Permission < ActiveRecord::Base
   scope :for_application, ->(application) {
     where(application: application)
   }
+
+  delegate :name, to: :organisation, prefix: true, allow_nil: true
 end
