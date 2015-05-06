@@ -14,6 +14,7 @@ class Profile < ActiveRecord::Base
   phony_normalize :tel, :mobile, default_country_code: "GB"
   validates_plausible_phone :tel, :mobile, presence: true
 
+  default_scope { order :name }
   scope :by_name, -> { order(name: :asc) }
 
   # It is not valid to have multiple memberships for a single organisation

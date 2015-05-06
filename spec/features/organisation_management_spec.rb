@@ -199,11 +199,11 @@ RSpec.feature "Users managing organisations" do
     click_link "Show"
     click_link "New Member"
 
-    select Profile.first.name
+    select Profile.unscoped.first.name
     click_button "Create Membership"
 
     expect(page).to have_content "Membership successfully created"
-    expect(page).to have_content Profile.first.name
+    expect(page).to have_content Profile.unscoped.first.name
   end
 
   specify "are shown errors if a member cannot be added" do
@@ -212,7 +212,7 @@ RSpec.feature "Users managing organisations" do
     click_link "Show"
     click_link "New Member"
 
-    profile = Profile.first
+    profile = Profile.unscoped.first
     select profile.name
     profile.delete
 
