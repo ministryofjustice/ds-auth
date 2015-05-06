@@ -45,4 +45,14 @@ Profile.where(user: user2).first_or_create(
     tel: "01234567890",
     mobile: "07123456789"
   )
+
+  laa = User.where(email: "laa#{i}@example.com").first_or_create(password: "password")
+  Profile.where(user: laa).first_or_create(
+    name: "LAA #{i}",
+    address: "#{i} Fake Street",
+    postcode: "POSTCODE",
+    email: "laa#{i}@example.com",
+    tel: "09011105010",
+    mobile: "07123456789"
+  )
 end
