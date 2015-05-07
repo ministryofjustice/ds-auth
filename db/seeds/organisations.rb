@@ -1,25 +1,25 @@
-example_org = Organisation.where(slug: "example-org").first_or_create(
+example_org = Organisation.where(slug: "example-org").first_or_create!(
   name: "Example Org",
   organisation_type: "law_office")
 
 Membership.create(organisation: example_org, profile: Profile.where(email: "jeff@example").first)
 
-custody_suite = Organisation.where(slug: "custody-suite").first_or_create(
+custody_suite = Organisation.where(slug: "custody-suite").first_or_create!(
   name: "Custody Suite",
   organisation_type: "custody_suite"
 )
 
-call_centre = Organisation.where(slug: "capita").first_or_create(
+call_centre = Organisation.where(slug: "capita").first_or_create!(
   name: "Capita",
   organisation_type: "call_centre"
 )
 
-law_firm = Organisation.where(slug: "law-firm").first_or_create(
+law_firm = Organisation.where(slug: "law-firm").first_or_create!(
   name: "Law Firm",
   organisation_type: "law_firm"
 )
 
-laa = Organisation.where(slug: "laa").first_or_create(
+laa = Organisation.where(slug: "laa").first_or_create!(
   name: "Legal Aid Agency",
   organisation_type: "civil",
 )
