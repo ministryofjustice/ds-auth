@@ -58,6 +58,19 @@ RSpec.describe "Users managing permissions" do
     expect(page).to have_content "Permission successfully deleted"
   end
 
+  specify "can delete permissions from the organisation show page"  do
+    visit organisation_path(organisation)
+
+    within "##{organisation.profiles.first.id}-row" do
+      within "dl" do
+        click_link "Delete"
+      end
+    end
+
+    expect(page).to have_content "Permission successfully deleted"
+    expect(page).not_to have_content permission.application.name
+  end
+
   specify "are shown a message if the permission cannot be deleted"  do
     visit permissions_path
 

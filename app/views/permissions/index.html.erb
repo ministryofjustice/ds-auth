@@ -13,7 +13,7 @@
         <td><%= permission.user.email %></td>
         <td><%= permission.role.name %></td>
         <td><%= permission.application.name %></td>
-        <td><%= permission.organisation.name %></td>
+        <td><%= permission.organisation_name %></td>
         <td><%= link_to t("delete"), permission, method: :delete, data: { confirm: t('are_you_sure') } %></td>
       </tr>
     <% end %>

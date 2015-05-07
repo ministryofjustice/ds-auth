@@ -78,7 +78,10 @@
             <dl>
               <%- profile.user.permissions.order(:application_id).each do |permission| %>
                 <dt><%= permission.application.name %> App:</dt>
-                <dd><%= permission.role.name%></dd>
+                <dd>
+                  <%= permission.role.name %>
+                  <%= link_to t(:delete), permission_path(permission, redirect_path: organisation_path(@organisation)), method: :delete, data: { confirm: t(:are_you_sure)} %>
+                </dd>
               <%- end %>
             </dl>
             <%- end %>
