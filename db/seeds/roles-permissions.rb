@@ -1,7 +1,7 @@
-cso_role = Role.where(name: "cso").first_or_create
-cco_role = Role.where(name: "cco").first_or_create
-solicitor_role = Role.where(name: "solicitor").first_or_create
-laa_role = Role.where(name: "laa").first_or_create
+cso_role = Role.where(name: "cso").first_or_create!
+cco_role = Role.where(name: "cco").first_or_create!
+solicitor_role = Role.where(name: "solicitor").first_or_create!
+laa_role = Role.where(name: "laa").first_or_create!
 
 rota_app = Doorkeeper::Application.find_by(name: "Rota")
 service_app = Doorkeeper::Application.find_by(name: "Service")
