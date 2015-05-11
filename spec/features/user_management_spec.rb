@@ -51,7 +51,7 @@ RSpec.feature "Users managing users" do
   end
 end
 
-def user_cannot_be_destroyed_for_some_reason user
+def user_cannot_be_destroyed_for_some_reason(user)
   expect(User).to receive(:find).with(user.id.to_s) { user }
   expect(user).to receive(:destroy) { false }
 end

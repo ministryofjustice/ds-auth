@@ -24,7 +24,7 @@ module ApplicationHelper
     end
   end
 
-  def errors_for_field field_name, field_messages
+  def errors_for_field(field_name, field_messages)
     content_tag :li do
       "#{field_name}: #{field_messages.join(', ')}".html_safe
     end

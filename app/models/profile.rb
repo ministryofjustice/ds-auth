@@ -18,7 +18,7 @@ class Profile < ActiveRecord::Base
 
   # It is not valid to have multiple memberships for a single organisation
   # so we can safely always call .first as only one will be returned
-  def membership_for organisation
+  def membership_for(organisation)
     memberships.where(organisation: organisation).first
   end
 

@@ -154,7 +154,7 @@ RSpec.feature "Users managing profiles" do
   end
 end
 
-def profile_cannot_be_destroyed_for_some_reason profile
+def profile_cannot_be_destroyed_for_some_reason(profile)
   expect(Profile).to receive(:find).with(profile.id.to_s) { profile }
   expect(profile).to receive(:destroy) { false }
 end

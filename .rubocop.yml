@@ -22,6 +22,12 @@ CaseIndentation:
   - end
   IndentOneStep: true
 
+MethodDefParentheses:
+  Description: >-
+    Checks if the method definitions have or don't have
+    parentheses.
+  Enabled: true
+
 Style/StringLiteralsInInterpolation:
   Description: Checks if uses of quotes inside expressions in interpolated strings.
   Enabled: false

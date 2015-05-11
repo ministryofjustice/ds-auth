@@ -43,11 +43,11 @@ RSpec.feature "User authentication" do
   end
 end
 
-def number_of_active_oauth_tokens_for user
+def number_of_active_oauth_tokens_for(user)
   Doorkeeper::AccessToken.where(resource_owner_id: user.id, revoked_at: nil).count
 end
 
-def user_is_logged_in user
+def user_is_logged_in(user)
   visit new_user_session_path
   fill_in "user_email", with: user.email
   fill_in "user_password", with: "password"
