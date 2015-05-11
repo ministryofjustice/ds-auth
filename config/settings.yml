@@ -8,6 +8,9 @@ devise:
   key: <%= ENV.fetch('DEVISE_KEY') %>
   salt: <%= ENV.fetch('DEVISE_SALT') %>
 
+doorkeeper:
+  force_ssl_in_redirect_uri: <%= ENV.fetch('FORCE_SSL_IN_REDIRECT_URI', false) %>
+
 action_mailer:
   default_url_options:
     host: <%= ENV.fetch('MAILER_DEFAULT_URL_HOST') %>
