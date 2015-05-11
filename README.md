@@ -42,6 +42,8 @@ To get the application running locally, you need to:
 
  	You can find the service app running on `http://localhost:45454`
 
+  To find which users credentials you can use, look in the `db/seeds/users.rb` file
+
 ### Test setup
 
 To run the tests, you will need to install [PhantomJS](http://phantomjs.org/), the test suite is known to be working with version `1.9.7`, it may or may not work with other versions. To run the tests, use the command: ```bundle exec rake```
