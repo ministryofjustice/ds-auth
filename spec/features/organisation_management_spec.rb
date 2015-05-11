@@ -253,12 +253,12 @@ RSpec.feature "Users managing organisations" do
   end
 end
 
-def organisation_cannot_be_destroyed_for_some_reason organisation
+def organisation_cannot_be_destroyed_for_some_reason(organisation)
   expect(Organisation).to receive(:find).with(organisation.id.to_s) { organisation }
   expect(organisation).to receive(:destroy) { false }
 end
 
-def membership_cannot_be_destroyed_for_some_reason membership
+def membership_cannot_be_destroyed_for_some_reason(membership)
   expect(Membership).to receive(:find).with(membership.id.to_s) { membership }
   expect(membership).to receive(:destroy) { false }
 end

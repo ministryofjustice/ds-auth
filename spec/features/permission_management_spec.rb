@@ -83,7 +83,7 @@ RSpec.describe "Users managing permissions" do
 
 end
 
-def permission_cannot_be_destroyed_for_some_reason permission
+def permission_cannot_be_destroyed_for_some_reason(permission)
   expect(Permission).to receive(:find).with(permission.id.to_s) { permission }
   expect(permission).to receive(:destroy) { false }
 end
