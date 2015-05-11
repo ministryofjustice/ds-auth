@@ -10,7 +10,7 @@ devise:
   salt: <%= ENV.fetch('DEVISE_SALT') %>
 
 doorkeeper:
-  force_ssl_in_redirect_uri: <%= ENV.fetch('FORCE_SSL_IN_REDIRECT_URI', false) %>
+  force_ssl_in_redirect_uri: <%= ENV.fetch('FORCE_SSL_IN_REDIRECT_URI', true) %>
 
 action_mailer:
   default_url_options:
