@@ -3,10 +3,14 @@ dsauth:
 
 rails:
   secret_key_base: <%= ENV.fetch('SECRET_KEY_BASE') %>
+  force_ssl: <%= ENV.fetch("FORCE_SSL", true) %>
 
 devise:
   key: <%= ENV.fetch('DEVISE_KEY') %>
   salt: <%= ENV.fetch('DEVISE_SALT') %>
+
+doorkeeper:
+  force_ssl_in_redirect_uri: <%= ENV.fetch('FORCE_SSL_IN_REDIRECT_URI', true) %>
 
 action_mailer:
   default_url_options:
