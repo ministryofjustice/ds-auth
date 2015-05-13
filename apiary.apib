@@ -36,7 +36,7 @@ It is recommended to follow the “url” link values, [Link](https://tools.ietf
 # Group Organisations
 Organisations are logical groups of users, and can be filtered by one or more types.
 
-## Organisations Collection [/api/v1/organisations?types[]=xxx]
+## Organisations Collection [/api/v1/organisations?uids[]=xxx&types[]=xxx]
 
 ### List all Organisations [GET]
 + Request
@@ -47,6 +47,7 @@ Organisations are logical groups of users, and can be filtered by one or more ty
             Authorization: Bearer <TOKEN>
 
 + Parameters
+    + uids (array[uuid], optional) - Organisation UIDs to load
     + types (array[string], optional) - Params array of Organisation types to filter by
         + Members
             + `custody_suite`
@@ -62,16 +63,24 @@ Organisations are logical groups of users, and can be filtered by one or more ty
                     "uid": "1234567890abcdef",
                     "name": "Tuckers",
                     "type": "law_firm",
+                    "parent_organisation_uid": null,
+                    "sub_organisation_uids": [],
                     "links": {
-                        "profiles": "/api/v1/profiles?uids[]=1a2b3c&uids[]=4d5e6f&uids[]=a1b2c3"
+                        "profiles": "/api/v1/profiles?uids[]=1a2b3c&uids[]=4d5e6f&uids[]=a1b2c3",
+                        "parent_organisation": null,
+                        "sub_organisations": null
                     }
                 },
                 {
                     "uid": "0987654321fedcba",
                     "name": "Brighton",
                     "type": "custody_suite",
+                    "parent_organisation_uid": "3c3aedd3",
+                    "sub_organisation_uids": ["4eb3dc", "a5b2ecc"],
                     "links": {
-                        "profiles": "/api/v1/profiles?uids[]=0f9e8d&uids[]=7c6b5a"
+                        "profiles": null,
+                        "parent_organisation": "/api/v1/organisation/3c3aedd3",
+                        "sub_organisations": "/api/v1/organisations?uids[]=4eb3dc&uids[]=a5b2ecc"
                     }
 
                 }
@@ -113,8 +122,12 @@ A single Organisation with all its details.
                 "uid": "1234567890abcdef",
                 "name": "Tuckers",
                 "type": "law_firm",
+                "parent_organisation_uid": "3c3aedd3",
+                "sub_organisation_uids": ["4eb3dc", "a5b2ecc"],
                 "links": {
-                    "profiles": "/api/v1/profiles?uids[]=1a2b3c&uids[]=4d5e6f&uids[]=a1b2c3"
+                    "profiles": "/api/v1/profiles?uids[]=1a2b3c&uids[]=4d5e6f&uids[]=a1b2c3",
+                    "parent_organisation": "/api/v1/organisation/3c3aedd3",
+                    "sub_organisations": "/api/v1/organisations?uids[]=4eb3dc&uids[]=a5b2ecc"
                 }
             }
         }
@@ -143,7 +156,7 @@ Used to find contact details for Solicitors or Agents.
             Authorization: Bearer <TOKEN>
 
 + Parameters
-    + uids (array[uuid], optional) - User UIDs to load
+    + uids (array[uuid], optional) - Profile UIDs to load
     + types (array[string], optional) - Profile types to filter by
         + Members
             + `solicitor`
@@ -229,7 +242,7 @@ No authorization is needed for this endpoint.
 ### Profile Matches [GET]
 
 + Parameters
-	+ q (string, optional) - query string
+    + q (string, optional) - query string
 
 + Response 200 (application/json)
 
@@ -240,7 +253,7 @@ No authorization is needed for this endpoint.
                     "name": "Bob Smith",
                     "type": "solicitor",
                     "links": {
-                   	     "organisation": "/api/v1/organisations/1234567890abcdef"
+                        "organisation": "/api/v1/organisations/1234567890abcdef"
                     }
                 }
             ],

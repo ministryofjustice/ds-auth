@@ -79,7 +79,7 @@ RSpec.describe ProfileForm do
         it "saves and creates a new User" do
           subject.submit(profile_and_user_params)
           expect(User.count).to eq 1
-          expect(User.last.email).to eq Profile.last.email
+          expect(User.last.email).to eq Profile.unscoped.last.email
           expect(Profile.count).to eq 1
         end
       end

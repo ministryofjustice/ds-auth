@@ -40,7 +40,7 @@ RSpec.feature "Users managing profiles" do
 
     click_button "Create Profile"
 
-    within "#profile_#{Profile.last.id}" do
+    within "#profile_#{Profile.unscoped.last.id}" do
       expect(page).to have_content "Eamonn Holmes"
       expect(page).to_not have_link "User"
     end
@@ -63,7 +63,7 @@ RSpec.feature "Users managing profiles" do
 
     click_button "Create Profile"
 
-    within "#profile_#{Profile.last.id}" do
+    within "#profile_#{Profile.unscoped.last.id}" do
       expect(page).to have_content "Eamonn Holmes"
       expect(page).to have_link "Change Password"
     end

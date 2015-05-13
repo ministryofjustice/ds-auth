@@ -16,16 +16,24 @@ RSpec.describe OrganisationsSerializer do
             uid: org_1.uid,
             name: org_1.name,
             type: org_1.organisation_type,
+            parent_organisation_uid: nil,
+            sub_organisation_uids: [],
             links: {
-              profiles: "/api/v1/profiles/uids[]=#{org_1_member.uid}"
+              profiles: "/api/v1/profiles?uids[]=#{org_1_member.uid}",
+              parent_organisation: nil,
+              sub_organisations: nil
             }
           },
           {
             uid: org_2.uid,
             name: org_2.name,
             type: org_2.organisation_type,
+            parent_organisation_uid: nil,
+            sub_organisation_uids: [],
             links: {
-              profiles: "/api/v1/profiles/uids[]=#{org_2_member.uid}"
+              profiles: "/api/v1/profiles?uids[]=#{org_2_member.uid}",
+              parent_organisation: nil,
+              sub_organisations: nil
             }
           }
         ]

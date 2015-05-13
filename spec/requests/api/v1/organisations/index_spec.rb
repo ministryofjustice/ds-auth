@@ -9,6 +9,7 @@ RSpec.describe "GET /api/v1/organisations" do
     context "with no filtering parameters" do
       it "returns a 200 response with all organisations in name order" do
         tuckers  = create :organisation, name: "Tuckers", organisation_type: "law_firm"
+        tuckers_office  = create :organisation, name: "Tuckers Office", organisation_type: "law_office", parent_organisation: tuckers
         brighton = create :organisation, name: "Brighton", organisation_type: "custody_suite"
         tuckers_profile  = create :profile, user: user, organisations: [tuckers]
         brighton_profile = create :profile, organisations: [brighton]
@@ -22,16 +23,36 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => brighton.uid,
               "name" => "Brighton",
               "type" => brighton.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
               "links" => {
-                "profiles" => "/api/v1/profiles/uids[]=#{brighton_profile.uid}"
+                "profiles" => "/api/v1/profiles?uids[]=#{brighton_profile.uid}",
+                "parent_organisation" => nil,
+                "sub_organisations" => nil
               }
             },
             {
               "uid" => tuckers.uid,
               "name" => "Tuckers",
               "type" => tuckers.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [tuckers_office.uid],
               "links" => {
-                "profiles" => "/api/v1/profiles/uids[]=#{tuckers_profile.uid}"
+                "profiles" => "/api/v1/profiles?uids[]=#{tuckers_profile.uid}",
+                "parent_organisation" => nil,
+                "sub_organisations" => "/api/v1/organisations?uids[]=#{tuckers_office.uid}"
+              }
+            },
+            {
+              "uid" => tuckers_office.uid,
+              "name" => "Tuckers Office",
+              "type" => tuckers_office.organisation_type,
+              "parent_organisation_uid" => tuckers.uid,
+              "sub_organisation_uids" => [],
+              "links" => {
+                "profiles" => nil,
+                "parent_organisation" => "/api/v1/organisation/#{tuckers.uid}",
+                "sub_organisations" => nil
               }
             }
           ]
@@ -40,6 +61,57 @@ RSpec.describe "GET /api/v1/organisations" do
 
       it "returns an empty 200 response if no organisations exist" do
         get "/api/v1/organisations", nil, api_request_headers
+
+        expect(response.status).to eq(200)
+        expect(response_json).to eq(
+          "organisations" => []
+        )
+      end
+    end
+
+    context "with uids filter" do
+      it "returns 200 response with matching organisations" do
+        create :organisation, name: "Tuckers", organisation_type: "law_firm"
+        brighton = create :organisation, name: "Brighton", organisation_type: "custody_suite"
+        london   = create :organisation, name: "London", organisation_type: "custody_suite"
+
+        get "/api/v1/organisations", { uids: [brighton.uid, london.uid] }, api_request_headers
+
+        expect(response.status).to eq(200)
+        expect(response_json).to eq(
+          "organisations" => [
+            {
+              "uid" => brighton.uid,
+              "name" => "Brighton",
+              "type" => brighton.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
+              "links" => {
+                "profiles" => nil,
+                "parent_organisation" => nil,
+                "sub_organisations" => nil
+              }
+            },
+            {
+              "uid" => london.uid,
+              "name" => "London",
+              "type" => london.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
+              "links" => {
+                "profiles" => nil,
+                "parent_organisation" => nil,
+                "sub_organisations" => nil
+              }
+            }
+          ]
+        )
+      end
+
+      it "returns an empty 200 response if not organisations match" do
+        create :organisation, name: "Tuckers", organisation_type: "law_firm"
+
+        get "/api/v1/organisations", { uids: ["a-random-guid"] }, api_request_headers
 
         expect(response.status).to eq(200)
         expect(response_json).to eq(
@@ -63,8 +135,12 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => tuckers.uid,
               "name" => "Tuckers",
               "type" => tuckers.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
               "links" => {
-                "profiles" => "/api/v1/profiles/uids[]=#{tuckers_profile.uid}"
+                "profiles" => "/api/v1/profiles?uids[]=#{tuckers_profile.uid}",
+                "parent_organisation" => nil,
+                "sub_organisations" => nil
               }
             }
           ]
@@ -87,16 +163,24 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => capita.uid,
               "name" => "Capita",
               "type" => capita.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
               "links" => {
-                "profiles" => "/api/v1/profiles/uids[]=#{capita_profile.uid}"
+                "profiles" => "/api/v1/profiles?uids[]=#{capita_profile.uid}",
+                "parent_organisation" => nil,
+                "sub_organisations" => nil
               }
             },
             {
               "uid" => tuckers.uid,
               "name" => "Tuckers",
               "type" => tuckers.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
               "links" => {
-                "profiles" => "/api/v1/profiles/uids[]=#{tuckers_profile.uid}"
+                "profiles" => "/api/v1/profiles?uids[]=#{tuckers_profile.uid}",
+                "parent_organisation" => nil,
+                "sub_organisations" => nil
               }
             }
           ]
@@ -107,6 +191,44 @@ RSpec.describe "GET /api/v1/organisations" do
         create :organisation, organisation_type: "custody_suite"
 
         get "/api/v1/organisations", { types: ["doesn't-exist"] }, api_request_headers
+
+        expect(response.status).to eq(200)
+        expect(response_json).to eq(
+          "organisations" => []
+        )
+      end
+    end
+
+    context "with uids and type filters" do
+      it "returns 200 response with matching organisations" do
+        tuckers = create :organisation, name: "Tuckers", organisation_type: "law_firm"
+        london   = create :organisation, name: "London", organisation_type: "custody_suite"
+
+        get "/api/v1/organisations", { uids: [tuckers.uid, london.uid], types: [london.organisation_type] }, api_request_headers
+
+        expect(response.status).to eq(200)
+        expect(response_json).to eq(
+          "organisations" => [
+            {
+              "uid" => london.uid,
+              "name" => "London",
+              "type" => london.organisation_type,
+              "parent_organisation_uid" => nil,
+              "sub_organisation_uids" => [],
+              "links" => {
+                "profiles" => nil,
+                "parent_organisation" => nil,
+                "sub_organisations" => nil
+              }
+            }
+          ]
+        )
+      end
+
+      it "returns an empty 200 response if not organisations match" do
+        create :organisation, name: "Tuckers", organisation_type: "law_firm"
+
+        get "/api/v1/organisations", { uids: ["a-random-guid"], types: ["law_firm"] }, api_request_headers
 
         expect(response.status).to eq(200)
         expect(response_json).to eq(
