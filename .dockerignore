@@ -8,3 +8,6 @@ log/*
 
 # Simplecov coverage report
 coverage/*
+
+# Remove Makefile, which changes often when re-running
+Makefile
