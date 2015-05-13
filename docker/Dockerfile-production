@@ -41,8 +41,7 @@ RUN cp .env.development .env.local && bin/rake assets:clobber assets:precompile 
 EXPOSE $UNICORN_PORT
 
 # Add volumes for log files
-VOLUME /usr/src/app/logs
-VOLUME /var/log
+VOLUME /usr/src/app/logs /var/log
 
 # Don't run logstash, statsd, or sshd
 RUN rm -rf /etc/service/logstash /etc/service/statsd /etc/service/sshd
