@@ -3,7 +3,24 @@ FROM defence-request-service-auth:base_localbuild
 # Base packages:
 #   - postgresql-client
 #
-RUN apt-get update && apt-get install -y postgresql-client
+# Packages required for PhantomJS:
+#   - build-essential
+#   - chrpath
+#   - git-core
+#   - libssl-dev
+#   - libfontconfig1-dev
+#
+RUN apt-get update && apt-get install -y postgresql-client \
+	build-essential chrpath git-core libssl-dev libfontconfig1-dev
+
+###############################################################################
+# Install PhantomJS
+###############################################################################
+ADD vendor/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 /usr/local/share/
+RUN ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/share/phantomjs && \
+    ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs && \
+    ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/bin/phantomjs && \
+    rm -f /usr/local/share/phantomjs-1.9.7-linux-x86_64.tar.bz2
 
 ###############################################################################
 # Defaults for executing container
