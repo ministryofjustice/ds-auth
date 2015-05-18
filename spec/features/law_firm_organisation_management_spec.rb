@@ -30,6 +30,6 @@ RSpec.feature "Users managing law firm type organisations" do
       click_link "Show"
     end
 
-    expect(page).to have_content "Supplier Number: AABBCC12345678"
+    expect(page).to have_content "Supplier number: AABBCC12345678"
   end
 end

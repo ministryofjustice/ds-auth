@@ -12,6 +12,6 @@ module OrganisationsHelper
   end
 
   def hidden_unless_law_firm(organisation)
-    organisation.is_law_firm? ? '' : 'hidden'
+    organisation.is_law_firm? ? "" : "hidden"
   end
 end

@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :organisation do |organisation|
     organisation.name              { Faker::Company.name }
     organisation.slug              { Faker::Internet.slug name}
-    organisation.organisation_type "law_firm"
+    organisation.organisation_type "custody_suite"
     organisation.searchable         true
     organisation.uid                { SecureRandom.uuid }
 

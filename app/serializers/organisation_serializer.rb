@@ -8,7 +8,7 @@ class OrganisationSerializer < BaseSerializer
       parent_organisation_uid: parent_organisation_uid,
       sub_organisation_uids: sub_organisation_uids,
       links: serialized_links
-    }
+    }.merge organisation_type_specific_fields
   end
 
   private
@@ -31,6 +31,16 @@ class OrganisationSerializer < BaseSerializer
 
   def sub_organisation_uids
     object.sub_organisations.map(&:uid)
+  end
+
+  def organisation_type_specific_fields
+    if object.is_law_firm?
+      {
+        supplier_number: object.supplier_number
+      }
+    else
+      {}
+    end
   end
 
   def profiles_link
