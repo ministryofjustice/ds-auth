@@ -55,6 +55,7 @@ en:
   select_organisation_type: "-- Select an organisation type --"
   show: "Show"
   slug: "Slug"
+  supplier_number: "Supplier number"
   update: "Update"
   update_profile: "Update Profile"
   update_user: "Update User"

@@ -12,4 +12,10 @@
  *
  *= require govuk_elements_extensions
  *= require user_management
+ *= require_self
  */
+
+aside {
+  font-size: 0.8em;
+  color: #888;
+}
