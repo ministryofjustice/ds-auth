@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     # it accepts :authorizations, :tokens, :applications and :authorized_applications
     controllers authorizations: "doorkeeper/authorizations_with_role_check"
   end
-  devise_for :users, skip: [:registrations]
+  devise_for :users, skip: [:registrations], controllers: { sessions: "sessions" }
 
   resources :users, only: [:edit, :update]
   resources :profiles, except: [:show]
