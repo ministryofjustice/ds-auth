@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424092725) do
+ActiveRecord::Schema.define(version: 20150518131629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,8 +84,10 @@ ActiveRecord::Schema.define(version: 20150424092725) do
     t.string   "mobile"
     t.uuid     "uid",                    default: "uuid_generate_v4()"
     t.integer  "parent_organisation_id"
+    t.jsonb    "details",                default: {}
   end
 
+  add_index "organisations", ["details"], name: "index_organisations_on_details", using: :gin
   add_index "organisations", ["parent_organisation_id"], name: "index_organisations_on_parent_organisation_id", using: :btree
   add_index "organisations", ["uid"], name: "index_organisations_on_uid", using: :btree
 

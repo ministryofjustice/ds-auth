@@ -21,6 +21,12 @@ class Organisation < ActiveRecord::Base
 
   scope :by_name, -> { order(name: :asc) }
 
+  store_accessor :details, :supplier_number
+
+  def is_law_firm?
+    organisation_type == "law_firm" || organisation_type == "law_office"
+  end
+
   private
 
   def no_circular_references(organisation=self)

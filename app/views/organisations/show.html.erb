@@ -13,6 +13,13 @@
   <%= organisation_type(@organisation) %>
 </p>
 
+<%- if @organisation.is_law_firm? %>
+<p>
+  <strong><%= t('supplier_number') %>:</strong>
+  <%= @organisation.supplier_number %>
+</p>
+<%- end %>
+
 <p>
   <strong><%= t('searchable') %>:</strong>
   <%= @organisation.searchable %>

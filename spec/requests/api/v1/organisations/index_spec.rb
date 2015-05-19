@@ -8,8 +8,9 @@ RSpec.describe "GET /api/v1/organisations" do
 
     context "with no filtering parameters" do
       it "returns a 200 response with all organisations in name order" do
-        tuckers  = create :organisation, name: "Tuckers", organisation_type: "law_firm"
-        tuckers_office  = create :organisation, name: "Tuckers Office", organisation_type: "law_office", parent_organisation: tuckers
+        tuckers  = create :organisation, name: "Tuckers", organisation_type: "law_firm", supplier_number: "AABBCC12345678"
+        tuckers_office  = create :organisation, name: "Tuckers Office", organisation_type: "law_office",
+                            parent_organisation: tuckers, supplier_number: "AABBCC99999"
         brighton = create :organisation, name: "Brighton", organisation_type: "custody_suite"
         tuckers_profile  = create :profile, user: user, organisations: [tuckers]
         brighton_profile = create :profile, organisations: [brighton]
@@ -35,6 +36,7 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => tuckers.uid,
               "name" => "Tuckers",
               "type" => tuckers.organisation_type,
+              "supplier_number" => tuckers.supplier_number,
               "parent_organisation_uid" => nil,
               "sub_organisation_uids" => [tuckers_office.uid],
               "links" => {
@@ -47,6 +49,7 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => tuckers_office.uid,
               "name" => "Tuckers Office",
               "type" => tuckers_office.organisation_type,
+              "supplier_number" => tuckers_office.supplier_number,
               "parent_organisation_uid" => tuckers.uid,
               "sub_organisation_uids" => [],
               "links" => {
@@ -135,6 +138,7 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => tuckers.uid,
               "name" => "Tuckers",
               "type" => tuckers.organisation_type,
+              "supplier_number" => tuckers.supplier_number,
               "parent_organisation_uid" => nil,
               "sub_organisation_uids" => [],
               "links" => {
@@ -175,6 +179,7 @@ RSpec.describe "GET /api/v1/organisations" do
               "uid" => tuckers.uid,
               "name" => "Tuckers",
               "type" => tuckers.organisation_type,
+              "supplier_number" => tuckers.supplier_number,
               "parent_organisation_uid" => nil,
               "sub_organisation_uids" => [],
               "links" => {

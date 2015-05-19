@@ -168,7 +168,7 @@ RSpec.feature "Users managing organisations" do
 
     expect(page).to have_content "Name: #{organisation.name}"
     expect(page).to have_content "Slug: #{organisation.slug}"
-    expect(page).to have_content "Organisation type: Law firm"
+    expect(page).to have_content "Organisation type: Custody suite"
     expect(page).to have_content "Searchable: true"
 
     expect(page).to have_content "Members"

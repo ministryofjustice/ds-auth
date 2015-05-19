@@ -60,6 +60,30 @@ RSpec.describe "GET /api/v1/organisations/:uid" do
       end
     end
 
+    context "when organisation is a law_firm type" do
+      it "returns the supplier_number in the response" do
+        organisation = create :organisation, organisation_type: "law_firm", supplier_number: "AABBCC12345678"
+        get "/api/v1/organisations/#{organisation.uid}", nil, api_request_headers
+
+        expect(response.status).to eq(200)
+        expect(response_json).to eq(
+          "organisation" => {
+            "uid" => organisation.uid,
+            "name" => organisation.name,
+            "type" => organisation.organisation_type,
+            "supplier_number" => organisation.supplier_number,
+            "parent_organisation_uid" => nil,
+            "sub_organisation_uids" => [],
+            "links" => {
+              "profiles" => nil,
+              "parent_organisation" => nil,
+              "sub_organisations" => nil
+            }
+          }
+        )
+      end
+    end
+
     it "returns a 404 response with an error with an invalid UID" do
       get "/api/v1/organisations/doesn't-exit", nil, api_request_headers
 

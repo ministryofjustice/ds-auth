@@ -10,4 +10,8 @@ module OrganisationsHelper
   def organisation_type(organisation)
     t("organisation_types.#{@organisation.organisation_type}")
   end
+
+  def hidden_unless_law_firm(organisation)
+    organisation.is_law_firm? ? "" : "hidden"
+  end
 end
