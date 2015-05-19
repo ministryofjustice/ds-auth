@@ -19,6 +19,7 @@ RSpec.describe "GET /api/v1/organisations/:uid" do
           "uid" => organisation.uid,
           "name" => organisation.name,
           "type" => organisation.organisation_type,
+          "tel" => organisation.tel,
           "parent_organisation_uid" => nil,
           "sub_organisation_uids" => [],
           "links" => {
@@ -48,6 +49,7 @@ RSpec.describe "GET /api/v1/organisations/:uid" do
             "uid" => organisation.uid,
             "name" => organisation.name,
             "type" => organisation.organisation_type,
+            "tel" => organisation.tel,
             "parent_organisation_uid" => parent_organisation.uid,
             "sub_organisation_uids" => [sub_organisation1.uid, sub_organisation2.uid],
             "links" => {
@@ -71,6 +73,7 @@ RSpec.describe "GET /api/v1/organisations/:uid" do
             "uid" => organisation.uid,
             "name" => organisation.name,
             "type" => organisation.organisation_type,
+            "tel" => organisation.tel,
             "supplier_number" => organisation.supplier_number,
             "parent_organisation_uid" => nil,
             "sub_organisation_uids" => [],

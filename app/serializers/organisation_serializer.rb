@@ -5,6 +5,7 @@ class OrganisationSerializer < BaseSerializer
       uid: object.uid,
       name: object.name,
       type: object.organisation_type,
+      tel: object.tel,
       parent_organisation_uid: parent_organisation_uid,
       sub_organisation_uids: sub_organisation_uids,
       links: serialized_links
