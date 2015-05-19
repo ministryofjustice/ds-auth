@@ -4,7 +4,7 @@ module Drs
   module AuthClient
     module Models
       class Organisation < Base
-        attr_accessor :name, :type
+        attr_accessor :name, :type, :tel
       end
     end
   end
