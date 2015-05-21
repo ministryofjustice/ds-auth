@@ -3,6 +3,7 @@ FactoryGirl.define do
     organisation.name              { Faker::Company.name }
     organisation.slug              { Faker::Internet.slug name}
     organisation.organisation_type "custody_suite"
+    organisation.tel               { Faker::PhoneNumber.phone_number }
     organisation.searchable         true
     organisation.uid                { SecureRandom.uuid }
 

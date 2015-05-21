@@ -16,6 +16,7 @@ RSpec.describe OrganisationsSerializer do
             uid: org_1.uid,
             name: org_1.name,
             type: org_1.organisation_type,
+            tel: org_1.tel,
             parent_organisation_uid: nil,
             sub_organisation_uids: [],
             links: {
@@ -28,6 +29,7 @@ RSpec.describe OrganisationsSerializer do
             uid: org_2.uid,
             name: org_2.name,
             type: org_2.organisation_type,
+            tel: org_2.tel,
             parent_organisation_uid: nil,
             sub_organisation_uids: [],
             links: {
