@@ -35,16 +35,31 @@ base_container:
 
 development_container: base_container
 	cat docker/Dockerfile-development | sed -e "s/FROM ${DOCKER_IMAGE}:base_localbuild/FROM ${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}/g" > Dockerfile
+
+	# Store the repo offset into the Dockerfile. We do this as the very last
+	# step of each container (not the Base container) to avoid invalidating caching.
+	printf "\nRUN echo `git rev-parse HEAD` > /.git-revision\n\n" >> Dockerfile
+
 	docker build -t "${DOCKER_IMAGE}:development_${DOCKER_IMAGE_TAG}" .
 	rm -f Dockerfile
 
 production_container: base_container
 	cat docker/Dockerfile-production | sed -e "s/FROM ${DOCKER_IMAGE}:base_localbuild/FROM ${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}/g" > Dockerfile
+
+	# Store the repo offset into the Dockerfile. We do this as the very last
+	# step of each container (not the Base container) to avoid invalidating caching.
+	printf "\nRUN echo `git rev-parse HEAD` > /.git-revision\n\n" >> Dockerfile
+
 	docker build -t "${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}" .
 	rm -f Dockerfile
 
 test_container: base_container
 	cat docker/Dockerfile-test | sed -e "s/FROM ${DOCKER_IMAGE}:base_localbuild/FROM ${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}/g" > Dockerfile
+
+	# Store the repo offset into the Dockerfile. We do this as the very last
+	# step of each container (not the Base container) to avoid invalidating caching.
+	printf "\nRUN echo `git rev-parse HEAD` > /.git-revision\n\n" >> Dockerfile
+
 	docker build -t "${DOCKER_IMAGE}:test_${DOCKER_IMAGE_TAG}" .
 	rm -f Dockerfile
 

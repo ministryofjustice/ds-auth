@@ -11,3 +11,6 @@ coverage/*
 
 # Remove Makefile, which changes often when re-running
 Makefile
+
+# This is created at runtime through the Dockerfile, and should be ignored
+.git-revision
