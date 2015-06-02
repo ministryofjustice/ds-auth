@@ -16,11 +16,11 @@ RUN apt-get update && apt-get install -y postgresql-client \
 ###############################################################################
 # Install PhantomJS
 ###############################################################################
-ADD vendor/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 /usr/local/share/
-RUN ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/share/phantomjs && \
-    ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs && \
-    ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/bin/phantomjs && \
-    rm -f /usr/local/share/phantomjs-1.9.7-linux-x86_64.tar.bz2
+ADD vendor/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2 /usr/local/share/
+RUN ln -sf /usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs /usr/local/share/phantomjs && \
+    ln -sf /usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs && \
+    ln -sf /usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs /usr/bin/phantomjs && \
+    rm -f /usr/local/share/phantomjs-1.9.8-linux-x86_64.tar.bz2
 
 ###############################################################################
 # Defaults for executing container
