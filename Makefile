@@ -48,7 +48,10 @@ production_container: base_container
 
 	# Store the repo offset into the Dockerfile. We do this as the very last
 	# step of each container (not the Base container) to avoid invalidating caching.
-	printf "\nRUN echo `git rev-parse HEAD` > /.git-revision\n\n" >> Dockerfile
+	printf "\nRUN echo version_number: ${DOCKER_IMAGE_TAG} >> /.version.yml\n\n" >> Dockerfile
+	printf "\nRUN echo build_date: `date -u '+%Y-%m-%dT%k:%M:%S%z'` >> /.version.yml\n\n" >> Dockerfile
+	printf "\nRUN echo commit_id: `git rev-parse HEAD` >> /.version.yml\n\n" >> Dockerfile
+	printf "\nRUN echo build_tag: ${JOB_NAME} ${BUILD_ID} >> /.version.yml\n\n" >> Dockerfile
 
 	docker build -t "${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}" .
 	rm -f Dockerfile
