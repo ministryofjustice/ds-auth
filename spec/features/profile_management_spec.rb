@@ -14,14 +14,14 @@ RSpec.feature "Users managing profiles" do
     expect(page).to have_content profile.name
   end
 
-  specify "Associated user toggles associated user password and confirmation", js: true do
+  specify "Create login toggles associated user password and confirmation", js: true do
     visit profiles_path
     click_link "New Profile"
 
     expect(page).to_not have_css("#profile_user_attributes_password")
     expect(page).to_not have_css("#profile_user_attributes_password_confirmation")
 
-    check "Associated user"
+    check "Create login"
 
     expect(page).to have_css("#profile_user_attributes_password")
     expect(page).to have_css("#profile_user_attributes_password_confirmation")
@@ -56,7 +56,7 @@ RSpec.feature "Users managing profiles" do
     fill_in "Address", with: "123 Fake Street"
     fill_in "Postcode", with: "POSTCODE"
     fill_in "Email", with: "eamonn.holmes@example.xxx"
-    check "Associated user"
+    check "Create login"
 
     fill_in "Password", with: "passwordyword"
     fill_in "Password confirmation", with: "passwordyword"
@@ -100,7 +100,7 @@ RSpec.feature "Users managing profiles" do
 
     let!(:profile_with_user) { create(:profile, :with_user) }
 
-    specify "deleting a profile with an associated user destroys the user" do
+    specify "deleting a profile with an Create login destroys the user" do
       user_id = profile_with_user.user.id
       profile_id = profile_with_user.id
 
