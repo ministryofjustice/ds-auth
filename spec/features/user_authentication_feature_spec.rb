@@ -6,7 +6,7 @@ RSpec.feature "User authentication" do
   specify "can log in with valid credentials" do
     visit new_user_session_path
     fill_in "user_email", with: user.email
-    fill_in "user_password", with: "password"
+    fill_in "user_password", with: user.password
     click_button "Sign in"
     expect(page).to have_content("You made it...")
   end
@@ -50,6 +50,6 @@ end
 def user_is_logged_in(user)
   visit new_user_session_path
   fill_in "user_email", with: user.email
-  fill_in "user_password", with: "password"
+  fill_in "user_password", with: user.password
   click_button "Sign in"
 end

@@ -5,7 +5,7 @@ RSpec.feature "Users managing law firm type organisations" do
   let!(:organisation) { create(:organisation, :with_profiles_and_users, profile_count: 3) }
 
   before do
-    login_as_user user.email
+    login_as_user user.email, user.password
   end
 
   specify "can create a new law firm with a supplier number", js: true do

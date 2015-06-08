@@ -30,5 +30,11 @@
   <%= @profile.postcode %>
 </p>
 
+<%- if @profile.user.present? %>
+  <p><%= t("user_can_login") %></p>
+<% else %>
+  <p><%= t("user_cannot_login") %></p>
+<%- end %>
+
 <%= link_to t('edit'), edit_profile_path(@profile) %> |
 <%= link_to t('back'), profiles_path %>

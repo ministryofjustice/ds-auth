@@ -2,10 +2,10 @@ FactoryGirl.define do
   factory :profile do |profile|
     name                        { Faker::Name.name }
     address                     { Faker::Address.street_address }
-    postcode                    "POSTCODE"
+    postcode                    Faker::Address.postcode
     sequence(:email)            { |n| "profile_#{n}@example.com" }
-    tel                         "01632 960178"
-    mobile                      "07700 900407"
+    tel                         "0207" + Faker::Number.number(7)
+    mobile                      "07" + Faker::Number.number(9)
     uid                         { SecureRandom.uuid }
   end
 

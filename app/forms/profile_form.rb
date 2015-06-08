@@ -1,63 +1,56 @@
-class ProfileForm
-  include ActiveModel::Model
-  extend Forwardable
+class ProfileForm < Reform::Form
+  include Composition
+  include Reform::Form::ActiveRecord
 
-  attr_reader :profile
+  property :name, on: :profile
+  property :email, on: :profile
+  property :tel, on: :profile
+  property :mobile, on: :profile
+  property :address, on: :profile
+  property :postcode, on: :profile
 
-  PROFILE_DELEGATED_ATTRIBUTES = :name, :tel, :mobile, :address, :postcode, :email
-  USER_DELEGATED_ATTRIBUTES = :password, :password_confirmation
+  model :profile
 
-  PROFILE_DELEGATED_ATTRIBUTES.each do |attr_name|
-    def_delegator :@profile, "#{attr_name}_before_type_cast", attr_name
+  property :password, on: :user
+  property :password_confirmation, on: :user, empty: true
+
+  validates :name, :address, :postcode, :email, presence: true
+
+  validates :email, uniqueness: true, email: { strict_mode: true }
+
+  validates :password, presence: true,
+    confirmation: true, length: { minimum: 8 }, if: :has_associated_user?
+
+
+  attr_accessor :has_associated_user
+  alias :has_associated_user? :has_associated_user
+
+  def validate(params)
+    @has_associated_user = params.delete(:has_associated_user)
+    super(params)
   end
 
-  USER_DELEGATED_ATTRIBUTES.each do |attr_name|
-    def_delegator :@user, "#{attr_name}_before_type_cast", attr_name
+  def email=(val)
+    super(val)
+    model[:user].email = val
   end
 
-  def self.model_name
-    ActiveModel::Name.new(self, nil, "Profile")
-  end
 
-  def initialize(profile)
-    @profile = profile
-  end
 
-  def submit(params)
-    @profile.assign_attributes correct_associated_user_params(params)
-
-    if @profile.valid?
-      unless @profile.save
-        self.errors[:profile] = "could not be saved"
-        return false
-      end
-    else
-      add_errors_to_form
-      return false
-    end
+  def active_for_authentication?
     true
   end
 
-  def add_errors_to_form
-    @profile.errors.messages.each do |field_name, error_message|
-      self.errors[field_name] = error_message.join ", "
-    end
+  def authenticatable_salt
+    model[:user].authenticatable_salt
   end
 
-  private
-
-  def correct_associated_user_params(params)
-    if associated_user?(params)
-      params[:user_attributes].merge!(email: params[:email])
-    else
-      params.except!(:user_attributes)
-    end
-    params
-  end
-
-  def associated_user?(params)
-    associated_user = params[:associated_user]
-    associated_user.present? && associated_user != "0"
+  def save
+    return false unless valid?
+    sync
+    profile = model[:profile]
+    profile.user = model[:user] if has_associated_user?
+    profile.save
   end
 end
 
