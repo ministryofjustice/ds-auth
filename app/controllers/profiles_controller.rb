@@ -8,7 +8,7 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    if create_and_save
+    if new_profile_form.validate_and_save(profile_params)
       redirect_to profile_path(new_profile_form), notice: flash_message(:create, Profile)
     else
       render :new
@@ -16,7 +16,7 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    if update_and_save
+    if edit_profile_form.validate_and_save(profile_params)
       redirect_to(profile_path(edit_profile_form), notice: flash_message(:update, Profile))
     else
       render :edit
@@ -24,7 +24,7 @@ class ProfilesController < ApplicationController
   end
 
   def destroy
-    if destroy_profile
+    if find_profile.destroy
       redirect_to profiles_path, notice: flash_message(:destroy, Profile)
     else
       redirect_to profiles_path, notice: flash_message(:failed_destroy, Profile)
@@ -53,18 +53,6 @@ class ProfilesController < ApplicationController
     find_profile.try(:user).present?
   end
 
-  def create_and_save
-    new_profile_form.validate(profile_params) && new_profile_form.save
-  end
-
-  def update_and_save
-    edit_profile_form.validate(profile_params) && edit_profile_form.save
-  end
-
-  def destroy_profile
-    find_profile.destroy
-  end
-
   def profile_params
     params.require(:profile).permit(:name,
                                     :tel,
@@ -73,8 +61,6 @@ class ProfilesController < ApplicationController
                                     :postcode,
                                     :email,
                                     :has_associated_user,
-                                    :password, :password_confirmation).tap do |filtered_params|
-      filtered_params[:has_associated_user] = (filtered_params[:has_associated_user] == "1")
-    end
+                                    :password, :password_confirmation)
   end
 end

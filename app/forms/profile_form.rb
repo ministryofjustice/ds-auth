@@ -25,24 +25,20 @@ class ProfileForm < Reform::Form
   attr_accessor :has_associated_user
   alias :has_associated_user? :has_associated_user
 
-  def validate(params)
-    @has_associated_user = params.delete(:has_associated_user)
-    super(params)
-  end
-
+  # Also save the email on the user model to keep devise happy
+  # TODO: don't store the email in 2 places
   def email=(val)
     super(val)
     model[:user].email = val
   end
 
-
-
-  def active_for_authentication?
-    true
+  def has_associated_user=(val)
+    @has_associated_user = val == "1"
   end
 
-  def authenticatable_salt
-    model[:user].authenticatable_salt
+  def validate_and_save(params)
+    self.has_associated_user = params.delete(:has_associated_user)
+    validate(params) && save
   end
 
   def save
@@ -51,6 +47,17 @@ class ProfileForm < Reform::Form
     profile = model[:profile]
     profile.user = model[:user] if has_associated_user?
     profile.save
+  end
+
+  private
+
+  # Devise integration
+  def active_for_authentication?
+    true
+  end
+
+  def authenticatable_salt
+    model[:user].authenticatable_salt
   end
 end
 
