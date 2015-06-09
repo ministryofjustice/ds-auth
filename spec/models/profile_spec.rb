@@ -22,4 +22,17 @@ RSpec.describe Profile do
       end
     end
   end
+
+  describe "deleting a Profile" do
+    let!(:profile) { FactoryGirl.create :profile, :with_user }
+
+    it "removes an associated user" do
+      expect { profile.destroy }.to change(User, :count).from(1).to(0)
+    end
+
+    it "removes all associated memberships" do
+      FactoryGirl.create :membership, profile: profile
+      expect { profile.destroy }.to change(Membership, :count).from(1).to(0)
+    end
+  end
 end

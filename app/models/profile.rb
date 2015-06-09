@@ -1,6 +1,6 @@
 class Profile < ActiveRecord::Base
   belongs_to :user, dependent: :destroy
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :organisations, through: :memberships
 
   default_scope { order :name }

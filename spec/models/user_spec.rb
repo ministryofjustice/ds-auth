@@ -30,4 +30,13 @@ RSpec.describe User do
       expect(subject.roles_for(application: application)).to eq([role])
     end
   end
+
+  describe "deleting a User" do
+    let!(:user) { FactoryGirl.create :user }
+
+    it "removes all associated permissions" do
+      FactoryGirl.create :permission, user: user
+      expect { user.destroy }.to change(Permission, :count).from(1).to(0)
+    end
+  end
 end
