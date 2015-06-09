@@ -7,25 +7,16 @@ class ProfilesController < ApplicationController
     @profiles = Profile.all
   end
 
-  def show
-  end
-
-  def new
-  end
-
   def create
-    if new_profile_form.validate(profile_params) && new_profile_form.save
+    if create_and_save
       redirect_to profile_path(new_profile_form), notice: flash_message(:create, Profile)
     else
       render :new
     end
   end
 
-  def edit
-  end
-
   def update
-    if edit_profile_form.validate(profile_params) && edit_profile_form.save
+    if update_and_save
       redirect_to(profile_path(edit_profile_form), notice: flash_message(:update, Profile))
     else
       render :edit
@@ -33,7 +24,7 @@ class ProfilesController < ApplicationController
   end
 
   def destroy
-    if find_profile.destroy
+    if destroy_profile
       redirect_to profiles_path, notice: flash_message(:destroy, Profile)
     else
       redirect_to profiles_path, notice: flash_message(:failed_destroy, Profile)
@@ -60,6 +51,18 @@ class ProfilesController < ApplicationController
 
   def has_associated_user
     find_profile.try(:user).present?
+  end
+
+  def create_and_save
+    new_profile_form.validate(profile_params) && new_profile_form.save
+  end
+
+  def update_and_save
+    edit_profile_form.validate(profile_params) && edit_profile_form.save
+  end
+
+  def destroy_profile
+    find_profile.destroy
   end
 
   def profile_params
