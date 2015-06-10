@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :user do |user|
     sequence(:email)            {|n| "barry#{n}@example.com" }
-    user.password               "password"
-    user.password_confirmation  "password"
+    user.password               Faker::Internet.password(8)
+    user.password_confirmation  { password }
 
     trait :with_profile do
       association :profile

@@ -1,6 +1,9 @@
 <%= f.label :name %>
 <%= f.text_field :name %>
 
+<%= f.label :email %>
+<%= f.text_field :email %>
+
 <%= f.label :tel %>
 <%= f.text_field :tel %>
 
@@ -8,10 +11,7 @@
 <%= f.text_field :mobile %>
 
 <%= f.label :address %>
-<%= f.text_field :address %>
+<%= f.text_area :address, rows: 4 %>
 
 <%= f.label :postcode %>
 <%= f.text_field :postcode %>
-
-<%= f.label :email %>
-<%= f.text_field :email %>

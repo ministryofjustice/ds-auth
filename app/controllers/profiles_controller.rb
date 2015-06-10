@@ -1,38 +1,30 @@
 class ProfilesController < ApplicationController
-  before_action :find_profile, except: [:index, :new, :create]
-  before_action :new_profile_form, only: [:show, :new, :create, :edit, :update]
+  before_action :find_profile, only: [:show, :destroy]
+  before_action :new_profile_form, only: [:new, :create]
+  before_action :edit_profile_form, only: [:edit, :update]
 
   def index
     @profiles = Profile.all
   end
 
-  def show
-  end
-
-  def new
-  end
-
   def create
-    if @profile_form.submit(profile_params)
-      redirect_to profiles_path, notice: flash_message(:create, Profile)
+    if new_profile_form.validate_and_save(profile_params)
+      redirect_to profile_path(new_profile_form), notice: flash_message(:create, Profile)
     else
       render :new
     end
   end
 
-  def edit
-  end
-
   def update
-    if @profile_form.submit(profile_params)
-      redirect_to(profiles_path, notice: flash_message(:update, Profile))
+    if edit_profile_form.validate_and_save(profile_params)
+      redirect_to(profile_path(edit_profile_form), notice: flash_message(:update, Profile))
     else
       render :edit
     end
   end
 
   def destroy
-    if @profile.destroy
+    if find_profile.destroy
       redirect_to profiles_path, notice: flash_message(:destroy, Profile)
     else
       redirect_to profiles_path, notice: flash_message(:failed_destroy, Profile)
@@ -41,28 +33,34 @@ class ProfilesController < ApplicationController
 
   private
 
-  def profile
-    @profile ||= Profile.new
+  def find_profile
+    @profile = Profile.find params[:id]
   end
 
-  def find_profile
-    @profile = Profile.find(params[:id])
+  def find_profile_user
+    find_profile.try(:user) || User.new
   end
 
   def new_profile_form
-    @profile_form ||= ProfileForm.new profile
+    @profile_form ||= ProfileForm.new profile: Profile.new, user: User.new
   end
 
+  def edit_profile_form
+    @profile_form ||= ProfileForm.new profile: find_profile, user: find_profile_user, has_associated_user: has_associated_user
+  end
+
+  def has_associated_user
+    find_profile.try(:user).present?
+  end
 
   def profile_params
-    params.require(:profile).permit(:user_id,
-                                    :name,
+    params.require(:profile).permit(:name,
                                     :tel,
                                     :mobile,
                                     :address,
                                     :postcode,
                                     :email,
-                                    :associated_user,
-                                    user_attributes: [:password, :password_confirmation])
+                                    :has_associated_user,
+                                    :password, :password_confirmation)
   end
 end

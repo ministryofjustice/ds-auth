@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   devise_for :users, skip: [:registrations], controllers: { sessions: "sessions" }
 
   resources :users, only: [:edit, :update]
-  resources :profiles, except: [:show]
+  resources :profiles
 
   resources :organisations do
     resources :memberships, except: [:index, :edit, :update, :show]

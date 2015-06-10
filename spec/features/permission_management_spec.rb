@@ -8,7 +8,7 @@ RSpec.describe "Users managing permissions" do
   let!(:permission) { create(:permission, user: user, organisation: organisation) }
 
   before do
-    login_as_user user.email
+    login_as_user user.email, user.password
   end
 
   specify "can create a new permission for a profile that has a user" do

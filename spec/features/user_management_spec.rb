@@ -6,7 +6,7 @@ RSpec.feature "Users managing users" do
 
 
   before do
-    login_as_user other_user.email
+    login_as_user other_user.email, other_user.password
   end
 
   specify "can edit the user's password" do

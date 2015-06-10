@@ -1,27 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Profile do
-  describe "validations" do
-    subject { create :profile }
-
-    [:name, :address, :postcode, :email, :tel, :mobile].each do |field|
-      it { expect(subject).to validate_presence_of field }
-    end
-
-    specify { expect(subject).to validate_uniqueness_of(:user_id).allow_nil }
-    specify { expect(subject).to validate_uniqueness_of(:email) }
-
-    specify { expect(subject).to allow_value("email@example.com").for(:email) }
-    specify { expect(subject).to_not allow_value("email@example").for(:email) }
-    specify { expect(subject).to_not allow_value("email-example.com").for(:email) }
-    specify { expect(subject).to_not allow_value("hello***@example.com").for(:email) }
-
-    [:tel, :mobile].each do |phone_field|
-      specify { expect(subject).to allow_value("01234567890").for(phone_field) }
-      specify { expect(subject).to_not allow_value("01234abcdef").for(phone_field) }
-      specify { expect(subject).to allow_value("+441234567890").for(phone_field) }
-    end
-  end
 
   describe "associations" do
     specify { expect(subject).to belong_to(:user) }
@@ -41,6 +20,19 @@ RSpec.describe Profile do
           "Third Profile"
         ]
       end
+    end
+  end
+
+  describe "deleting a Profile" do
+    let!(:profile) { FactoryGirl.create :profile, :with_user }
+
+    it "removes an associated user" do
+      expect { profile.destroy }.to change(User, :count).from(1).to(0)
+    end
+
+    it "removes all associated memberships" do
+      FactoryGirl.create :membership, profile: profile
+      expect { profile.destroy }.to change(Membership, :count).from(1).to(0)
     end
   end
 end

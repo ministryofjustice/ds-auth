@@ -1,18 +1,7 @@
 class Profile < ActiveRecord::Base
   belongs_to :user, dependent: :destroy
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :organisations, through: :memberships
-
-  accepts_nested_attributes_for :user
-
-  validates :name, :address, :postcode, :email, presence: true
-
-  validates :user_id, uniqueness: true, allow_nil: true
-
-  validates :email, uniqueness: true, email: { strict_mode: true }
-
-  phony_normalize :tel, :mobile, default_country_code: "GB"
-  validates_plausible_phone :tel, :mobile, presence: true
 
   default_scope { order :name }
   scope :by_name, -> { order(name: :asc) }
