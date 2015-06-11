@@ -1,12 +1,18 @@
 <%= form_for(@user) do |f| %>
-  <%= f.label :email %>
-  <%= f.text_field :email, disabled: !@user.new_record? %>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email, disabled: !@user.new_record? %>
+  </div>
 
-  <%= f.label :password %>
-  <%= f.password_field :password, autocomplete: "off" %>
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
 
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  <div class="field">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
 
   <div class="actions">
     <%= f.submit t('update_user'), class: "button" %>
