@@ -3,3 +3,21 @@ $ie-version: 6;
 $mobile-ie6: false;
 
 @import "govuk_elements_extensions";
+
+.field {
+  label, input {
+    display: block;
+  }
+  input {
+    width: 300px;
+  }
+}
+
+.remember-me-field {
+  label, input {
+    display: inline;
+  }
+  input {
+    width: auto;
+  }
+}
