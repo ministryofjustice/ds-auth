@@ -64,6 +64,8 @@ module Drs
       end
 
       def get_resource(path, model, model_method, default_result, params = {})
+        return default_result if params.values.any?(&:empty?)
+
         response = get(path, params)
         if response
           model.send(model_method, parse_response(response))
