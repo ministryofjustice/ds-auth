@@ -26,10 +26,10 @@ law_firm_1 = Organisation.where(slug: "law-firm-1").first
   )
   solicitor.update roles: %w(solicitor_admin admin) if i == 1
 
-  laaTeamMember = Membership.create(
+  laa_team_member = Membership.create(
     organisation: laa,
     user: User.where(email: "laa#{i}@example.com").first,
     roles: %w(rotaTeam)
   )
-  laaTeamMember.update roles: %w(rotaTeam admin) if i == 1
+  laa_team_member.update roles: %w(rotaTeam admin) if i == 1
 end

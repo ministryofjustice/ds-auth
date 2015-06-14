@@ -30,6 +30,10 @@ class Organisation < ActiveRecord::Base
     @available_roles ||= RoleLoader.new.available_roles_for_organisation_type organisation_type
   end
 
+  def default_roles
+    @default_roles ||= RoleLoader.new.default_roles_for_organisation_type organisation_type
+  end
+
   def available_role_names
     available_roles.map(&:name)
   end

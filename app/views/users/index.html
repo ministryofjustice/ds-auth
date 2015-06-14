@@ -11,8 +11,8 @@
   <%- @users.each do |user| %>
     <%= content_tag_for(:tr, user) do %>
       <td><%= link_to user.name, user_path(user) %></td>
-      <td><%= link_to t('edit'), edit_user_path(user) %></td>
-      <td><%= link_to t('delete'), user_path(user), method: :delete, data: { confirm: t('are_you_sure') } %></td>
+      <td><%= link_to t('edit'), edit_user_path(user) if policy(user).edit? %></td>
+      <td><%= link_to t('delete'), user_path(user), method: :delete, data: { confirm: t('are_you_sure') } if policy(user).destroy? %></td>
     <%- end %>
   <%- end %>
   </tbody>
@@ -20,4 +20,4 @@
 
 <br>
 
-<%= link_to t('new_user'), new_user_path %>
+<%= link_to t('new_user'), new_user_path if policy(User.new).new? %>

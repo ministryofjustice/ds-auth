@@ -17,7 +17,7 @@ class Membership < ActiveRecord::Base
   end
 
   def roles=(val)
-    super Array(val).keep_if {|r| r.present? }
+    super Array(val).keep_if(&:present?)
   end
 
   def applications
@@ -25,6 +25,6 @@ class Membership < ActiveRecord::Base
   end
 
   def applications=(val)
-    super Array(val).keep_if {|r| r.present? }
+    super Array(val).keep_if(&:present?)
   end
 end

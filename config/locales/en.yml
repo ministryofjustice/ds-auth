@@ -50,6 +50,7 @@ en:
   new_profile: "New Profile"
   new_role: "New Role"
   new_user: "New user"
+  not_authorized: "You are not authorized to do that"
   organisation_type: "Organisation type"
   organisation: "Organisation"
   password: "Change Password"

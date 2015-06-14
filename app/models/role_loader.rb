@@ -14,6 +14,10 @@ class RoleLoader
     end) + default_available_roles
   end
 
+  def default_roles_for_organisation_type(organisation_type)
+    organisation_type_data(organisation_type)["default_roles"] + default_organisation_roles
+  end
+
   private
 
   def load_organisation_types
@@ -30,7 +34,7 @@ class RoleLoader
     end
   end
 
-  def default_default_roles
+  def default_organisation_roles
     load_organisation_types["default"]["default_roles"]
   end
 
