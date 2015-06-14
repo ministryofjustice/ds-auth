@@ -2,7 +2,7 @@ RSpec.shared_context "logged in API User" do
   let!(:user)        { create :user,
                        :logged_in_to_applications,
                        number_of_applications: 1 }
-  let!(:application) { user.permissions.first.application }
+  let(:application)  { Doorkeeper::Application.first }
   let!(:token)       { Doorkeeper::AccessToken.
                        where(application_id: application,
                              resource_owner_id: user.id).first }

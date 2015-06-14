@@ -5,22 +5,12 @@ module Doorkeeper
     module Application
       extend ActiveSupport::Concern
 
-      included do
-        has_many :permissions
-      end
-
       def available_roles
-        load_organisation_types.map do |organisation_type, data|
-          data["available_roles"].map do |role_name, applications|
-            role_name if applications.include?(name)
-          end
-        end.flatten.compact.uniq.sort
+        @available_roles ||= ::RoleLoader.new.available_roles_for_application name
       end
 
-      private
-
-      def load_organisation_types
-        @load_organisation_type ||= YAML::load File.open(::Rails.root + "config/organisation_types.yml")
+      def available_role_names
+        available_roles.map(&:name)
       end
     end
   end

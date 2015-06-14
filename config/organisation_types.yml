@@ -37,3 +37,4 @@ laa_rota_team:
     manager: ["drs-auth","drs-rota"]
     rotaTeam: ["drs-rota"]
   default_roles: ["rotaTeam"]
+

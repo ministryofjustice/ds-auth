@@ -27,13 +27,11 @@ class Organisation < ActiveRecord::Base
   end
 
   def available_roles
-    (organisation_type_data["available_roles"].map do |name, applications|
-      Role.new name, applications
-    end) + default_available_roles
+    @available_roles ||= RoleLoader.new.available_roles_for_organisation_type organisation_type
   end
 
-  def default_roles
-    organisation_type_data["default_roles"] + default_default_roles
+  def available_role_names
+    available_roles.map(&:name)
   end
 
   private
@@ -44,23 +42,5 @@ class Organisation < ActiveRecord::Base
     elsif organisation.parent_organisation.present?
       no_circular_references(organisation.parent_organisation)
     end
-  end
-
-  def default_available_roles
-    load_organisation_types["default"]["available_roles"].map do |name, applications|
-      Role.new name, applications
-    end
-  end
-
-  def default_default_roles
-    load_organisation_types["default"]["default_roles"]
-  end
-
-  def organisation_type_data
-    load_organisation_types[organisation_type]
-  end
-
-  def load_organisation_types
-    @load_organisation_type ||= YAML::load File.open(Rails.root + "config/organisation_types.yml")
   end
 end

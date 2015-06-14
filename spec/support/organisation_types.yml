@@ -1,0 +1,15 @@
+default: &default
+  available_roles:
+    admin: ["drs-auth"]
+  default_roles: []
+
+custody_suite:
+  <<: *default
+  available_roles:
+    cso: ["drs-service"]
+  default_roles: ["cso"]
+
+
+
+
+

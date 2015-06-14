@@ -1,4 +1,5 @@
 ENV["RAILS_ENV"] ||= "test"
+ENV["ORGANISATION_FILE_PATH"] = "spec/support/organisation_types.yml"
 
 require File.expand_path("../../config/environment", __FILE__)
 

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Users managing organisations" do
   let(:user) { create(:user) }
-  let!(:organisation) { create(:organisation, :with_profiles_and_users, profile_count: 3) }
+  let!(:organisation) { create(:organisation, :with_users, user_count: 3) }
 
   before do
     login_as_user user.email, user.password
@@ -22,16 +22,9 @@ RSpec.feature "Users managing organisations" do
     fill_in "Name", with: "Imperial College London"
     fill_in "Slug", with: "imperial-college-london"
 
-    expect(page).to have_select("Organisation type",
-                                options: ["-- Select an organisation type --",
-                                          "Call centre",
-                                          "Civil",
-                                          "Court",
-                                          "Custody suite",
-                                          "Law firm",
-                                          "Law office"])
+    expect(page).to have_select("Organisation type")
 
-    select "Call centre", from: "Organisation type"
+    select "Drs Call Center", from: "Organisation type"
 
     check "Searchable"
     fill_in "Tel", with: "01632 960178"
@@ -172,8 +165,8 @@ RSpec.feature "Users managing organisations" do
     expect(page).to have_content "Searchable: true"
 
     expect(page).to have_content "Members"
-    organisation.profiles.each do |p|
-      expect(page).to have_content p.name
+    organisation.users.each do |u|
+      expect(page).to have_content u.name
     end
   end
 
@@ -193,63 +186,6 @@ RSpec.feature "Users managing organisations" do
       expect(page).to have_content so.name
       expect(page).to have_link so.name, href: organisation_path(so)
     end
-  end
-
-  specify "can add a new member from the show page" do
-    visit organisations_path
-
-    click_link "Show"
-    click_link "New Member"
-
-    select Profile.unscoped.first.name
-    click_button "Create Membership"
-
-    expect(page).to have_content "Membership successfully created"
-    expect(page).to have_content Profile.unscoped.first.name
-  end
-
-  specify "are shown errors if a member cannot be added" do
-    visit organisations_path
-
-    click_link "Show"
-    click_link "New Member"
-
-    profile = Profile.unscoped.first
-    select profile.name
-    profile.delete
-
-    click_button "Create Membership"
-
-    expect(page).to have_content "You need to fix the errors on this page before continuing."
-    expect(page).to have_content "Member: can't be blank"
-  end
-
-  specify "can remove members from the show page" do
-    organisation = Organisation.first
-    visit organisation_path(organisation)
-
-    first_member = organisation.profiles.first
-    within"##{first_member.id}-row" do
-      click_link "Remove Member"
-    end
-
-    expect(page).to have_content "Membership successfully deleted"
-    expect(page).to_not have_content first_member.name
-  end
-
-  specify "are shown errors if a member cannot be removed" do
-    organisation = Organisation.first
-    visit organisation_path(organisation)
-
-    first_member = organisation.profiles.first
-    membership = first_member.membership_for organisation
-    membership_cannot_be_destroyed_for_some_reason membership
-
-    within"##{first_member.id}-row" do
-      click_link "Remove Member"
-    end
-
-    expect(page).to have_content "Membership was not deleted"
   end
 end
 

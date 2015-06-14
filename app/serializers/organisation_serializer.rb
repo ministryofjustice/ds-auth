@@ -5,7 +5,7 @@ class OrganisationSerializer < BaseSerializer
       uid: object.uid,
       name: object.name,
       type: object.organisation_type,
-      tel: object.tel,
+      telephone: object.tel,
       parent_organisation_uid: parent_organisation_uid,
       sub_organisation_uids: sub_organisation_uids,
       links: serialized_links
@@ -16,7 +16,7 @@ class OrganisationSerializer < BaseSerializer
 
   def serialized_links
     {
-      profiles: profiles_link,
+      users: users_link,
       parent_organisation: parent_organisation_link,
       sub_organisations: sub_organisations_link,
     }
@@ -44,8 +44,8 @@ class OrganisationSerializer < BaseSerializer
     end
   end
 
-  def profiles_link
-    "/api/v1/profiles?#{serialize_uids(object.profiles)}" unless object.profiles.empty?
+  def users_link
+    "/api/v1/users?#{serialize_uids(object.users)}" unless object.users.empty?
   end
 
   def parent_organisation_link

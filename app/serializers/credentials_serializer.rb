@@ -34,6 +34,6 @@ class CredentialsSerializer
   end
 
   def serialized_roles
-    user.roles_for(application: application)
+    user.role_names_for(application: application)
   end
 end

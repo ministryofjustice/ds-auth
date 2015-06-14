@@ -21,53 +21,25 @@ RSpec.describe CredentialsSerializer do
     let(:permission) { build_stubbed :permission, application: application, user: user, role: role }
 
     it "serializes the credentials for the passed in user" do
-      user = build_stubbed :user, profile: profile
+      organisation = create :organisation
+      user = create :user, organisations: [organisation]
       serializer = CredentialsSerializer.new user: user, application: application
 
       expect(serializer.serialize).to eq(
         {
           user: {
             email: user.email,
-          },
-          profile: {
-            email: user.profile.email,
-            name: user.profile.name,
-            telephone: user.profile.tel,
-            mobile: user.profile.mobile,
+            name: user.name,
+            telephone: user.telephone,
+            mobile: user.mobile,
             address: {
-              full_address: user.profile.address,
-              postcode: user.profile.postcode,
+              full_address: user.address,
+              postcode: user.postcode,
             },
-            organisation_uids: user.profile.organisations.map(&:uid),
-            uid: user.profile.uid
+            organisation_uids: user.organisations.map(&:uid),
+            uid: user.uid
           },
-          roles: user.roles_for(application: application).map(&:name)
-        }
-      )
-    end
-
-    it "returns empty profile keys if the user has no profile" do
-      user = build_stubbed :user
-      serializer = CredentialsSerializer.new user: user, application: application
-
-      expect(serializer.serialize).to eq(
-        {
-          user: {
-            email: user.email,
-          },
-          profile: {
-            email: "",
-            name: "",
-            telephone: "",
-            mobile: "",
-            address: {
-              full_address: "",
-              postcode: "",
-            },
-            organisation_uids: [],
-            uid: ""
-          },
-          roles: []
+          roles: user.role_names_for(application: application)
         }
       )
     end

@@ -5,8 +5,8 @@ RSpec.describe OrganisationsSerializer do
     it "serializes all organisations in the provided order" do
       org_1 = create :organisation
       org_2 = create :organisation
-      org_1_member = create :profile, organisations: [org_1]
-      org_2_member = create :profile, organisations: [org_2]
+      org_1_member = create :user, organisations: [org_1]
+      org_2_member = create :user, organisations: [org_2]
 
       serializer = OrganisationsSerializer.new [org_1, org_2]
 
@@ -16,11 +16,11 @@ RSpec.describe OrganisationsSerializer do
             uid: org_1.uid,
             name: org_1.name,
             type: org_1.organisation_type,
-            tel: org_1.tel,
+            telephone: org_1.tel,
             parent_organisation_uid: nil,
             sub_organisation_uids: [],
             links: {
-              profiles: "/api/v1/profiles?uids[]=#{org_1_member.uid}",
+              users: "/api/v1/users?uids[]=#{org_1_member.uid}",
               parent_organisation: nil,
               sub_organisations: nil
             }
@@ -29,11 +29,11 @@ RSpec.describe OrganisationsSerializer do
             uid: org_2.uid,
             name: org_2.name,
             type: org_2.organisation_type,
-            tel: org_2.tel,
+            telephone: org_2.tel,
             parent_organisation_uid: nil,
             sub_organisation_uids: [],
             links: {
-              profiles: "/api/v1/profiles?uids[]=#{org_2_member.uid}",
+              users: "/api/v1/users?uids[]=#{org_2_member.uid}",
               parent_organisation: nil,
               sub_organisations: nil
             }

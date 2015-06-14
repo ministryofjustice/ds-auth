@@ -46,7 +46,7 @@ module Api::V1
       UsersSerializer.new(users)
     end
 
-    def profile_serializer(user)
+    def user_serializer(user)
       UserSerializer.new(user)
     end
 
