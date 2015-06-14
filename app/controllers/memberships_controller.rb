@@ -1,9 +1,10 @@
 class MembershipsController < ApplicationController
-  before_action :set_membership, only: [:destroy]
+  before_action :set_membership, only: [:edit, :update, :destroy]
   before_action :set_organisation
 
   def new
-    @membership = Membership.new
+    @membership = Membership.new roles: @organisation.default_roles
+    @users = User.where.not(id: @organisation.user_ids)
   end
 
   def create
@@ -12,6 +13,17 @@ class MembershipsController < ApplicationController
       redirect_to organisation_path(@organisation), notice: flash_message(:create, Membership)
     else
       render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @membership.update membership_params
+      redirect_to organisation_path(@organisation), notice: flash_message(:update, Membership)
+    else
+      render :edit
     end
   end
 
@@ -35,7 +47,7 @@ class MembershipsController < ApplicationController
 
   def membership_params
     params.require(:membership).
-      permit(:profile_id).
+      permit(:user_id, roles: [], applications: []).
       merge({ organisation_id: @organisation.id })
   end
 

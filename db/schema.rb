@@ -11,11 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150613121249) do
+ActiveRecord::Schema.define(version: 20150613124729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer  "organisation_id"
+    t.integer  "user_id"
+    t.jsonb    "permissions",     default: {}
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "memberships", ["organisation_id"], name: "index_memberships_on_organisation_id", using: :btree
+  add_index "memberships", ["user_id"], name: "index_memberships_on_user_id", using: :btree
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false
@@ -102,4 +113,6 @@ ActiveRecord::Schema.define(version: 20150613121249) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "memberships", "organisations"
+  add_foreign_key "memberships", "users"
 end

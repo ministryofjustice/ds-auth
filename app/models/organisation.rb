@@ -1,16 +1,15 @@
 class Organisation < ActiveRecord::Base
   ORGANISATION_TYPES = %w{
-    call_centre
-    civil
+    drs_call_center
+    laa_rota_team
     court
     custody_suite
     law_firm
     law_office
   }
 
-  has_many :permissions
   has_many :memberships
-  has_many :profiles, through: :memberships
+  has_many :users, through: :memberships
 
   has_many :sub_organisations, -> { order :id }, class_name: "Organisation", foreign_key: "parent_organisation_id"
   belongs_to :parent_organisation, class_name: "Organisation"
@@ -27,6 +26,16 @@ class Organisation < ActiveRecord::Base
     organisation_type == "law_firm" || organisation_type == "law_office"
   end
 
+  def available_roles
+    (organisation_type_data["available_roles"].map do |name, applications|
+      Role.new name, applications
+    end) + default_available_roles
+  end
+
+  def default_roles
+    organisation_type_data["default_roles"] + default_default_roles
+  end
+
   private
 
   def no_circular_references(organisation=self)
@@ -35,5 +44,23 @@ class Organisation < ActiveRecord::Base
     elsif organisation.parent_organisation.present?
       no_circular_references(organisation.parent_organisation)
     end
+  end
+
+  def default_available_roles
+    load_organisation_types["default"]["available_roles"].map do |name, applications|
+      Role.new name, applications
+    end
+  end
+
+  def default_default_roles
+    load_organisation_types["default"]["default_roles"]
+  end
+
+  def organisation_type_data
+    load_organisation_types[organisation_type]
+  end
+
+  def load_organisation_types
+    @load_organisation_type ||= YAML::load File.open(Rails.root + "config/organisation_types.yml")
   end
 end

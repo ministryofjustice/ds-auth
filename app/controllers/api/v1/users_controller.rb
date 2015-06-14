@@ -1,24 +1,24 @@
 module Api::V1
-  class ProfilesController < ApiController
+  class UsersController < ApiController
 
     def index
       if params[:uids].present?
-        profiles = Profile.where(uid: params[:uids])
+        users = User.where(uid: params[:uids])
       else
-        profiles = Profile.all
+        users = User.all
       end
-      profiles = profiles.by_name
+      users = users.by_name
 
       respond_to do |format|
-        format.json { render json: profiles_serializer(profiles) }
+        format.json { render json: users_serializer(users) }
       end
     end
 
     def show
-      profile = Profile.find_by(uid: params[:uid])
-      if profile.present?
+      user = User.find_by(uid: params[:uid])
+      if user.present?
         respond_to do |format|
-          format.json { render json: profile_serializer(profile) }
+          format.json { render json: user_serializer(user) }
         end
       else
         respond_to do |format|
@@ -42,12 +42,12 @@ module Api::V1
       )
     end
 
-    def profiles_serializer(profiles)
-      ProfilesSerializer.new(profiles)
+    def users_serializer(users)
+      UsersSerializer.new(users)
     end
 
-    def profile_serializer(profile)
-      ProfileSerializer.new(profile)
+    def profile_serializer(user)
+      UserSerializer.new(user)
     end
 
   end

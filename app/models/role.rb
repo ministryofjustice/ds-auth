@@ -1,6 +1,6 @@
-class Role < ActiveRecord::Base
-  has_many :permissions
-  has_many :users, through: :permissions
+class Role < Struct.new(:name, :applications)
 
-  validates :name, presence: true, uniqueness: true
+  def <=>(other)
+    name <=> other.name
+  end
 end

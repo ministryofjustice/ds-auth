@@ -30,5 +30,18 @@
   <%= @user.postcode %>
 </p>
 
+<h3>Organisations</h3>
+<table>
+  <thead>
+    <th></th>
+  </thead>
+<%- @user.memberships.each do |membership| %>
+  <%= content_tag(:tr, membership) do %>
+    <td><%= link_to membership.organisation.name, organisation_path(membership.organisation) %></td>
+  <%- end %>
+<%- end %>
+</table>
+
+<br />
 <%= link_to t('edit'), edit_user_path(@user) %> |
 <%= link_to t('back'), users_path %>
