@@ -9,7 +9,10 @@ custody_suite:
     cso: ["drs-service"]
   default_roles: ["cso"]
 
-
-
-
-
+law_firm: &law_firm
+  <<: *default
+  available_roles:
+    solicitor: ["drs-service", "drs-rota"]
+    solicitor_admin: ["drs-auth", "drs-service", "drs-rota"]
+    calendar_viewer: ["drs-rota"]
+  default_roles: ["solicitor"]
