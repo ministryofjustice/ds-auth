@@ -3,14 +3,14 @@ class RoleLoader
   def available_roles_for_application(name)
     load_organisation_types.map do |organisation_type, data|
       data["available_roles"].map do |role_name, applications|
-        Role.new role_name, applications if applications.include?(name)
+        Role.new name: role_name, application: applications if applications.include?(name)
       end
     end.flatten.compact.uniq.sort
   end
 
   def available_roles_for_organisation_type(organisation_type)
     (organisation_type_data(organisation_type)["available_roles"].map do |name, applications|
-      Role.new name, applications
+      Role.new name: name, application: applications
     end) + default_available_roles
   end
 
@@ -30,7 +30,7 @@ class RoleLoader
 
   def default_available_roles
     load_organisation_types["default"]["available_roles"].map do |name, applications|
-      Role.new name, applications
+      Role.new name: name, application: applications
     end
   end
 
