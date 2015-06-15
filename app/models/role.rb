@@ -1,8 +1,8 @@
 class Role
-  attr_accessor :name, :application
+  attr_accessor :name, :applications
 
   def initialize(params = {})
-    @name, @application = params[:name], params[:application]
+    @name, @applications = params[:name], Array(params[:applications])
   end
 
   def <=>(other)
