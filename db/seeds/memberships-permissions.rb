@@ -1,7 +1,11 @@
 custody_suite = Organisation.where(slug: "custody-suite").first
+raise "Expected Organisation custody-suite to be present but was nil" unless custody_suite
 call_centre = Organisation.where(slug: "capita").first
+raise "Expected Organisation call_centre (capita) to be present but was nil" unless call_centre
 laa = Organisation.where(slug: "laa").first
+raise "Expected Organisation laa to be present but was nil" unless laa
 law_firm_1 = Organisation.where(slug: "law-firm-1").first
+raise "Expected Organisation law-firm-1 to be present but was nil" unless law_firm_1
 
 (1..5).each do |i|
   cso = Membership.create(
