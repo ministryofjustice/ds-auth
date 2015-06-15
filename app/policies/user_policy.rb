@@ -18,7 +18,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def create?
-    user_is_admin
+    user_is_admin_in_profile_organisation
   end
 
   def update?
@@ -38,8 +38,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def user_is_admin_in_profile_organisation
-    user_belongs_to_same_organisation &&
-    user.memberships.where(organisation: record.organisations).with_any_role("admin").exists?
+    user.memberships.where(organisation: record.memberships.map(&:organisation)).with_any_role("admin").exists?
   end
 
   def user_is_admin
