@@ -5,11 +5,11 @@ class Membership < ActiveRecord::Base
   store_accessor :permissions, :roles, :applications
 
   scope :with_roles, ->(*roles) {
-    where("permissions -> 'roles' ?& array['#{Array(roles).join("','")}']")
+    where("permissions -> 'roles' ?& array[:roles]", roles: Array(*roles))
   }
 
   scope :with_any_role, ->(*roles) {
-    where("permissions -> 'roles' ?| array['#{Array(roles).join("','")}']")
+    where("permissions -> 'roles' ?| array[:roles]", roles: Array(*roles))
   }
 
   def roles
