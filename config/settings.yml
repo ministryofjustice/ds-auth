@@ -26,5 +26,5 @@ action_mailer:
     password: <%= ENV.fetch('MAILER_SMTP_PASSWORD') %>
     enable_starttls_auto: true
 
-sandbox_email: <%= ENV.fetch('SANDBOX_EMAIL', 'false') == 'true' %>
+sandbox_email: <%= ENV.fetch('SANDBOX_EMAIL', 'false') %>
 sandbox_email_address: <%= ENV.fetch('SANDBOX_EMAIL_ADDRESS', nil) %>
