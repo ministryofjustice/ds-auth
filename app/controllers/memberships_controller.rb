@@ -3,8 +3,11 @@ class MembershipsController < ApplicationController
   before_action :set_organisation
 
   def new
-    @membership = Membership.new roles: @organisation.default_roles
-    @users = User.where.not(id: @organisation.user_ids)
+    user = User.find(params[:user_id])
+
+    redirect_if_user_already_member user
+
+    @membership = Membership.new user: user, roles: @organisation.default_role_names
   end
 
   def create
@@ -49,6 +52,15 @@ class MembershipsController < ApplicationController
     params.require(:membership).
       permit(:user_id, roles: [], applications: []).
       merge({ organisation_id: @organisation.id })
+  end
+
+  def redirect_if_user_already_member(user)
+    if membership = @organisation.memberships.where(user: user).first
+      redirect_to(
+        edit_organisation_membership_path(@organisation, membership),
+        notice: t("user_already_member_of_organisation", organisation_name: @organisation.name)
+      )
+    end
   end
 
 end

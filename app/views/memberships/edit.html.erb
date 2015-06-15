@@ -1,6 +1,6 @@
 <%= render 'shared/error_messages', object: @membership %>
 
-<h1><%= t('edit_membership') %></h1>
+<h1><%= t('edit_membership_to_organisation', organisation_name: @organisation.name) %></h1>
 
 <%= render 'form' %>
 

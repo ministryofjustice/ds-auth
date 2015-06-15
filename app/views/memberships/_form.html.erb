@@ -1,15 +1,7 @@
 <%= form_for [@organisation, @membership] do |f| %>
   <div class="field">
-    <%= "#{t('organisation')}: #{@organisation.name}" %>
-  </div>
-
-  <div class="field">
-    <%- if @membership.new_record? %>
-      <%= f.label :user_id, t('member') %>
-      <%= f.select :user_id, options_from_collection_for_select(@users, 'id', 'name') %>
-    <% else %>
-      <%= t("user") + ": " + @membership.user.name %>
-    <%- end %>
+    <%= "#{t("user")}: #{@membership.user.name} (#{@membership.user.email})" %>
+    <%= f.hidden_field :user_id %>
   </div>
 
   <div class="field">

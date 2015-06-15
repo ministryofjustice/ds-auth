@@ -30,7 +30,7 @@ class Organisation < ActiveRecord::Base
     @available_roles ||= RoleLoader.new.available_roles_for_organisation_type organisation_type
   end
 
-  def default_roles
+  def default_role_names
     @default_roles ||= RoleLoader.new.default_roles_for_organisation_type organisation_type
   end
 

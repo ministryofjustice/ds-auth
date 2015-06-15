@@ -5,6 +5,14 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def permitted_attributes
+    if record.new_record?
+      [:email, :password, :password_confirmation, :name, :telephone, :mobile, :address, :postcode, :email, membership: { roles: [] }]
+    else
+      [:email, :password, :password_confirmation, :name, :telephone, :mobile, :address, :postcode, :email]
+    end
+  end
+
   def show?
     is_user || user_belongs_to_same_organisation
   end

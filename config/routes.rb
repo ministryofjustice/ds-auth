@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   end
   devise_for :users, skip: [:registrations], controllers: { sessions: "sessions" }
 
-  resources :users
+  resources :users, except: [:new, :create]
 
   resources :organisations do
+    resources :users
     resources :memberships
   end
 

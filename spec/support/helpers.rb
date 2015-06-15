@@ -10,12 +10,6 @@ module HelperMethods
     click_link("Sign out")
   end
 
-  def fill_in_new_user_form_with(user)
-    visit users_path
-    click_link "New user"
-    fill_in_user_form_with user
-  end
-
   def fill_in_edit_user_form_with(old_user, new_user)
     visit users_path
     within "tr#user_#{old_user.id}" do

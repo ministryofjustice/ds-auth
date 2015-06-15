@@ -1,13 +1,25 @@
 <%= render 'shared/error_messages', object: @user %>
 
-<h1><%= t('new_user') %></h1>
+<h1><%= t('new_user_for_organisation', organisation_name: @organisation.name) %></h1>
 
-<%= form_for(@user) do |f| %>
-  <%= render 'form', f: f %>
+<%= form_for([@organisation, @user]) do |f| %>
 
-  <div class="actions">
-    <%= f.submit t('create_user'), class: "button" %>
-  </div>
+    <%= render 'form', f: f %>
+
+    <div class="field">
+      <h3>Roles</h3>
+      <%= f.fields_for :membership, @user.memberships.first do |ff| %>
+        <%= ff.collection_check_boxes :roles, @organisation.available_roles.sort, :name, :name do |b| %>
+          <%= b.label() { b.check_box + t(b.text) } %>
+        <%- end %>
+      <%- end %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit t('create_user'), class: "button" %>
+    </div>
+
+
 <%- end %>
 
-<%= link_to t('back'), users_path %>
+<%= link_to t('back'), organisation_path(@organisation) %>

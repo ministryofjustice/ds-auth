@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :membership do
-    organisation nil
-    user nil
+    organisation
+    user
     permissions ""
   end
 end

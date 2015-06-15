@@ -8,7 +8,7 @@ RSpec.describe Role do
       role = Role.new name: "foo", applications: ["bar"]
 
       expect(role.name).to eq("foo")
-      expect(role.application).to eq(["bar"])
+      expect(role.applications).to eq(["bar"])
     end
   end
 

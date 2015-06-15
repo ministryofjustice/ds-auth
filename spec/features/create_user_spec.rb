@@ -16,19 +16,72 @@ RSpec.feature "Creating a user" do
     specify "Creating a user" do
       new_user = FactoryGirl.build :user
 
-      fill_in_new_user_form_with new_user
+      visit organisation_path(organisation)
+      click_link "New user"
 
+      fill_in_user_form_with new_user
       fill_in_user_password new_user.password
+
+      check "Admin"
 
       click_button "Create user"
 
       assert_user_rendered new_user
     end
 
+    specify "Creating a user that already exists in a different organisation" do
+      new_user = FactoryGirl.create :user
+      new_organisation = FactoryGirl.create :organisation
+      FactoryGirl.create :membership, organisation: new_organisation, user: new_user
+
+      visit organisation_path(organisation)
+      click_link "New user"
+
+      fill_in_user_form_with new_user
+      fill_in_user_password "12345678"
+
+      click_button "Create user"
+
+      expect(current_path).to eq(organisation_users_path(organisation))
+      expect(page).to have_content "You need to fix the errors on this page before continuing"
+      expect(page).to have_link "Click here to add #{new_user.email} to #{organisation.name}"
+
+      click_link "Click here to add #{new_user.email} to #{organisation.name}"
+
+      expect(current_path).to eq(new_organisation_membership_path(organisation))
+      expect(page).to have_content "New membership to #{organisation.name}"
+      expect(page).to have_content "User: #{new_user.name} (#{new_user.email})"
+    end
+
+    specify "Creating a user that already exists in the organisation" do
+      new_user = FactoryGirl.create :user
+      membership = FactoryGirl.create :membership, organisation: organisation, user: new_user
+
+      visit organisation_path(organisation)
+      click_link "New user"
+
+      fill_in_user_form_with new_user
+      fill_in_user_password "12345678"
+
+      click_button "Create user"
+
+      expect(current_path).to eq(organisation_users_path(organisation))
+      expect(page).to have_content "You need to fix the errors on this page before continuing"
+      expect(page).to have_link "Click here to add #{new_user.email} to #{organisation.name}"
+
+      click_link "Click here to add #{new_user.email} to #{organisation.name}"
+
+      expect(current_path).to eq(edit_organisation_membership_path(organisation, membership))
+      expect(page).to have_content "That user is already a member of #{organisation.name}"
+    end
+
     specify "errors are shown if a user cannot be created" do
       new_user = FactoryGirl.build :user, name: ""
 
-      fill_in_new_user_form_with new_user
+      visit organisation_path(organisation)
+      click_link "New user"
+
+      fill_in_user_form_with new_user
 
       click_button "Create user"
 
@@ -39,7 +92,7 @@ RSpec.feature "Creating a user" do
 
   context "as a User without an admin permission" do
     specify "gets redirected back to the root_path with an error message" do
-      visit new_user_path
+      visit new_organisation_user_path(organisation)
 
       expect(current_path).to eq(root_path)
       expect(page).to have_content "You are not authorized to do that"
