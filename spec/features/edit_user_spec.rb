@@ -31,12 +31,12 @@ RSpec.feature "Editing a user" do
     login_as_user current_user.email, current_user.password
   end
 
-  context "as a User that owns the Profile" do
+  context "as a User updating their own info" do
     let!(:current_user) { user }
     include_examples "editing a User"
   end
 
-  context "as a User with an admin permission for the organisation the Profile belongs to" do
+  context "as a User with an admin permission for the organisation the User belongs to" do
     let!(:current_user) { create :user }
 
     before do
@@ -46,7 +46,7 @@ RSpec.feature "Editing a user" do
     include_examples "editing a User"
   end
 
-  context "as a User without an admin permission trying to edit another Users profile" do
+  context "as a User without an admin permission trying to edit another Users info" do
     let!(:current_user) { create(:user, organisations: [organisation]) }
 
     specify "gets redirected back to the root_path with an error message" do

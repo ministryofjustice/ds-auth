@@ -10,6 +10,6 @@ class User < ActiveRecord::Base
   scope :by_name, -> { order(name: :asc) }
 
   def role_names_for(application: )
-    memberships.with_any_role(application.available_role_names).map(&:roles).flatten
+    memberships.with_any_role(*application.available_role_names).map(&:roles).flatten
   end
 end

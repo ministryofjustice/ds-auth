@@ -8,11 +8,11 @@ class Membership < ActiveRecord::Base
   validates_uniqueness_of :user_id, scope: [:organisation_id]
 
   scope :with_roles, ->(*roles) {
-    where("permissions -> 'roles' ?& array[:roles]", roles: Array(*roles))
+    where("permissions -> 'roles' ?& array[:roles]", roles: roles)
   }
 
   scope :with_any_role, ->(*roles) {
-    where("permissions -> 'roles' ?| array[:roles]", roles: Array(*roles))
+    where("permissions -> 'roles' ?| array[:roles]", roles: roles)
   }
 
   def roles
@@ -20,14 +20,6 @@ class Membership < ActiveRecord::Base
   end
 
   def roles=(val)
-    super Array(val).keep_if(&:present?)
-  end
-
-  def applications
-    Array super
-  end
-
-  def applications=(val)
     super Array(val).keep_if(&:present?)
   end
 end

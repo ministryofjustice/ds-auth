@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Role do
-  let(:user){ create :user }
 
   describe "initializing" do
     it "accepts name and application params" do
