@@ -10,6 +10,7 @@ module Importers
           end
 
           unless org.save
+            puts "Error whilst saving Organisation: #{org_name}."
             raise ActiveRecord::Rollback
           end
 
@@ -19,6 +20,7 @@ module Importers
             end
 
             unless user.save
+              puts "Error whilst saving User: #{user_attrs[:name]}."
               raise ActiveRecord::Rollback
             end
 
