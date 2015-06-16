@@ -44,8 +44,7 @@ RSpec.describe CredentialsSerializer do
                 }
             ],
             uid: user.uid
-          },
-          roles: user.role_names_for(application: application)
+          }
         }
       )
     end

@@ -9,8 +9,7 @@ class CredentialsSerializer
 
   def serialize
     {
-      user: serialized_user,
-      roles: serialized_roles,
+      user: serialized_user
     }
   end
 
@@ -31,10 +30,6 @@ class CredentialsSerializer
       organisations: serialized_organisations,
       uid: user.uid,
     }
-  end
-
-  def serialized_roles
-    user.role_names_for(application: application)
   end
 
   def serialized_organisations
