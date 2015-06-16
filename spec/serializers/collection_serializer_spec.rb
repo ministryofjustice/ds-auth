@@ -14,9 +14,9 @@ RSpec.describe CollectionSerializer do
       end
     end
 
-    let (:profiles) { create_list :profile, 2 }
+    let (:users) { create_list :user, 2 }
 
-    subject { TestCollectionSerializer.new profiles }
+    subject { TestCollectionSerializer.new users }
 
     it "calls root_key and serialize on the extending serializer" do
       expect(subject.as_json).to eq({
@@ -26,9 +26,9 @@ RSpec.describe CollectionSerializer do
   end
 
   describe "#serialize" do
-    let(:profiles) { double("profiles") }
+    let(:users) { double("users") }
 
-    subject { CollectionSerializer.new profiles }
+    subject { CollectionSerializer.new users }
 
     it "should raise an error" do
       expect { subject.serialize }.to raise_error(NotImplementedError)
@@ -36,9 +36,9 @@ RSpec.describe CollectionSerializer do
   end
 
   describe "#root_key" do
-    let(:profiles) { double("profiles") }
+    let(:users) { double("users") }
 
-    subject { CollectionSerializer.new profiles }
+    subject { CollectionSerializer.new users }
 
     it "should raise an error" do
       expect { subject.send(:root_key) }.to raise_error(NotImplementedError)

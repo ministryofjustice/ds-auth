@@ -11,7 +11,7 @@ module Doorkeeper
     private
 
     def resource_owner_has_role_for_application?
-      current_resource_owner.permissions.where(application_id: server.client_via_uid.application.id).exists?
+      current_resource_owner.memberships.with_any_role(*server.client_via_uid.application.available_role_names).exists?
     end
 
     def role_failure_uri

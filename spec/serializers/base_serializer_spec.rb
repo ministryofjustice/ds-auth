@@ -8,21 +8,21 @@ RSpec.describe BaseSerializer do
       end
     end
 
-    let(:profile) { create :profile }
+    let(:user) { create :user }
 
-    subject { TestSerializer.new profile }
+    subject { TestSerializer.new user }
 
     it "creates a root key and calls serialize on the extended serializer" do
       expect(subject.as_json).to eq ({
-        profile: "test #serialize response"
+        user: "test #serialize response"
       })
     end
   end
 
   describe "#serialize" do
-    let(:profile) { double("profile") }
+    let(:user) { double("user") }
 
-    subject { BaseSerializer.new profile }
+    subject { BaseSerializer.new user }
 
     it "should raise an error" do
       expect { subject.serialize }.to raise_error(NotImplementedError)

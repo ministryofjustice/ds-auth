@@ -1,12 +1,22 @@
 require "rails_helper"
 
 RSpec.describe Role do
-  describe "associations" do
-    specify { expect(subject).to have_many(:permissions) }
-    specify { expect(subject).to have_many(:users).through(:permissions) }
+
+  describe "initializing" do
+    it "accepts name and application params" do
+      role = Role.new name: "foo", applications: ["bar"]
+
+      expect(role.name).to eq("foo")
+      expect(role.applications).to eq(["bar"])
+    end
   end
 
-  describe "validations" do
-    specify { expect(subject).to validate_presence_of(:name) }
+  describe "sorting" do
+    it "can be sorted by name with other Roles" do
+      role1 = Role.new name: "foo"
+      role2 = Role.new name: "bar"
+
+      expect([role1, role2].sort).to eq([role2, role1])
+    end
   end
 end

@@ -5,6 +5,7 @@ RSpec.describe "GET /oauth/authorize" do
 
   let!(:doorkeeper_app) { create :doorkeeper_application, redirect_uri: "https://localhost:34343/auth/callback" }
   let!(:resource_owner) { create :user }
+  let(:organisation) { create :organisation }
 
   before do
     Warden.test_mode!
@@ -23,7 +24,8 @@ RSpec.describe "GET /oauth/authorize" do
   context "when the resource owner (User)" do
     context "as a role for the application" do
       it "redirects to the apps auth callback uri" do
-        create :permission, user: resource_owner, application: doorkeeper_app
+        create :membership, user: resource_owner, organisation: organisation, permissions: { roles: ["admin"] }
+        allow_any_instance_of(Doorkeeper::Application).to receive(:available_role_names).and_return ["admin"]
 
         get authorize_url
 

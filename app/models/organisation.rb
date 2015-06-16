@@ -1,16 +1,15 @@
 class Organisation < ActiveRecord::Base
   ORGANISATION_TYPES = %w{
-    call_centre
-    civil
+    drs_call_center
+    laa_rota_team
     court
     custody_suite
     law_firm
     law_office
   }
 
-  has_many :permissions
   has_many :memberships
-  has_many :profiles, through: :memberships
+  has_many :users, through: :memberships
 
   has_many :sub_organisations, -> { order :id }, class_name: "Organisation", foreign_key: "parent_organisation_id"
   belongs_to :parent_organisation, class_name: "Organisation"
@@ -25,6 +24,18 @@ class Organisation < ActiveRecord::Base
 
   def is_law_firm?
     organisation_type == "law_firm" || organisation_type == "law_office"
+  end
+
+  def available_roles
+    @available_roles ||= RoleLoader.new.available_roles_for_organisation_type organisation_type
+  end
+
+  def default_role_names
+    @default_roles ||= RoleLoader.new.default_roles_for_organisation_type organisation_type
+  end
+
+  def available_role_names
+    available_roles.map(&:name)
   end
 
   private

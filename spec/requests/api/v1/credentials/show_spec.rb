@@ -8,29 +8,26 @@ RSpec.describe "GET /api/v1/profiles/me" do
 
     it "returns a 200 response with the user credentials" do
       organisation = create :organisation
-      create :profile, user: user, organisations: [organisation]
+      create :membership, user: user, organisation: organisation, permissions: { roles: ["admin"] }
 
-      get "/api/v1/profiles/me", nil, api_request_headers
+      get "/api/v1/me", nil, api_request_headers
 
       expect(response.status).to eq(200)
       expect(response_json).to eq(
         {
           "user" => {
             "email" => user.email,
-          },
-          "profile" => {
-            "email" => user.profile.email,
-            "name" => user.profile.name,
-            "telephone" => user.profile.tel,
-            "mobile" => user.profile.mobile,
+            "name" => user.name,
+            "telephone" => user.telephone,
+            "mobile" => user.mobile,
             "address" => {
-              "full_address" => user.profile.address,
-              "postcode" => user.profile.postcode,
+              "full_address" => user.address,
+              "postcode" => user.postcode,
             },
-            "organisation_uids" => user.profile.organisations.map(&:uid),
-            "uid" => user.profile.uid
+            "organisation_uids" => user.organisations.map(&:uid),
+            "uid" => user.uid
           },
-          "roles" => user.roles_for(application: application).map(&:name)
+          "roles" => ["admin"]
         }
       )
     end

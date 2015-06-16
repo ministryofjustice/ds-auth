@@ -1,0 +1,40 @@
+default: &default
+  available_roles:
+    admin: ["drs-auth"]
+  default_roles: []
+
+webops:
+  available_roles:
+    support: ["*"]
+  default_roles: ["support"]
+
+custody_suite:
+  <<: *default
+  available_roles:
+    cso: ["drs-service"]
+  default_roles: ["cso"]
+
+drs_call_center:
+  <<: *default
+  available_roles:
+    operator: ["drs-service", "drs-rota"]
+    manager: ["drs-auth", "drs-service", "drs-rota"]
+  default_roles: ["operator"]
+
+law_firm: &law_firm
+  <<: *default
+  available_roles:
+    solicitor: ["drs-service", "drs-rota"]
+    solicitor_admin: ["drs-auth", "drs-service", "drs-rota"]
+    calendar_viewer: ["drs-rota"]
+  default_roles: ["solicitor"]
+
+law_office:
+  <<: *law_firm
+
+laa_rota_team:
+  available_roles:
+    manager: ["drs-auth","drs-rota"]
+    rotaTeam: ["drs-rota"]
+  default_roles: ["rotaTeam"]
+

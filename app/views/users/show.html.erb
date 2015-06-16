@@ -1,0 +1,47 @@
+<h1><%= t("user") %></h1>
+
+<p>
+  <strong><%= t('name') %>:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong><%= t('email') %>:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong><%= t('telephone') %>:</strong>
+  <%= @user.telephone %>
+</p>
+
+<p>
+  <strong><%= t('mobile') %>:</strong>
+  <%= @user.mobile %>
+</p>
+
+<p>
+  <strong><%= t('address') %></strong>
+  <%= @user.address %>
+</p>
+
+<p>
+  <strong><%= t('postcode') %>:</strong>
+  <%= @user.postcode %>
+</p>
+
+<h3>Organisations</h3>
+<table>
+  <thead>
+    <th></th>
+  </thead>
+<%- @user.memberships.each do |membership| %>
+  <%= content_tag(:tr, membership) do %>
+    <td><%= link_to membership.organisation.name, organisation_path(membership.organisation) %></td>
+  <%- end %>
+<%- end %>
+</table>
+
+<br />
+<%= link_to t('edit'), edit_user_path(@user) %> |
+<%= link_to t('back'), users_path %>

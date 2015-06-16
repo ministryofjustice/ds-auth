@@ -12,57 +12,11 @@ RSpec.describe "GET /api/v1/organisations" do
         tuckers_office  = create :organisation, name: "Tuckers Office", organisation_type: "law_office",
                             parent_organisation: tuckers, supplier_number: "AABBCC99999"
         brighton = create :organisation, name: "Brighton", organisation_type: "custody_suite"
-        tuckers_profile  = create :profile, user: user, organisations: [tuckers]
-        brighton_profile = create :profile, organisations: [brighton]
 
         get "/api/v1/organisations", nil, api_request_headers
 
         expect(response.status).to eq(200)
-        expect(response_json).to eq(
-          "organisations" => [
-            {
-              "uid" => brighton.uid,
-              "name" => "Brighton",
-              "type" => brighton.organisation_type,
-              "tel" => brighton.tel,
-              "parent_organisation_uid" => nil,
-              "sub_organisation_uids" => [],
-              "links" => {
-                "profiles" => "/api/v1/profiles?uids[]=#{brighton_profile.uid}",
-                "parent_organisation" => nil,
-                "sub_organisations" => nil
-              }
-            },
-            {
-              "uid" => tuckers.uid,
-              "name" => "Tuckers",
-              "type" => tuckers.organisation_type,
-              "tel" => tuckers.tel,
-              "supplier_number" => tuckers.supplier_number,
-              "parent_organisation_uid" => nil,
-              "sub_organisation_uids" => [tuckers_office.uid],
-              "links" => {
-                "profiles" => "/api/v1/profiles?uids[]=#{tuckers_profile.uid}",
-                "parent_organisation" => nil,
-                "sub_organisations" => "/api/v1/organisations?uids[]=#{tuckers_office.uid}"
-              }
-            },
-            {
-              "uid" => tuckers_office.uid,
-              "name" => "Tuckers Office",
-              "type" => tuckers_office.organisation_type,
-              "tel" => tuckers_office.tel,
-              "supplier_number" => tuckers_office.supplier_number,
-              "parent_organisation_uid" => tuckers.uid,
-              "sub_organisation_uids" => [],
-              "links" => {
-                "profiles" => nil,
-                "parent_organisation" => "/api/v1/organisation/#{tuckers.uid}",
-                "sub_organisations" => nil
-              }
-            }
-          ]
-        )
+        expect(response_json).to eq(OrganisationsSerializer.new([brighton, tuckers, tuckers_office]).as_json.deep_stringify_keys)
       end
 
       it "returns an empty 200 response if no organisations exist" do
@@ -84,36 +38,7 @@ RSpec.describe "GET /api/v1/organisations" do
         get "/api/v1/organisations", { uids: [brighton.uid, london.uid] }, api_request_headers
 
         expect(response.status).to eq(200)
-        expect(response_json).to eq(
-          "organisations" => [
-            {
-              "uid" => brighton.uid,
-              "name" => "Brighton",
-              "type" => brighton.organisation_type,
-              "tel" => brighton.tel,
-              "parent_organisation_uid" => nil,
-              "sub_organisation_uids" => [],
-              "links" => {
-                "profiles" => nil,
-                "parent_organisation" => nil,
-                "sub_organisations" => nil
-              }
-            },
-            {
-              "uid" => london.uid,
-              "name" => "London",
-              "type" => london.organisation_type,
-              "tel" => london.tel,
-              "parent_organisation_uid" => nil,
-              "sub_organisation_uids" => [],
-              "links" => {
-                "profiles" => nil,
-                "parent_organisation" => nil,
-                "sub_organisations" => nil
-              }
-            }
-          ]
-        )
+        expect(response_json).to eq(OrganisationsSerializer.new([brighton, london]).as_json.deep_stringify_keys)
       end
 
       it "returns an empty 200 response if not organisations match" do
@@ -132,72 +57,22 @@ RSpec.describe "GET /api/v1/organisations" do
       it "returns a 200 response with only matching organisations" do
         tuckers  = create :organisation, name: "Tuckers", organisation_type: "law_firm"
                    create :organisation, name: "Brighton", organisation_type: "custody_suite"
-        tuckers_profile  = create :profile, user: user, organisations: [tuckers]
 
         get "/api/v1/organisations", { types: ["law_firm"] }, api_request_headers
 
         expect(response.status).to eq(200)
-        expect(response_json).to eq(
-          "organisations" => [
-            {
-              "uid" => tuckers.uid,
-              "name" => "Tuckers",
-              "type" => tuckers.organisation_type,
-              "tel" => tuckers.tel,
-              "supplier_number" => tuckers.supplier_number,
-              "parent_organisation_uid" => nil,
-              "sub_organisation_uids" => [],
-              "links" => {
-                "profiles" => "/api/v1/profiles?uids[]=#{tuckers_profile.uid}",
-                "parent_organisation" => nil,
-                "sub_organisations" => nil
-              }
-            }
-          ]
-        )
+        expect(response_json).to eq(OrganisationsSerializer.new([tuckers]).as_json.deep_stringify_keys)
       end
 
       it "returns a 200 with many matching organisations if provided with many types, in name order" do
         tuckers  = create :organisation, name: "Tuckers", organisation_type: "law_firm"
-        capita   = create :organisation, name: "Capita", organisation_type: "call_centre"
+        capita   = create :organisation, name: "Capita", organisation_type: "drs_call_center"
                    create :organisation, name: "Brighton", organisation_type: "custody_suite"
-        tuckers_profile  = create :profile, user: user, organisations: [tuckers]
-        capita_profile   = create :profile, organisations: [capita]
 
-        get "/api/v1/organisations", { types: ["call_centre", "law_firm"] }, api_request_headers
+        get "/api/v1/organisations", { types: ["drs_call_center", "law_firm"] }, api_request_headers
 
         expect(response.status).to eq(200)
-        expect(response_json).to eq(
-          "organisations" => [
-            {
-              "uid" => capita.uid,
-              "name" => "Capita",
-              "type" => capita.organisation_type,
-              "tel" => capita.tel,
-              "parent_organisation_uid" => nil,
-              "sub_organisation_uids" => [],
-              "links" => {
-                "profiles" => "/api/v1/profiles?uids[]=#{capita_profile.uid}",
-                "parent_organisation" => nil,
-                "sub_organisations" => nil
-              }
-            },
-            {
-              "uid" => tuckers.uid,
-              "name" => "Tuckers",
-              "type" => tuckers.organisation_type,
-              "tel" => tuckers.tel,
-              "supplier_number" => tuckers.supplier_number,
-              "parent_organisation_uid" => nil,
-              "sub_organisation_uids" => [],
-              "links" => {
-                "profiles" => "/api/v1/profiles?uids[]=#{tuckers_profile.uid}",
-                "parent_organisation" => nil,
-                "sub_organisations" => nil
-              }
-            }
-          ]
-        )
+        expect(response_json).to eq(OrganisationsSerializer.new([capita, tuckers]).as_json.deep_stringify_keys)
       end
 
       it "returns an empty 200 response if no organisations match" do
@@ -220,23 +95,7 @@ RSpec.describe "GET /api/v1/organisations" do
         get "/api/v1/organisations", { uids: [tuckers.uid, london.uid], types: [london.organisation_type] }, api_request_headers
 
         expect(response.status).to eq(200)
-        expect(response_json).to eq(
-          "organisations" => [
-            {
-              "uid" => london.uid,
-              "name" => "London",
-              "type" => london.organisation_type,
-              "tel" => london.tel,
-              "parent_organisation_uid" => nil,
-              "sub_organisation_uids" => [],
-              "links" => {
-                "profiles" => nil,
-                "parent_organisation" => nil,
-                "sub_organisations" => nil
-              }
-            }
-          ]
-        )
+        expect(response_json).to eq(OrganisationsSerializer.new([london]).as_json.deep_stringify_keys)
       end
 
       it "returns an empty 200 response if not organisations match" do

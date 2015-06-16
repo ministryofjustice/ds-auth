@@ -5,8 +5,12 @@ module Doorkeeper
     module Application
       extend ActiveSupport::Concern
 
-      included do
-        has_many :permissions
+      def available_roles
+        @available_roles ||= ::RoleLoader.new.available_roles_for_application name
+      end
+
+      def available_role_names
+        available_roles.map(&:name)
       end
     end
   end

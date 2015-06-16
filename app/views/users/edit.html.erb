@@ -2,6 +2,12 @@
 
 <h1><%= t('edit_user') %></h1>
 
-<%= render 'form' %>
+<%= form_for(@user) do |f| %>
+  <%= render 'form',  f: f %>
 
-<%= link_to t('back'), profiles_path %>
+  <div class="actions">
+    <%= f.submit t('update_user'), class: "button" %>
+  </div>
+<%- end %>
+
+<%= link_to t('back'), users_path %>

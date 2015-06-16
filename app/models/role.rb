@@ -1,6 +1,11 @@
-class Role < ActiveRecord::Base
-  has_many :permissions
-  has_many :users, through: :permissions
+class Role
+  attr_accessor :name, :applications
 
-  validates :name, presence: true, uniqueness: true
+  def initialize(params = {})
+    @name, @applications = params[:name], Array(params[:applications])
+  end
+
+  def <=>(other)
+    name <=> other.name
+  end
 end

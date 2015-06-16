@@ -10,35 +10,34 @@ module HelperMethods
     click_link("Sign out")
   end
 
-  def fill_in_new_profile_form_with(profile)
-    visit profiles_path
-    click_link "New Profile"
-    fill_in_profile_form_with profile
-  end
-
-  def fill_in_edit_profile_form_with(old_profile, new_profile)
-    visit profiles_path
-    within "tr#profile_#{old_profile.id}" do
+  def fill_in_edit_user_form_with(old_user, new_user)
+    visit users_path
+    within "tr#user_#{old_user.id}" do
       click_link "Edit"
     end
-    fill_in_profile_form_with new_profile
+    fill_in_user_form_with new_user
   end
 
-  def fill_in_profile_form_with(profile)
-    fill_in "Name", with: profile.name
-    fill_in "Email", with: profile.email
-    fill_in "Tel", with: profile.tel
-    fill_in "Mobile", with: profile.mobile
-    fill_in "Address", with: profile.address
-    fill_in "Postcode", with: profile.postcode
+  def fill_in_user_form_with(user)
+    fill_in "Name", with: user.name
+    fill_in "Email", with: user.email
+    fill_in "Telephone", with: user.telephone
+    fill_in "Mobile", with: user.mobile
+    fill_in "Address", with: user.address
+    fill_in "Postcode", with: user.postcode
   end
 
-  def assert_profile_rendered(profile)
-    expect(page).to have_content(profile.name)
-    expect(page).to have_content(profile.email)
-    expect(page).to have_content(profile.tel)
-    expect(page).to have_content(profile.mobile)
-    expect(page).to have_content(profile.address)
-    expect(page).to have_content(profile.postcode)
+  def fill_in_user_password(password)
+    fill_in "Password", with: password
+    fill_in "Password confirmation", with: password
+  end
+
+  def assert_user_rendered(user)
+    expect(page).to have_content(user.name)
+    expect(page).to have_content(user.email)
+    expect(page).to have_content(user.telephone)
+    expect(page).to have_content(user.mobile)
+    expect(page).to have_content(user.address)
+    expect(page).to have_content(user.postcode)
   end
 end

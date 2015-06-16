@@ -1,12 +1,15 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :permissions, dependent: :destroy
-  has_one :profile
+  has_many :memberships, dependent: :destroy
+  has_many :organisations, through: :memberships
 
-  delegate :name, to: :profile
+  validates_presence_of :name
 
-  def roles_for(application: )
-    permissions.for_application(application).map(&:role)
+  default_scope { order :name }
+  scope :by_name, -> { order(name: :asc) }
+
+  def role_names_for(application: )
+    memberships.with_any_role(*application.available_role_names).map(&:roles).flatten
   end
 end

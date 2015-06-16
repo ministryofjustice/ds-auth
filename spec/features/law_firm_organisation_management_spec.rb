@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Users managing law firm type organisations" do
   let(:user) { create(:user) }
-  let!(:organisation) { create(:organisation, :with_profiles_and_users, profile_count: 3) }
+  let!(:organisation) { create(:organisation) }
 
   before do
     login_as_user user.email, user.password

@@ -5,23 +5,25 @@ Rails.application.routes.draw do
   end
   devise_for :users, skip: [:registrations], controllers: { sessions: "sessions" }
 
-  resources :users, only: [:edit, :update]
-  resources :profiles
+  resources :users, except: [:new, :create]
 
   resources :organisations do
-    resources :memberships, except: [:index, :edit, :update, :show]
+    resources :users
+    resources :memberships
   end
-
-  resources :permissions, only: [:new, :index, :create, :destroy]
 
   root "welcome#index"
 
   namespace :api, format: "json" do
     namespace :v1 do
+      get "me" => "users#me"
       resources :organisations, only: [:index, :show], param: :uid
-      resources :profiles, only: [:index, :show], param: :uid do
+      resources :users, only: [:index, :show], param: :uid do
         get "me", on: :collection
       end
+
+      # support legacy /api/v1/profiles/me route
+      get "profiles/me" => "users#me"
     end
   end
 

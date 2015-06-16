@@ -1,17 +1,17 @@
 require "rails_helper"
 
-RSpec.describe ProfileSerializer do
+RSpec.describe UserSerializer do
   describe "#serialize" do
     let(:organisation) { build_stubbed :organisation }
-    let(:profile) { build_stubbed :profile, organisations: [organisation] }
+    let(:user) { build_stubbed :user, organisations: [organisation] }
 
-    it "serializes the profile" do
-      serializer = ProfileSerializer.new profile
+    it "serializes the user" do
+      serializer = UserSerializer.new user
 
       expect(serializer.serialize).to eq(
         {
-          uid: profile.uid,
-          name: profile.name,
+          uid: user.uid,
+          name: user.name,
           links: {
             organisation: "/api/v1/organisations/#{organisation.uid}"
           }

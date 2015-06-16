@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :membership do
-    association :organisation
-    association :profile
+    organisation
+    user
+    permissions ""
   end
 end

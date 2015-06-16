@@ -2,32 +2,29 @@ require "rails_helper"
 
 RSpec.describe User do
   let(:user){ create :user }
-  let(:role) { Role.create(name: "super-danger-admin") }
+
 
   describe "associations" do
-    specify { expect(subject).to have_one(:profile) }
-    specify { expect(subject).to have_many(:permissions) }
+    specify { expect(subject).to have_many(:organisations).through(:memberships) }
+    specify { expect(subject).to have_many(:memberships) }
   end
 
-  describe "delegation" do
-    specify { expect(subject).to delegate_method(:name).to(:profile) }
-  end
-
-  describe "#roles_for" do
-    let(:application) { build :doorkeeper_application }
-    let(:role) { build :role }
+  describe "#roles_names_for" do
+    let!(:application) { build :doorkeeper_application }
+    let!(:membership) { create :membership, user: user, permissions: { roles: ["admin"]} }
 
     it "raises an error without an application" do
-      expect { subject.roles_for }.to raise_error(ArgumentError)
+      expect { user.role_names_for }.to raise_error(ArgumentError)
     end
 
     it "returns an empty array when user has no roles for the given application" do
-      expect(subject.roles_for(application: application)).to eq([])
+      allow(application).to receive(:available_role_names).and_return []
+      expect(user.role_names_for(application: application)).to eq([])
     end
 
     it "returns the roles a user has for the given application" do
-      expect(subject.permissions).to receive(:for_application).with(application).and_return [double("Permission", role: role)]
-      expect(subject.roles_for(application: application)).to eq([role])
+      allow(application).to receive(:available_role_names).and_return ["admin"]
+      expect(user.role_names_for(application: application)).to eq(["admin"])
     end
   end
 
@@ -35,8 +32,8 @@ RSpec.describe User do
     let!(:user) { FactoryGirl.create :user }
 
     it "removes all associated permissions" do
-      FactoryGirl.create :permission, user: user
-      expect { user.destroy }.to change(Permission, :count).from(1).to(0)
+      FactoryGirl.create :membership, user: user
+      expect { user.destroy }.to change(Membership, :count).from(1).to(0)
     end
   end
 end

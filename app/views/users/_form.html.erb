@@ -1,20 +1,44 @@
-<%= form_for(@user) do |f| %>
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :email, disabled: !@user.new_record? %>
-  </div>
+<div class="field">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+<div class="field">
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+</div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+<div class="field">
+  <%= f.label :telephone %>
+  <%= f.text_field :telephone %>
+</div>
 
-  <div class="actions">
-    <%= f.submit t('update_user'), class: "button" %>
-  </div>
-<%- end %>
+<div class="field">
+  <%= f.label :mobile %>
+  <%= f.text_field :mobile %>
+</div>
+
+<div class="field">
+  <%= f.label :address %>
+  <%= f.text_area :address, rows: 4 %>
+</div>
+
+<div class="field">
+  <%= f.label :postcode %>
+  <%= f.text_field :postcode %>
+</div>
+
+<div class="field">
+  <%= f.label :password %>
+  <%- unless @user.new_record? %>
+    <aside>Leave password blank to keep existing password</aside>
+  <%- end %>
+  <%= f.password_field :password, autocomplete: "off" %>
+</div>
+
+<div class="field">
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation, autocomplete: "off" %>
+</div>
+
+

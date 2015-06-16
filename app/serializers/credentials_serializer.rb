@@ -10,7 +10,6 @@ class CredentialsSerializer
   def serialize
     {
       user: serialized_user,
-      profile: serialized_profile,
       roles: serialized_roles,
     }
   end
@@ -22,29 +21,19 @@ class CredentialsSerializer
   def serialized_user
     {
       email: user.email,
-    }
-  end
-
-  def serialized_profile
-    {
-      email: profile.email,
-      name: profile.name,
-      telephone: profile.tel,
-      mobile: profile.mobile,
+      name: user.name,
+      telephone: user.telephone,
+      mobile: user.mobile,
       address: {
-        full_address: profile.address,
-        postcode: profile.postcode,
+        full_address: user.address,
+        postcode: user.postcode,
       },
-      organisation_uids: profile.organisations.pluck(:uid),
-      uid: profile.uid,
+      organisation_uids: user.organisations.pluck(:uid),
+      uid: user.uid,
     }
   end
 
   def serialized_roles
-    user.roles_for(application: application).map(&:name)
-  end
-
-  def profile
-    user.profile || NullProfile.new
+    user.role_names_for(application: application)
   end
 end
