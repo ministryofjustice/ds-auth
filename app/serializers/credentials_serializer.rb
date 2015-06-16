@@ -40,7 +40,7 @@ class CredentialsSerializer
           uid: organisation.uid,
           name: organisation.name,
           type: organisation.organisation_type,
-          roles: membership.roles
+          roles: membership.roles & @application.available_role_names
       }
     end
   end

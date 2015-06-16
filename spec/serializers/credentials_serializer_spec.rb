@@ -15,13 +15,13 @@ RSpec.describe CredentialsSerializer do
   end
 
   describe "#serialize" do
-    let(:application) { build_stubbed :doorkeeper_application }
-    let(:roles) { %w(tea_drinker cake_eater) }
+    let(:application) { build_stubbed :doorkeeper_application, name: "drs-service" }
+    let(:application_roles) { %w(cso) }
 
     it "serializes the credentials for the passed in user" do
       organisation = create :organisation
       user = create :user
-      create :membership, user: user, organisation: organisation, permissions: { roles: roles }
+      create :membership, user: user, organisation: organisation, permissions: { roles: application_roles + [:cake_eater] }
 
       serializer = CredentialsSerializer.new user: user, application: application
       expect(serializer.serialize).to eq(
@@ -40,7 +40,7 @@ RSpec.describe CredentialsSerializer do
                     uid: organisation.uid,
                     name: organisation.name,
                     type: organisation.organisation_type,
-                    roles: roles
+                    roles: application_roles
                 }
             ],
             uid: user.uid
