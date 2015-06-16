@@ -4,7 +4,8 @@ require_relative "../../../lib/importers/solicitor_parser"
 RSpec.describe Importers::SolicitorParser do
   describe "#import!" do
     it "creates Organisation and User models for each row" do
-      allow(File).to receive(:open).with("test_file", "r").and_return(example_file)
+      expect(File).to receive(:open).with("test_file", "r").and_return(example_file)
+      expect(Devise).to receive(:friendly_token).exactly(3).times.and_return("password")
 
       imported_data = Importers::SolicitorParser.new("test_file").import!
 

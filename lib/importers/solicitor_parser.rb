@@ -37,12 +37,13 @@ module Importers
 
     def user_attributes(row)
       user_name = row[1]
+      generated_password = Devise.friendly_token.first(8)
       {
         name: user_name,
         telephone: row[2],
         email: generate_email(user_name),
-        password: "password",
-        password_confirmation: "password"
+        password: generated_password,
+        password_confirmation: generated_password
       }
     end
 

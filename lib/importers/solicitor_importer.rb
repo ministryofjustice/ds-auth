@@ -10,7 +10,7 @@ module Importers
           end
 
           unless org.save
-            puts "Error whilst saving Organisation: #{org_name}."
+            puts "Error whilst saving Organisation: #{org_name}." unless Rails.env.test?
             raise ActiveRecord::Rollback
           end
 
@@ -20,12 +20,12 @@ module Importers
             end
 
             unless user.save
-              puts "Error whilst saving User: #{user_attrs[:name]}."
+              puts "Error whilst saving User: #{user_attrs[:name]}." unless Rails.env.test?
               raise ActiveRecord::Rollback
             end
 
             Membership.where(user_id: user.id, organisation_id: org.id).first_or_create! do |m|
-              m.roles = org.default_role_names
+              m.roles = ["solicitor_admin"]
             end
           end
         end

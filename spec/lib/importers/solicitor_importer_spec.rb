@@ -38,7 +38,7 @@ RSpec.describe Importers::SolicitorImporter do
 
       it "creates the Membership with roles" do
         expect(Organisation.last.users.count).to eq 1
-        expect(Membership.last.roles).not_to be_empty
+        expect(Membership.last.roles).to include("solicitor_admin")
       end
     end
 
