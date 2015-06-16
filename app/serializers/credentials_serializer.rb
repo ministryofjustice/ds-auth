@@ -28,12 +28,25 @@ class CredentialsSerializer
         full_address: user.address,
         postcode: user.postcode,
       },
-      organisation_uids: user.organisations.pluck(:uid),
+      organisations: serialized_organisations,
       uid: user.uid,
     }
   end
 
   def serialized_roles
     user.role_names_for(application: application)
+  end
+
+  def serialized_organisations
+    user.memberships.map do |membership|
+      organisation = membership.organisation
+
+      {
+          uid: organisation.uid,
+          name: organisation.name,
+          type: organisation.organisation_type,
+          roles: membership.roles
+      }
+    end
   end
 end
