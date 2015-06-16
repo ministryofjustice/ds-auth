@@ -18,6 +18,12 @@ class RoleLoader
     organisation_type_data(organisation_type)["default_roles"] + default_organisation_roles
   end
 
+  def application_names_for_roles(*roles)
+    load_organisation_types.map do |organisation_type, data|
+      data["available_roles"].slice(*roles).map {|role, applications| applications }
+    end.flatten.compact.uniq.sort.map {|app_name| Doorkeeper::Application.find_by_name app_name }.compact
+  end
+
   private
 
   def load_organisation_types
@@ -41,5 +47,4 @@ class RoleLoader
   def organisation_type_data(organisation_type)
     load_organisation_types[organisation_type]
   end
-
 end

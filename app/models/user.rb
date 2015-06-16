@@ -12,4 +12,8 @@ class User < ActiveRecord::Base
   def role_names_for(application: )
     memberships.with_any_role(*application.available_role_names).map(&:roles).flatten
   end
+
+  def roles
+    memberships.map(&:roles).flatten
+  end
 end

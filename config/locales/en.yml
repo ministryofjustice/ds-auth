@@ -20,6 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  access_to_applications: "You have access to these applications:"
   admin: "Admin"
   are_you_sure: "Are you sure?"
   back: "Back"
@@ -48,6 +49,7 @@ en:
   roles: "Roles"
   members: "Members"
   name: "Name"
+  manage_organisation: "Manage %{organisation_name}"
   new_membership_to_organisation: "New membership to %{organisation_name}"
   new_organisation: "New Organisation"
   new_permission: "New Permission"

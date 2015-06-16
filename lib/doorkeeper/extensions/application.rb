@@ -12,6 +12,12 @@ module Doorkeeper
       def available_role_names
         available_roles.map(&:name)
       end
+
+      def url
+        @url || URI.parse(redirect_uri).tap do |uri|
+          uri.path = "/"
+        end.to_s
+      end
     end
   end
 end

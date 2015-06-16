@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resources :memberships
   end
 
-  root "welcome#index"
+  root "dashboard#index"
 
   namespace :api, format: "json" do
     namespace :v1 do
