@@ -7,8 +7,9 @@ RSpec.describe "GET /api/v1/profiles/me" do
     include_context "logged in API User"
 
     it "returns a 200 response with the user credentials" do
+      roles = %w(admin lion_tamer)
       organisation = create :organisation
-      create :membership, user: user, organisation: organisation, permissions: { roles: ["admin"] }
+      create :membership, user: user, organisation: organisation, permissions: { roles: roles }
 
       get "/api/v1/me", nil, api_request_headers
 
@@ -24,10 +25,16 @@ RSpec.describe "GET /api/v1/profiles/me" do
               "full_address" => user.address,
               "postcode" => user.postcode,
             },
-            "organisation_uids" => user.organisations.map(&:uid),
+            "organisations" => [
+                {
+                    "uid" => organisation.uid,
+                    "name" => organisation.name,
+                    "type" => organisation.organisation_type,
+                    "roles" => roles
+                }
+            ],
             "uid" => user.uid
-          },
-          "roles" => ["admin"]
+          }
         }
       )
     end
