@@ -1,12 +1,12 @@
 require "spec_helper"
-require_relative "../../../lib/importers/solicitor_importer"
+require_relative "../../../lib/importers/solicitor_parser"
 
-RSpec.describe Importers::SolicitorImporter do
+RSpec.describe Importers::SolicitorParser do
   describe "#import!" do
     it "creates Organisation and User models for each row" do
       allow(File).to receive(:open).with("test_file", "r").and_return(example_file)
 
-      imported_data = Importers::SolicitorImporter.new("test_file").import!
+      imported_data = Importers::SolicitorParser.new("test_file").import!
 
       expect(imported_data).to eq({
         "Lawyers Inc." => {

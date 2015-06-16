@@ -1,7 +1,7 @@
 require "csv"
 
 module Importers
-  class SolicitorImporter
+  class SolicitorParser
     def initialize(filename)
       @filename = filename
     end
