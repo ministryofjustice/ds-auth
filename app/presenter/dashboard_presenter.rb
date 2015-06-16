@@ -12,7 +12,7 @@ class DashboardPresenter
   def application_links
     applications.map do |application|
       content_tag :li do
-        link_to application.name, application.url
+        link_to application.name, application.url, target: "_blank"
       end
     end.join.html_safe
   end
