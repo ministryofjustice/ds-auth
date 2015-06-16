@@ -19,9 +19,15 @@ class RoleLoader
   end
 
   def application_names_for_roles(*roles)
-    load_organisation_types.map do |organisation_type, data|
-      data["available_roles"].slice(*roles).map {|role, applications| applications }
-    end.flatten.compact.uniq.sort.map {|app_name| Doorkeeper::Application.find_by_name app_name }.compact
+    app_names = Set.new.tap do |application_names|
+      load_organisation_types.map do |organisation_type, data|
+        data["available_roles"].slice(*roles).each do |role, applications|
+          applications.each {|app_name| application_names << app_name }
+        end
+      end
+    end
+
+    app_names.sort.map {|app_name| Doorkeeper::Application.find_by_name app_name }.compact
   end
 
   private
