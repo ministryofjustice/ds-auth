@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "User authentication" do
+RSpec.feature "User logging in" do
   let!(:user) { create(:user) }
 
   specify "can log in with valid credentials" do
@@ -8,7 +8,8 @@ RSpec.feature "User authentication" do
     fill_in "user_email", with: user.email
     fill_in "user_password", with: user.password
     click_button "Sign in"
-    expect(page).to have_content("You made it...")
+
+    expect(current_path).to eq(root_path)
   end
 
   specify "cannot log in with invalid credentials" do
@@ -16,13 +17,16 @@ RSpec.feature "User authentication" do
     fill_in "user_email", with: user.email
     fill_in "user_password", with: "notarealpassword"
     click_button "Sign in"
-    expect(page).to_not have_content("You made it...")
+
+    expect(current_path).to eq(new_user_session_path)
   end
 
   specify "receives a message when missing credentials for login" do
     visit new_user_session_path
     fill_in "user_email", with: user.email
     click_button "Sign in"
+
+    expect(current_path).to eq(new_user_session_path)
     expect(page).to have_content("Invalid email or password")
   end
 
@@ -40,6 +44,17 @@ RSpec.feature "User authentication" do
 
       expect(number_of_active_oauth_tokens_for user).to eq 0
     end
+  end
+
+  specify "after logging in User has links to all Applications they have access to" do
+    create :doorkeeper_application, name: "drs-service", redirect_uri: "http://foobar.example.org/oauth/callback"
+    create :membership, user: user, roles: ["cso"]
+
+    user_is_logged_in user
+
+    expect(current_path).to eq(root_path)
+    expect(page).to have_content("You have access to these applications:")
+    expect(page).to have_link("drs-service", href: "http://foobar.example.org/")
   end
 end
 

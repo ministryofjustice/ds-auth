@@ -1,0 +1,23 @@
+<h1>Welcome <%= current_user.name %></h1>
+
+<section>
+  <ul>
+    <%- if current_user.organisations.count > 1 %>
+      <li><%= link_to t("organisations"), organisations_path %></li>
+    <%- end %>
+
+    <%- if current_user.organisations.count == 1 %>
+      <li><%= link_to current_user.organisations.first.name, organisation_path(current_user.organisations.first) %></li>
+    <%- end %>
+  </ul>
+</section>
+
+<%- if @dashboard.has_applications? %>
+<section>
+  <h2><%= t("access_to_applications") %></h2>
+
+  <ul>
+    <%= @dashboard.application_links %>
+  </ul>
+</section>
+<%- end %>
