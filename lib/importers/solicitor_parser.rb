@@ -36,13 +36,13 @@ module Importers
     end
 
     def user_email(row)
-      row[4]
+      row[3]
     end
 
     def user_attributes(row)
       {
         name: row[1],
-        telephone: row[3]
+        telephone: row[2]
       }
     end
 
