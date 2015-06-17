@@ -9,15 +9,12 @@ RSpec.describe Importers::SolicitorImporter do
           "Test Firm" => {
             slug: "test-firm",
             organisation_type: "law_firm",
-            users: [
-              {
+            users: {
+              "mr-test-user@example.com" => {
                 name: "Mr Test User",
-                telephone: "01234567890",
-                email: "mr-test-user@example.com",
-                password: "password",
-                password_confirmation: "password"
+                telephone: "01234567890"
               }
-            ]
+            }
           }
         }
       }
@@ -48,15 +45,12 @@ RSpec.describe Importers::SolicitorImporter do
           "Test Firm" => {
             slug: "",
             organisation_type: "law_firm",
-            users: [
-              {
+            users: {
+              "mr-test-user@example.com" => {
                 name: "Mr Test User",
-                telephone: "01234567890",
-                email: "mr-test-user@example.com",
-                password: "password",
-                password_confirmation: "password"
+                telephone: "01234567890"
               }
-            ]
+            }
           }
         }
       }
@@ -84,15 +78,11 @@ RSpec.describe Importers::SolicitorImporter do
           "Test Firm" => {
             slug: "test-firm",
             organisation_type: "law_firm",
-            users: [
-              {
-                name: "Mr Test User",
-                telephone: "01234567890",
-                email: "mr-test-user@example.com",
-                password: "",
-                password_confirmation: ""
+            users: {
+              "mr-test-user@example.com" => {
+                # name: nil
               }
-            ]
+            }
           }
         }
       }
@@ -120,12 +110,12 @@ RSpec.describe Importers::SolicitorImporter do
           "Test Firm" => {
             slug: "test-firm",
             organisation_type: "law_firm",
-            users: []
+            users: {}
           },
           "Invalid Firm" => {
             slug: "",
             organisation_type: "",
-            users: []
+            users: {}
           }
         }
       }

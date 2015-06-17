@@ -14,13 +14,14 @@ module Importers
             raise ActiveRecord::Rollback
           end
 
-          users_attrs.each do |user_attrs|
-            user = User.where(email: user_attrs[:email]).first_or_initialize do |u|
+          users_attrs.each_pair do |user_email, user_attrs|
+            user = User.where(email: user_email).first_or_initialize do |u|
               u.assign_attributes(user_attrs)
+              u.password = u.password_confirmation = Devise.friendly_token.first(8)
             end
 
             unless user.save
-              puts "Error whilst saving User: #{user_attrs[:name]}." unless Rails.env.test?
+              puts "Error whilst saving User: #{user_email}." unless Rails.env.test?
               raise ActiveRecord::Rollback
             end
 

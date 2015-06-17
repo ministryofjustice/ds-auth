@@ -21,7 +21,7 @@ module Importers
       csv_rows.each do |row|
         org_name = row[0]
         results[org_name] ||= organisation_attributes(org_name)
-        results[org_name][:users] << user_attributes(row)
+        results[org_name][:users][user_email(row)] = user_attributes(row)
       end
 
       results
@@ -31,28 +31,23 @@ module Importers
       {
         slug: generate_slug(org_name),
         organisation_type: "law_firm",
-        users: []
+        users: {}
       }
     end
 
+    def user_email(row)
+      row[4]
+    end
+
     def user_attributes(row)
-      user_name = row[1]
-      generated_password = Devise.friendly_token.first(8)
       {
-        name: user_name,
-        telephone: row[2],
-        email: generate_email(user_name),
-        password: generated_password,
-        password_confirmation: generated_password
+        name: row[1],
+        telephone: row[3]
       }
     end
 
     def generate_slug(org_name)
       org_name.gsub(/[^\w\s]+/, "").gsub(/\s+/, "-").downcase
-    end
-
-    def generate_email(user_name)
-      generate_slug(user_name) + "@example.com"
     end
   end
 end
