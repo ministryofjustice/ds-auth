@@ -47,3 +47,4 @@ To get the application running locally, you need to:
 ### Test setup
 
 To run the tests, you will need to install [PhantomJS](http://phantomjs.org/), the test suite is known to be working with version `1.9.7`, it may or may not work with other versions. To run the tests, use the command: ```bundle exec rake```
+
