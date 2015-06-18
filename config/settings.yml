@@ -26,5 +26,9 @@ action_mailer:
     password: <%= ENV.fetch('MAILER_SMTP_PASSWORD') %>
     enable_starttls_auto: true
 
+aws:
+  region: eu-west-1
+  s3_asset_bucket_name: <%= ENV.fetch("AWS_S3_ASSET_BUCKET_NAME") %>
+
 sandbox_email: <%= ENV.fetch('SANDBOX_EMAIL', 'false') %>
 sandbox_email_address: <%= ENV.fetch('SANDBOX_EMAIL_ADDRESS', nil) %>
