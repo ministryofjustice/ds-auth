@@ -4,6 +4,7 @@ ruby "2.2.2"
 
 gem "dotenv-rails", "~> 2.0.0", require: "dotenv/rails-now"
 
+gem "asset_sync"
 gem "coffee-rails", "~> 4.1.0"
 gem "devise", "~> 3.4.1"
 gem "doorkeeper"
