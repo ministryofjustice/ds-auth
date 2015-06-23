@@ -32,15 +32,15 @@ end
 ```Ruby
     # get a valid authenticated OAuth token
     auth_token = '...'
-    
+
     # instantiate the client with the token
     client = Drs::AuthClient::Client.new(auth_token)
-    
+
     # single resource example
     organisation = client.organisation('UID')
-    
+
     # collection of resources
-    profiles = client.profiles    
+    users = client.users
 ```
 
 ## Design
@@ -50,31 +50,31 @@ The client is based on a few conventions:
 1. The API is implemented as RESTful
 2. Models are named based on remote resources and in the `Drs::AuthClient::Models` namespace - ie. `Organisation` for `/organisations`
 3. Models have `uid` attribute as their unique identified and can be retrieved by it - ie. `/organisations/UID`
-4. Remote responses have the resource data prefixed on the top level based on the model (resource) name - ie. for `profile` and `profiles`
+4. Remote responses have the resource data prefixed on the top level based on the model (resource) name - ie. for `user` and `users`
 
 	```json
-	// single resource	
+	// single resource
 	{
-		"profile": {
-			"uid": "PROFILE",
+		"user": {
+			"uid": "xxxx-xxxx-xxxxx-xxxx",
 			"name": "Name and Surname"
 		}
 	}
-	
+
 	// collection
 	{
-		"profiles": [
+		"users": [
 			{
-				"uid": "PROFILE1",
+				"uid": "xxxx-xxxx-xxxxx-xxxx",
 				"name": "Name and Surname"
 			},
 			{
-				"uid": "PROFILE2",
+				"uid": "xxxx-xxxx-xxxxx-xxxx",
 				"name": "Other Name"
 			}
 		]
 	}
-	
+
 	```
 
 
@@ -86,13 +86,13 @@ The most usual extension probably will be adding more resources / models. That's
 
 ```ruby
 module Drs::AuthClient::Models
-  class Solicitor < Profile
+  class Solicitor < User
     attr_accessor :registered_number
   end
 end
 ```
 
-Steps: 
+Steps:
 
 1. Create the new model in `Model` namespace as described above.
 
@@ -100,14 +100,14 @@ Steps:
 
 3. Create single and collection resource methods on the `Client` class
 
-	```ruby	
+	```ruby
 	def solicitor(uid)
  	  get_resource("solicitors/#{id}", Models::Solicitor, :from_hash, nil)
 	end
-	
+
 	def solicitors
 	  get_resource("solicitors", Models::Solicitor, :collection_from_hash, [])
-	end	
+	end
 	```
 
 

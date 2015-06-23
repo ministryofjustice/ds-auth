@@ -4,7 +4,7 @@ require "active_support/core_ext/string/inflections"
 require "faraday"
 
 require "drs/auth_client/models/organisation"
-require "drs/auth_client/models/profile"
+require "drs/auth_client/models/user"
 
 module Drs
   module AuthClient
@@ -36,12 +36,12 @@ module Drs
         get_resource("organisations", Models::Organisation, :collection_from_hash, [], params)
       end
 
-      def profile(id)
-        get_resource("profiles/#{id}", Models::Profile, :from_hash, nil)
+      def user(id)
+        get_resource("users/#{id}", Models::User, :from_hash, nil)
       end
 
-      def profiles(params = {})
-        get_resource("profiles", Models::Profile, :collection_from_hash, [], params)
+      def users(params = {})
+        get_resource("users", Models::User, :collection_from_hash, [], params)
       end
 
       private
