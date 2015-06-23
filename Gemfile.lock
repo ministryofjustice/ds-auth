@@ -110,6 +110,8 @@ GEM
       railties (>= 3.0.0)
     faker (1.4.3)
       i18n (~> 0.5)
+    faraday (0.9.1)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.8)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
@@ -267,6 +269,7 @@ GEM
     moj_template (0.23.0)
       rails (>= 3.1)
     multi_json (1.11.1)
+    multipart-post (2.0.0)
     nenv (0.2.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -389,6 +392,8 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    sentry-raven (0.13.3)
+      faraday (>= 0.7.6)
     shellany (0.0.1)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
@@ -479,6 +484,7 @@ DEPENDENCIES
   rubocop (~> 0.30)
   sass-rails (~> 5.0.2)
   sdoc (~> 0.4.0)
+  sentry-raven
   shoulda-matchers
   simplecov
   uglifier (>= 1.3.0)

@@ -19,6 +19,7 @@ gem "phony_rails"
 gem "rails", "4.2.2"
 gem "rails_config", "~> 0.4.2"
 gem "sass-rails", "~> 5.0.2"
+gem "sentry-raven"
 gem "sdoc", "~> 0.4.0", group: :doc
 gem "uglifier", ">= 1.3.0"
 gem "unicorn"
