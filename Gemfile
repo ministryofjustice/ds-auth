@@ -9,6 +9,7 @@ gem "coffee-rails", "~> 4.1.0"
 gem "devise", "~> 3.4.1"
 gem "doorkeeper"
 gem "email_validator"
+gem "fog-aws", "= 0.1.2"          # See https://github.com/fog/fog-aws/issues/130
 gem "jbuilder", "~> 2.0"
 gem "jquery-rails"
 gem "lograge"
