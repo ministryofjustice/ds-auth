@@ -187,5 +187,5 @@ RSpec.describe Drs::AuthClient::Client do
   end
 
   include_examples "available resource", "organisation"
-  include_examples "available resource", "profile"
+  include_examples "available resource", "user"
 end

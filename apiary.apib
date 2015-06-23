@@ -30,7 +30,7 @@ It is recommended to follow the “url” link values, [Link](https://tools.ietf
 
         {
             "organisations_url": "/api/v1/organisations",
-            "profiles_url": "/api/v1/profiles"
+            "users_url": "/api/v1/users"
         }
 
 # Group Organisations
@@ -140,15 +140,11 @@ A single Organisation with all its details.
             ]
         }
 
-# Group Profiles
-Profiles of people that may or may not have a login to Defence Request.
+# Group Users
+Users of people that may or may not have a login.
 
-Will eventually contain all Solicitors that have a Legal Aid Contract.
-
-Used to find contact details for Solicitors or Agents.
-
-## Profiles Collection [/api/v1/profiles?uids[]=xxx&types[]=xxx]
-### List all Profiles [GET]
+## Users Collection [/api/v1/users?uids[]=xxx&types[]=xxx]
+### List all Users [GET]
 + Request
     + Headers
 
@@ -165,7 +161,7 @@ Used to find contact details for Solicitors or Agents.
 + Response 200 (application/json)
 
         {
-            "profiles:" [
+            "users:" [
                 {
                     "uid": "1a2b3c",
                     "name": "Bob Smith",
@@ -184,10 +180,10 @@ Used to find contact details for Solicitors or Agents.
                 }
             ],
             "links": {
-                "first": "/api/v1/profiles",
-                "previous": "/api/v1/profiles?page=1",
-                "next": "/api/v1/profiles?page=2",
-                "last": "/api/v1/profiles?page=3"
+                "first": "/api/v1/users",
+                "previous": "/api/v1/users?page=1",
+                "next": "/api/v1/users?page=2",
+                "last": "/api/v1/users?page=3"
             }
         }
 
@@ -199,13 +195,13 @@ Used to find contact details for Solicitors or Agents.
             ]
         }
 
-## Profile [/api/v1/profiles/{uid}]
-A single Profile with all its details
+## User [/api/v1/users/{uid}]
+A single User with all its details
 
 + Parameters
-    + uid (uuid, required) - UID of the Profile
+    + uid (uuid, required) - UID of the User
 
-### Single Profile [GET]
+### Single User [GET]
 + Request
 
     + Headers
@@ -216,7 +212,7 @@ A single Profile with all its details
 + Response 200 (application/json)
 
         {
-            "profile": {
+            "user": {
                 "uid": "1a2b3c",
                 "name": "Bob Smith",
                 "type": "solicitor",
@@ -234,12 +230,17 @@ A single Profile with all its details
             ]
         }
 
-## Profile Search [/api/v1/profiles/search?q=xxx]
-Search Profiles on Name, Firm (Organisation) Name, Firm Address.
+## User Search [/api/v1/users/search?q=xxx]
+Search Users on Name
 
-No authorization is needed for this endpoint.
+### User Matches [GET]
 
-### Profile Matches [GET]
++ Request
+
+    + Headers
+
+            Accept: application/json
+            Authorization: Bearer <TOKEN>
 
 + Parameters
     + q (string, optional) - query string
@@ -247,7 +248,7 @@ No authorization is needed for this endpoint.
 + Response 200 (application/json)
 
         {
-            "profiles": [
+            "users": [
                 {
                     "uid": "1a2b3c",
                     "name": "Bob Smith",
@@ -258,10 +259,10 @@ No authorization is needed for this endpoint.
                 }
             ],
             "links": {
-                "first": "/api/v1/profiles/search?q=xxx",
-                "previous": "/api/v1/profiles/search?q=xxx&page=1",
-                "next": "/api/v1/profiles/search?q=xxx&page=2",
-                "last": "/api/v1/profiles/search?q=xxx&page=3"
+                "first": "/api/v1/users/search?q=xxx",
+                "previous": "/api/v1/users/search?q=xxx&page=1",
+                "next": "/api/v1/users/search?q=xxx&page=2",
+                "last": "/api/v1/users/search?q=xxx&page=3"
             }
         }
 
@@ -273,7 +274,7 @@ No authorization is needed for this endpoint.
             ]
         }
 
-## User Profile [/api/v1/profiles/me]
+## User Profile [/api/v1/me]
 Returns Profile object for the user identified by the Authorization Header.
 
 Used by consuming Applications to populate `current_user`.
@@ -293,28 +294,23 @@ Note: Roles returned in this response only apply in the context of the calling A
         {
             "user": {
                 "uid": "1a2b3c",
-                "first_name": "Bob",
-                "last_name": "Smith",
-                "username": "bob.smith",
-                "email": "bob.smith@world.com"
-            },
-            "profile": {
                 "name": "Bob Smith",
                 "email": "bob.smith@world.com",
                 "telephone": "0123456789",
                 "mobile": "071234567",
                 "address": {
-                    "line1": "",
-                    "line2": "",
-                    "city": ""
+                    "full_address": ""
                     "postcode": ""
                 },
-                "PIN": "1234",
-                "organisation_uids": ["1234567890abcdef","2345678901bcdefa"]
-            },
-            "roles": [
-                "admin", "foo", "bar"
-            ]
+                "organisations": [
+                    {
+                        "uid": "234fs243sfsfsf",
+                        "name": "PBV Solicitors",
+                        "type": "law_firm",
+                        "roles": ["solicitor"]
+                    }
+                ]
+            }
         }
 
 + Response 401 (application/json)
