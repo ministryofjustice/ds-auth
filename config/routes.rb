@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resources :organisations, only: [:index, :show], param: :uid
       resources :users, only: [:index, :show], param: :uid do
         get "me", on: :collection
+        get "search", on: :collection
       end
 
       # support legacy /api/v1/profiles/me route
