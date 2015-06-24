@@ -18,35 +18,35 @@ Membership.where(
 
 (1..5).each do |i|
   cso = Membership.where(
-          organisation: custody_suite,
-          user: User.where(email: "cso#{i}@example.com").first
-        ).first_or_create!(
-          roles: %w(cso)
-        )
+    organisation: custody_suite,
+    user: User.where(email: "cso#{i}@example.com").first
+  ).first_or_create!(
+    roles: %w(cso)
+  )
   cso.update roles: %w(cso admin) if i == 1
 
 
   cco = Membership.where(
-          organisation: call_centre,
-          user: User.where(email: "cco#{i}@example.com").first
-        ).first_or_create!(
-          roles: %w(operator)
-        )
+    organisation: call_centre,
+    user: User.where(email: "cco#{i}@example.com").first
+  ).first_or_create!(
+    roles: %w(operator)
+  )
   cco.update roles: %w(operator admin) if i == 1
 
   solicitor = Membership.where(
-          organisation: law_firm_1,
-          user: User.where(email: "solicitor#{i}@example.com").first
-        ).first_or_create!(
-          roles: %w(solicitor)
-        )
+    organisation: law_firm_1,
+    user: User.where(email: "solicitor#{i}@example.com").first
+  ).first_or_create!(
+    roles: %w(solicitor)
+  )
   solicitor.update roles: %w(solicitor_admin admin) if i == 1
 
   laa_team_member = Membership.where(
-          organisation: laa,
-          user: User.where(email: "laa#{i}@example.com").first
-        ).first_or_create!(
-          roles: %w(rotaTeam)
-        )
+    organisation: laa,
+    user: User.where(email: "laa#{i}@example.com").first
+  ).first_or_create!(
+    roles: %w(rotaTeam)
+  )
   laa_team_member.update roles: %w(rotaTeam admin) if i == 1
 end

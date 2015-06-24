@@ -53,4 +53,24 @@ RSpec.describe OrganisationPolicy do
     it { is_expected.not_to permit_action(:create) }
     it { is_expected.not_to permit_action(:destroy) }
   end
+
+  context "webops user" do
+    let!(:webops_user) { FactoryGirl.create :user }
+    let!(:webops_organisation) { FactoryGirl.create :organisation, organisation_type: "webops"}
+
+    subject { OrganisationPolicy.new webops_user, organisation }
+
+    before do
+      FactoryGirl.create :membership, user: webops_user, organisation: webops_organisation, permissions: { roles: ["support"] }
+    end
+
+    it { is_expected.to permit_action(:show) }
+    it { is_expected.to permit_action(:edit) }
+    it { is_expected.to permit_action(:update) }
+    it { is_expected.to permit_action(:manage_members) }
+
+    it { is_expected.to permit_action(:new) }
+    it { is_expected.to permit_action(:create) }
+    it { is_expected.to permit_action(:destroy) }
+  end
 end

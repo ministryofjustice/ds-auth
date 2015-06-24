@@ -22,7 +22,7 @@ class OrganisationsController < ApplicationController
     authorize @organisation
 
     if @organisation.save
-      redirect_to organisations_path, notice: flash_message(:create, Organisation)
+      redirect_to organisation_path(@organisation), notice: flash_message(:create, Organisation)
     else
       render :new
     end

@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
   def roles
     memberships.map(&:roles).flatten
   end
+
+  def is_webops?
+    organisations.where(organisation_type: "webops").exists?
+  end
 end
