@@ -1,3 +1,8 @@
+Organisation.where(slug: "webops").first_or_create!(
+  name: "Webops",
+  organisation_type: "webops"
+)
+
 Organisation.where(slug: "custody-suite").first_or_create!(
   name: "Custody Suite",
   organisation_type: "custody_suite",

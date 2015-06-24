@@ -1,3 +1,13 @@
+User.where(email: "webops@example.com").first_or_create!(
+    password: "password",
+    name: "Webops user",
+    address: "Fake Street",
+    postcode: "POSTCODE",
+    email: "webops@example.com",
+    telephone: "01234567890",
+    mobile: "07123456789"
+  )
+
 # Create 5 CSOs, CCOs, LAA Rota team members, and solicitors
 (1..5).each do |i|
   User.where(email: "cso#{i}@example.com").first_or_create!(
