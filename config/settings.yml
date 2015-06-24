@@ -27,7 +27,7 @@ action_mailer:
     enable_starttls_auto: true
 
 aws:
-  region: eu-west-1
+  region: <%= ENV.fetch("AWS_REGION") %>
   s3_asset_bucket_name: <%= ENV.fetch("AWS_S3_ASSET_BUCKET_NAME") %>
 
 sandbox_email: <%= ENV.fetch('SANDBOX_EMAIL', 'false') %>
