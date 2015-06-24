@@ -407,6 +407,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
+    timecop (0.7.4)
     timers (4.0.1)
       hitimes
     tzinfo (1.2.2)
@@ -480,6 +481,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   shoulda-matchers
   simplecov
+  timecop
   uglifier (>= 1.3.0)
   unicorn
   web-console (~> 2.0)

@@ -5,6 +5,7 @@ RSpec.describe "GET /api/v1/users" do
 
   context "with a valid authentication token" do
     include_context "logged in API User"
+    it_behaves_like "an endpoint that times out sessions", "/api/v1/users"
 
     context "with no filtering parameters" do
       it "returns a 200 response with all profiles in name order" do

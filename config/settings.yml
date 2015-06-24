@@ -8,9 +8,11 @@ rails:
 devise:
   key: <%= ENV.fetch('DEVISE_KEY') %>
   salt: <%= ENV.fetch('DEVISE_SALT') %>
+  session_timeout: <%= ENV.fetch('SESSION_TIMEOUT_MINUTES', 60) %>
 
 doorkeeper:
   force_ssl_in_redirect_uri: <%= ENV.fetch('FORCE_SSL_IN_REDIRECT_URI', true) %>
+  session_timeout: <%= ENV.fetch('SESSION_TIMEOUT_MINUTES', 60) %>
 
 action_mailer:
   default_url_options:
