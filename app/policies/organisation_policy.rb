@@ -56,8 +56,4 @@ class OrganisationPolicy < ApplicationPolicy
   def user_is_admin_in_organisation
     record.memberships.where(user: user).with_any_role("admin").exists?
   end
-
-  def user_is_webops
-    user.is_webops?
-  end
 end

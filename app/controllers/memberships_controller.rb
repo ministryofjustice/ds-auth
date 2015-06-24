@@ -1,17 +1,22 @@
 class MembershipsController < ApplicationController
-  before_action :set_membership, only: [:edit, :update, :destroy]
   before_action :set_organisation
+  before_action :set_membership, only: [:edit, :update, :destroy]
+  after_action :verify_authorized, except: :index
 
   def new
-    user = User.find(params[:user_id])
+    # We only add existing Users here - new users get added to an Organisation in Users#create
+    user = User.find_by_uid!(params[:user_uid])
 
-    redirect_if_user_already_member user
+    @membership = Membership.new user: user, organisation: @organisation, roles: @organisation.default_role_names
 
-    @membership = Membership.new user: user, roles: @organisation.default_role_names
+    authorize @membership
   end
 
   def create
     @membership = Membership.new membership_params
+
+    authorize @membership
+
     if @membership.save
       redirect_to organisation_path(@organisation), notice: flash_message(:create, Membership)
     else
@@ -20,9 +25,12 @@ class MembershipsController < ApplicationController
   end
 
   def edit
+    authorize @membership
   end
 
   def update
+    authorize @membership
+
     if @membership.update membership_params
       redirect_to organisation_path(@organisation), notice: flash_message(:update, Membership)
     else
@@ -31,6 +39,8 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
+    authorize @membership
+
     if @membership.destroy
       redirect_to organisation_path(@organisation), notice: flash_message(:destroy, Membership)
     else
@@ -41,11 +51,11 @@ class MembershipsController < ApplicationController
   private
 
   def set_membership
-    @membership = Membership.find(params[:id])
+    @membership ||= set_organisation.memberships.find(params[:id])
   end
 
   def set_organisation
-    @organisation = Organisation.find(params[:organisation_id])
+    @organisation ||= Organisation.find(params[:organisation_id])
   end
 
   def membership_params
@@ -53,14 +63,4 @@ class MembershipsController < ApplicationController
       permit(:user_id, roles: [], applications: []).
       merge({ organisation_id: @organisation.id })
   end
-
-  def redirect_if_user_already_member(user)
-    if membership = @organisation.memberships.where(user: user).first
-      redirect_to(
-        edit_organisation_membership_path(@organisation, membership),
-        notice: t("user_already_member_of_organisation", organisation_name: @organisation.name)
-      )
-    end
-  end
-
 end

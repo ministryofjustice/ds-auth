@@ -98,8 +98,8 @@
             </ul>
           </td>
           <td>
-            <%= link_to t("edit_roles"), edit_organisation_membership_path(@organisation, membership) if policy(@organisation).manage_members? %>
-            <%= link_to t("remove_member"), organisation_membership_path(@organisation, membership), method: :delete if policy(@organisation).manage_members? %>
+            <%= link_to t("edit_membership"), edit_organisation_membership_path(@organisation, membership) if policy(@organisation).manage_members? %>
+            <%= link_to t("delete_membership"), organisation_membership_path(@organisation, membership), method: :delete if policy(@organisation).manage_members? %>
           </td>
         <%- end %>
       <%- end %>
