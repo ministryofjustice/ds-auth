@@ -20,7 +20,7 @@ RSpec.feature "Users managing law firm type organisations" do
 
     fill_in "Supplier number", with: "AABBCC12345678"
 
-    click_button "Create Organisation"
+    click_button "Create organisation"
 
     expect(current_path).to eq(organisations_path)
     expect(page).to have_content "Organisation successfully created"

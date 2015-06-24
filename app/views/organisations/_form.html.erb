@@ -1,41 +1,63 @@
-<%= form_for(@organisation) do |f| %>
+<div class="field">
   <%= f.label :name %>
   <%= f.text_field :name %>
+</div>
 
-  <%= f.label :slug %>
-  <%= f.text_field :slug %>
+<%- if @organisation.new_record? %>
+  <div class="field">
+    <%= f.label :slug %>
+    <%= f.text_field :slug %>
+  </div>
 
-  <%= f.label :organisation_type %>
-  <%= f.select :organisation_type, options_for_organisation_type, prompt: t('select_organisation_type') %>
+  <div class="field">
+    <%= f.label :organisation_type %>
+    <%= f.select :organisation_type, options_for_organisation_type, prompt: t('select_organisation_type') %>
+  </div>
+<%- end %>
 
-  <section data-organisation-type="law_firm,law_office" class="<%= hidden_unless_law_firm @organisation %>">
+<section data-organisation-type="law_firm,law_office" class="<%= hidden_unless_law_firm @organisation %>">
+  <div class="field">
     <%= f.label :supplier_number %>
     <label><aside>This field is only relevant for Law Firms and Law Offices</aside></label>
     <%= f.text_field :supplier_number %>
-  </section>
+  </div>
+</section>
 
+<div class="field">
   <%= f.label :searchable %>
   <%= f.check_box :searchable %>
+</div>
 
+<div class="field">
   <%= f.label :tel %>
   <%= f.text_field :tel %>
+</div>
 
+<div class="field">
   <%= f.label :mobile %>
   <%= f.text_field :mobile %>
+</div>
 
+<div class="field">
   <%= f.label :address %>
   <%= f.text_field :address %>
+</div>
 
+<div class="field">
   <%= f.label :postcode %>
   <%= f.text_field :postcode %>
+</div>
 
+<div class="field">
   <%= f.label :email %>
   <%= f.text_field :email %>
+</div>
 
-  <%= f.label :parent_organisation_id %>
-  <%= f.select :parent_organisation_id, options_for_parent_organisation, include_blank: "---" %>
-
-  <div class="actions">
-    <%= f.submit %>
+<%- if @organisation.new_record? %>
+  <div class="field">
+    <%= f.label :parent_organisation_id %>
+    <%= f.select :parent_organisation_id, options_for_parent_organisation, include_blank: "---" %>
   </div>
-<% end %>
+<%- end %>
+
+
