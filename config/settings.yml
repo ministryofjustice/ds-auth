@@ -32,3 +32,9 @@ aws:
 
 sandbox_email: <%= ENV.fetch('SANDBOX_EMAIL', 'false') %>
 sandbox_email_address: <%= ENV.fetch('SANDBOX_EMAIL_ADDRESS', nil) %>
+
+sentry:
+  # Note that this should only be set to false if you absolutely dont care
+  # about the security of your environment. This makes error logging vulnerable
+  # to man-in-the-middle attacks.
+  ssl_verification: <%= ENV.fetch("SENTRY_SSL_VERIFICATION", true) %>
