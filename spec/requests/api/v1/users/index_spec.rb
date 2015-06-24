@@ -7,7 +7,7 @@ RSpec.describe "GET /api/v1/users" do
     include_context "logged in API User"
 
     context "with no filtering parameters" do
-      it "returns a 200 response with all profiles in name order" do
+      it "returns a 200 response with all users in name order" do
         organisation    = create :organisation
         user.update name: "Eamon Holmes"
         another_user = create :user, name: "Barry Evans", organisations: [organisation]
