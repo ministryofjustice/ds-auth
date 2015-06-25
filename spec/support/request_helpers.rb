@@ -37,7 +37,7 @@ RSpec.shared_examples "an endpoint that times out sessions" do |url|
   it "returns a 401 response when the access_token has expired" do
     expect(token).not_to be_nil, "must supply a token in the spec scope"
 
-    Timecop.travel(3.hours.from_now) do
+    Timecop.travel((Settings.doorkeeper.session_timeout + 2).minutes.from_now) do
 
       get url, nil, api_request_headers
 
