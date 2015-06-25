@@ -1,12 +1,12 @@
 require "rails_helper"
 
-RSpec.describe "GET /api/v1/profiles/:uid" do
+RSpec.describe "GET /api/v1/users/:uid" do
   it_behaves_like "a protected endpoint", "/api/v1/users/#{SecureRandom.uuid}"
 
   context "with a valid authentication token" do
     include_context "logged in API User"
 
-    it "returns a 200 response with the requested profile" do
+    it "returns a 200 response with the requested user" do
       organisation = create :organisation
       user = create :user, organisations: [organisation]
 

@@ -27,6 +27,18 @@ module Api::V1
       end
     end
 
+    def search
+      if params[:q].present?
+        users = User.where("name ~* ?", params[:q])
+      else
+        users = User.none
+      end
+
+      respond_to do |format|
+        format.json { render json: users_serializer(users) }
+      end
+    end
+
     def me
       respond_to do |format|
         format.json { render json: credentials_serializer }

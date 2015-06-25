@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
 
   validates_presence_of :name
 
-  default_scope { order :name }
-  scope :by_name, -> { order(name: :asc) }
+  default_scope { order :id }
+  scope :by_name,  -> { order(name: :asc) }
 
   def role_names_for(application: )
     memberships.with_any_role(*application.available_role_names).map(&:roles).flatten
