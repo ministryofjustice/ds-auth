@@ -6,9 +6,9 @@ RSpec.describe "GET /api/v1/users/search?q=:term" do
   context "with a valid authentication token" do
     include_context "logged in API User"
 
-    it "returns a 200 response with users whose name matches the search term, in email address order" do
-      matching_user_1 = create :user, name: "Bob Smith", email: "bob.smith@b.com"
-      matching_user_2 = create :user, name: "BOB SMITH", email: "bob.smith@a.com"
+    it "returns a 200 response with users whose name matches the search term, in ID order" do
+      matching_user_1 = create :user, name: "Bob Smith", email: "bob.smith@b.com", id: 123
+      matching_user_2 = create :user, name: "BOB SMITH", email: "bob.smith@a.com", id: 122
                         create :user, name: "Shirley Smith"
 
       get "/api/v1/users/search", { q: "bob smith" }, api_request_headers

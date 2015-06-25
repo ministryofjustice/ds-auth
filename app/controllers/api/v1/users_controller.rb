@@ -33,7 +33,6 @@ module Api::V1
       else
         users = User.none
       end
-      users = users.by_email
 
       respond_to do |format|
         format.json { render json: users_serializer(users) }

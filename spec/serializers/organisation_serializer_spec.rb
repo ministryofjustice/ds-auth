@@ -5,8 +5,8 @@ RSpec.describe OrganisationSerializer do
     it "serializes the Organisation" do
       parent_organisation = create :organisation
       organisation = create :organisation, parent_organisation: parent_organisation
-      member_1 = create :user, name: "Member B", organisations: [organisation]
-      member_2 = create :user, name: "Member A", organisations: [organisation]
+      member_1 = create :user, name: "Member B", id: 231, organisations: [organisation]
+      member_2 = create :user, name: "Member A", id: 123, organisations: [organisation]
 
       sub_organisation1 = create :organisation, parent_organisation: organisation
       sub_organisation2 = create :organisation, parent_organisation: organisation
