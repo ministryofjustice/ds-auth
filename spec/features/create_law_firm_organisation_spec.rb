@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Webops creating law firm type organisations" do
+RSpec.feature "Creating law firm type organisations" do
   let!(:user) { FactoryGirl.create :user }
   let!(:webops_organisation) { FactoryGirl.create :organisation, organisation_type: "webops"}
   let!(:organisation) { create(:organisation) }

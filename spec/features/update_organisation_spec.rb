@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Creating Organisations" do
+RSpec.feature "Updating an Organisation" do
   let!(:user) { create :user }
   let!(:organisation) { create :organisation }
 

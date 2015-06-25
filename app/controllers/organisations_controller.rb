@@ -33,9 +33,11 @@ class OrganisationsController < ApplicationController
   end
 
   def update
+    @organisation.assign_attributes organisation_params
+
     authorize @organisation
 
-    if @organisation.update_attributes organisation_params
+    if @organisation.save
       redirect_to organisation_path(@organisation), notice: flash_message(:update, Organisation)
     else
       render :edit
