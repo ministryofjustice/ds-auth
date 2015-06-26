@@ -7,14 +7,14 @@ RSpec.describe "GET /api/v1/users/search?q=:term" do
     include_context "logged in API User"
 
     it "returns a 200 response with users whose name matches the search term, in ID order" do
-      matching_user_1 = create :user, name: "Bob Smith", email: "bob.smith@b.com", id: 123
-      matching_user_2 = create :user, name: "BOB SMITH", email: "bob.smith@a.com", id: 122
+      matching_user_1 = create :user, name: "Bob Smith", email: "bob.smith@b.com"
+      matching_user_2 = create :user, name: "BOB SMITH", email: "bob.smith@a.com"
                         create :user, name: "Shirley Smith"
 
       get "/api/v1/users/search", { q: "bob smith" }, api_request_headers
 
       expect(response.status).to eq(200)
-      expect(response_json).to eq (UsersSerializer.new([matching_user_2, matching_user_1]).as_json.deep_stringify_keys)
+      expect(response_json).to eq (UsersSerializer.new([matching_user_1, matching_user_2]).as_json.deep_stringify_keys)
     end
 
     it "returns an empty 200 response if the q param is omitted" do

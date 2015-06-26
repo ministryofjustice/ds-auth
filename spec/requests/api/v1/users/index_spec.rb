@@ -10,7 +10,7 @@ RSpec.describe "GET /api/v1/users" do
       it "returns a 200 response with all users in name order" do
         organisation    = create :organisation
         user.update name: "Eamon Holmes"
-        another_user = create :user, name: "Barry Evans", id: (user.id + 1), organisations: [organisation]
+        another_user = create :user, name: "Barry Evans", organisations: [organisation]
 
         get "/api/v1/users", nil, api_request_headers
 
@@ -32,14 +32,14 @@ RSpec.describe "GET /api/v1/users" do
 
       it "returns a 200 with many matching users if provided with many UIDs, in ID order" do
         organisation = create :organisation
-        match_1      = create :user, name: "Barry Scott", organisations: [organisation], id: 231
-        match_2      = create :user, name: "Barry Evans", organisations: [organisation], id: 123
+        match_1      = create :user, name: "Barry Scott", organisations: [organisation]
+        match_2      = create :user, name: "Barry Evans", organisations: [organisation]
                        create :user, organisations: [organisation]
 
         get "/api/v1/users", { uids: [match_1.uid, match_2.uid] }, api_request_headers
 
         expect(response.status).to eq(200)
-        expect(response_json).to eq(UsersSerializer.new([match_2, match_1]).as_json.deep_stringify_keys)
+        expect(response_json).to eq(UsersSerializer.new([match_1, match_2]).as_json.deep_stringify_keys)
       end
 
       it "returns an empty 200 response if no users match" do
