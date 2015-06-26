@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   resources :users, except: [:new, :create]
 
   resources :organisations do
-    resources :users
-    resources :memberships
+    resources :users, only: [:new, :create]
+    resources :memberships, except: [:index]
   end
 
   root "dashboard#index"

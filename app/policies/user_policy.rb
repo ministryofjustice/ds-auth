@@ -1,7 +1,11 @@
 class UserPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.joins(:memberships).where(memberships: { organisation: user.organisations })
+      if user.is_webops?
+        scope.all
+      else
+        scope.joins(:memberships).where(memberships: { organisation: user.organisations })
+      end
     end
   end
 
@@ -14,15 +18,15 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    is_user || user_belongs_to_same_organisation
+    is_user || user_belongs_to_same_organisation || user_is_webops
   end
 
   def create?
-    user_is_admin_in_profile_organisation
+    user_is_admin_in_profile_organisation || user_is_webops
   end
 
   def update?
-    is_user || user_is_admin_in_profile_organisation
+    is_user || user_is_admin_in_profile_organisation || user_is_webops
   end
 
   alias :destroy? :create?

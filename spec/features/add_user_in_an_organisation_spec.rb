@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Creating a user" do
+RSpec.feature "Adding a user to an Organisation" do
   let!(:user) { create :user }
   let!(:organisation) { create :organisation }
 
@@ -51,11 +51,20 @@ RSpec.feature "Creating a user" do
       expect(current_path).to eq(new_organisation_membership_path(organisation))
       expect(page).to have_content "New membership to #{organisation.name}"
       expect(page).to have_content "User: #{new_user.name} (#{new_user.email})"
+
+      click_button "Create membership"
+
+      expect(current_path).to eq(organisation_path(organisation))
+      expect(page).to have_content("Membership successfully created")
+
+      within ".members" do
+        expect(page).to have_link(new_user.name, href: user_path(new_user))
+      end
     end
 
     specify "Creating a user that already exists in the organisation" do
       new_user = FactoryGirl.create :user
-      membership = FactoryGirl.create :membership, organisation: organisation, user: new_user
+      FactoryGirl.create :membership, organisation: organisation, user: new_user
 
       visit organisation_path(organisation)
       click_link "New user"
@@ -67,12 +76,7 @@ RSpec.feature "Creating a user" do
 
       expect(current_path).to eq(organisation_users_path(organisation))
       expect(page).to have_content "You need to fix the errors on this page before continuing"
-      expect(page).to have_link "Click here to add #{new_user.email} to #{organisation.name}"
-
-      click_link "Click here to add #{new_user.email} to #{organisation.name}"
-
-      expect(current_path).to eq(edit_organisation_membership_path(organisation, membership))
-      expect(page).to have_content "That user is already a member of #{organisation.name}"
+      expect(page).to have_content "#{new_user.email} is already a member of #{organisation.name}"
     end
 
     specify "errors are shown if a user cannot be created" do

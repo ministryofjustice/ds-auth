@@ -9,6 +9,10 @@ class User < ActiveRecord::Base
   default_scope { order :id }
   scope :by_name,  -> { order(name: :asc) }
 
+  def member_of?(organisation)
+    memberships.where(organisation: organisation).exists?
+  end
+
   def role_names_for(application: )
     memberships.with_any_role(*application.available_role_names).map(&:roles).flatten
   end

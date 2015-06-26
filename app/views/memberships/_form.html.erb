@@ -1,17 +1,12 @@
-<%= form_for [@organisation, @membership] do |f| %>
-  <div class="field">
-    <%= "#{t("user")}: #{@membership.user.name} (#{@membership.user.email})" %>
-    <%= f.hidden_field :user_id %>
-  </div>
+<div class="field">
+  <%= "#{t("user")}: #{@membership.user.name} (#{@membership.user.email})" %>
+  <%= f.hidden_field :user_id %>
+</div>
 
-  <div class="field">
-    <h3>Roles</h3>
-    <%= f.collection_check_boxes :roles, @organisation.available_roles.sort, :name, :name do |b| %>
-      <%= b.label() { b.check_box + t(b.text) } %>
-    <%- end %>
-  </div>
+<div class="field">
+  <h3>Roles</h3>
+  <%= f.collection_check_boxes :roles, @organisation.available_roles.sort, :name, :name do |b| %>
+    <%= b.label() { b.check_box + t(b.text) } %>
+  <%- end %>
+</div>
 
-  <div class="actions">
-    <%= f.submit class: "button" %>
-  </div>
-<%- end %>

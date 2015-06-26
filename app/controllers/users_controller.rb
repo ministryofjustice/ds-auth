@@ -87,8 +87,13 @@ class UsersController < ApplicationController
   def customize_user_already_exists_error_message(user, organisation)
     if user.errors[:email] == ["has already been taken"]
       existing_user = User.find_by_email(user.email)
-      link = new_organisation_membership_path(organisation, user_id: existing_user.id)
-      user.errors[:email] << "<a href=\"#{link}\">Click here to add #{user.email} to #{organisation.name}</a>"
+
+      if existing_user.member_of? organisation
+        user.errors[:email] << ["#{user.email} is already a member of #{organisation.name}"]
+      else
+        link = new_organisation_membership_path(organisation, user_uid: existing_user.uid)
+        user.errors[:email] << ["<a href=\"#{link}\">Click here to add #{user.email} to #{organisation.name}</a>"]
+      end
     end
   end
 end
