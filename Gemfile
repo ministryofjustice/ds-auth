@@ -45,6 +45,7 @@ group :development, :test do
   gem "quiet_assets", "~> 1.1"
   gem "rspec-rails", "~> 3.2.0"
   gem "rubocop", "~> 0.30"
+  gem "timecop"
 end
 
 group :test do

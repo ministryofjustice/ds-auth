@@ -30,7 +30,7 @@ FactoryGirl.define do
       after(:create) do |u, evaluator|
         (1..evaluator.number_of_applications).each do
           application = create :doorkeeper_application
-          create :access_token, application: application, resource_owner_id: u.id
+          create :access_token, application: application, resource_owner_id: u.id, expires_in: Settings.doorkeeper.session_timeout.minutes
         end
       end
     end

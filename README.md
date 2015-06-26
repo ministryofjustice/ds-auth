@@ -3,6 +3,11 @@
 ## Environment Variables
 see .example.env
 
+### Session Timeout
+By default sessions will last 1 hour with no action before requiring the User to log in again.
+This can be customized by setting the ```SESSION_TIMEOUT_MINUTES``` ENV variable.
+(Note the value is in minutes)
+
 ## API documentation
 Written using API Blueprint syntax: https://apiblueprint.org/ into apiary.apib
 

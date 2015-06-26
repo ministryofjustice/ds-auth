@@ -5,6 +5,7 @@ RSpec.describe "GET /api/v1/users/:uid" do
 
   context "with a valid authentication token" do
     include_context "logged in API User"
+    it_behaves_like "an endpoint that times out sessions", "/api/v1/users/#{SecureRandom.uuid}"
 
     it "returns a 200 response with the requested user" do
       organisation = create :organisation

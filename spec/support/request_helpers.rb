@@ -27,8 +27,26 @@ RSpec.shared_examples "a protected endpoint" do |url|
     expect(response.status).to eq(401)
     expect(response_json).to eq(
       {
-        "errors" => ["Not authorized, please login"]
+        "errors" => ["The access token is invalid"]
       }
     )
+  end
+end
+
+RSpec.shared_examples "an endpoint that times out sessions" do |url|
+  it "returns a 401 response when the access_token has expired" do
+    expect(token).not_to be_nil, "must supply a token in the spec scope"
+
+    Timecop.travel((Settings.doorkeeper.session_timeout + 2).minutes.from_now) do
+
+      get url, nil, api_request_headers
+
+      expect(response.status).to eq(401)
+      expect(response_json).to eq(
+        {
+          "errors" => ["The access token expired"]
+        }
+      )
+    end
   end
 end

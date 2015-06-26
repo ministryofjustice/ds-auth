@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable
 
   has_many :memberships, dependent: :destroy
   has_many :organisations, through: :memberships
