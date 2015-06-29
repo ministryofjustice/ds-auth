@@ -1,5 +1,16 @@
 # Defence Solicitor Authentication
 
+This is a centralised OAuth 2-based single sign-on provider.
+
+We use Devise to provide username / password sign-in, and Doorkeeper to provide an OAuth 2 provider.
+
+Notes on the application structure can be found [here](docs/structure.pdf)
+
+## Usage
+The app currently uses Rails seeds to populate consuming applications and users. See [db/seeds](db/seeds) for more info.
+
+An [omniauth](https://github.com/intridea/omniauth) gem has been written to make integrating consuming applications easier: [omniauth-dsds](https://github.com/ministryofjustice/defence-request-service-omniauth-dsds)
+
 ## Environment Variables
 see .example.env
 
@@ -26,7 +37,7 @@ To get the application running locally, you need to:
  * ### Install ruby 2.2.2
  	It is recommended that you use a ruby version manager such as [rbenv](http://rbenv.org/) or [rvm](https://rvm.io/)
 
- * ### Install postgres
+ * ### Install postgres 9.4 or above
  	http://www.postgresql.org/
 
  * ### Bundle the gems
@@ -52,4 +63,18 @@ To get the application running locally, you need to:
 ### Test setup
 
 To run the tests, you will need to install [PhantomJS](http://phantomjs.org/), the test suite is known to be working with version `1.9.7`, it may or may not work with other versions. To run the tests, use the command: ```bundle exec rake```
+
+## Docker
+
+A [Makefile](Makefile) is provided to build the app as a docker image.
+
+3 different environments are used for Docker - dev, test and production.
+
+* development - includes phantomjs and mounts the code as a volume
+* test - includes phantomjs and copies code into image. Default run commmand set to ```rake spec```
+* production - just what is needed for production. No dev or test gems / services
+
+```make all``` will build all 3 environments
+
+```make development_container``` will just build be development image
 
