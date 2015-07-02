@@ -3,6 +3,12 @@ default: &default
     admin: ["drs-auth"]
   default_roles: []
 
+laa_staff:
+  <<: *default
+  available_roles:
+    caseworker: ["adp"]
+  default_roles: []
+
 webops:
   available_roles:
     support: ["*"]

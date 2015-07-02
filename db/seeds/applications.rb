@@ -10,3 +10,8 @@ Doorkeeper::Application.where(name: "drs-service").first_or_create!(
   redirect_uri: ENV.fetch("SERVICE_REDIRECT_URI")
 )
 
+Doorkeeper::Application.where(name: "adp").first_or_create!(
+  uid: ENV.fetch("ADP_UID"),
+  secret: ENV.fetch("ADP_SECRET"),
+  redirect_uri: ENV.fetch("ADP_REDIRECT_URI")
+)

@@ -28,3 +28,9 @@ Organisation.where(slug: "laa").first_or_create!(
   organisation_type: "laa_rota_team",
   tel: "03069 990919"
 )
+
+Organisation.where(slug: "laa_staff").first_or_create!(
+  name: "Legal Aid Agency Staff",
+  organisation_type: "laa_staff",
+  tel: "03069 990919"
+)

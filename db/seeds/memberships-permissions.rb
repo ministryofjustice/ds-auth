@@ -50,3 +50,11 @@ Membership.where(
   )
   laa_team_member.update roles: %w(rotaTeam admin) if i == 1
 end
+
+laa_staff = Organisation.where(slug: "laa_staff").first
+  laa_caseworker = Membership.where(
+    organisation: laa_staff,
+    user: User.where(email: "caseworker@example.com").first
+  ).first_or_create!(
+    roles: %w(caseworker)
+  )

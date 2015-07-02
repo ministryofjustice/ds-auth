@@ -49,4 +49,15 @@ User.where(email: "webops@example.com").first_or_create!(
     telephone: "09011105010",
     mobile: "07123456789"
   )
+
 end
+
+  User.where(email: "caseworker@example.com").first_or_create!(
+    password: "password",
+    name: "LAA Caseworker",
+    address: "Fake Street",
+    postcode: "POSTCODE",
+    email: "caseworker@example.com",
+    telephone: "09011105010",
+    mobile: "07123456789"
+  )
