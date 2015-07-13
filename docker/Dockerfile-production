@@ -1,4 +1,4 @@
-FROM defence-request-service-auth:base_localbuild
+FROM ds-auth:base_localbuild
 
 ###############################################################################
 # Runit setup
