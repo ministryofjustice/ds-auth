@@ -6,7 +6,7 @@
 .PHONY: base_container production_container docker
 
 # The name of the image created by this project
-DOCKER_IMAGE = defence-request-service-auth
+DOCKER_IMAGE = ds-auth
 
 ifndef DOCKER_PUBLISH_PREFIX
 	# Default tag is oskarpearson/${DOCKER_IMAGE}/${DOCKER_IMAGE}:tagvalue
