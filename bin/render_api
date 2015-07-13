@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-if [ -z "$(which aglio)" ]; then
-  echo 'error: aglio is not installed, cannot generate api docs'
-  echo ''
-  echo 'npm install -g aglio'
-  exit 1
-else
-  aglio -i apiary.apib -t slate -o public/api.html
-fi

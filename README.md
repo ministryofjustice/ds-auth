@@ -19,14 +19,6 @@ By default sessions will last 1 hour with no action before requiring the User to
 This can be customized by setting the ```SESSION_TIMEOUT_MINUTES``` ENV variable.
 (Note the value is in minutes)
 
-## API documentation
-Written using API Blueprint syntax: https://apiblueprint.org/ into apiary.apib
-
-To generate a new HTML format locally run: ```bin/render_api```
-(requires [aglio](https://github.com/danielgtaylor/aglio))
-
-API docs accessible from /api.html
-
 ## Local Setup
 
 To get the application running locally, you need to:
