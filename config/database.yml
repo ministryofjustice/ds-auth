@@ -8,12 +8,12 @@ default: &default
 
 development:
   <<: *default
-  database: defence-solicitor-service-auth_development
+  database: ds-auth_development
 
 test:
   <<: *default
-  database: defence-solicitor-service-auth_test
+  database: ds-auth_test
 
 production:
   <<: *default
-  database: defence-solicitor-service-auth_production
+  database: ds-auth_production
