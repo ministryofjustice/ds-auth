@@ -3,7 +3,7 @@ module ApplicationHelper
   # Devise will add extra flash messages.
   # We only want to display alerts, notices and errors
   def flash
-    super.select {|key, _| key.to_s.in? ["alert", "notice", "error"] }
+    Hash[super.select {|key, _| key.to_s.in? ["alert", "notice", "error"] }]
   end
 
   def flash_messages
