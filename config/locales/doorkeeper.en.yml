@@ -4,6 +4,7 @@ en:
       doorkeeper/application:
         name: 'Name'
         redirect_uri: 'Redirect URI'
+        handles_own_authorization: 'Handles Own Authorization'
     errors:
       models:
         doorkeeper/application:
