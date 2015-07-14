@@ -1,14 +1,14 @@
 module Doorkeeper
   class AuthorizationsWithRoleCheckController < Doorkeeper::AuthorizationsController
     def new
-      if application.only_allow_authorized_login?
+      if application.handles_own_authorization?
+        super
+      else
         if resource_owner_has_role_for_application?
           super
         else
           redirect_to role_failure_uri
         end
-      else
-        super
       end
     end
 

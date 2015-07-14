@@ -12,7 +12,7 @@
 
     <p><code id="secret"><%= @application.secret %></code></p>
 
-    <h4><%= t('.only_allow_authorized_login')%>: <%= authorization_status(@application) %></h4>
+    <h4><%= t('.handles_own_authorization')%>: <%= authorization_status(@application) %></h4>
 
     <h4><%= t('.callback_urls') %>:</h4>
 

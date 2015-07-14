@@ -27,11 +27,11 @@
     </div>
   <% end %>
 
-  <%= content_tag :div, class: "checkbox#{' has-error' if application.errors[:only_allow_authorized_login].present?}" do %>
+  <%= content_tag :div, class: "checkbox#{' has-error' if application.errors[:handles_own_authorization].present?}" do %>
     <div class="col-sm-offset-2 col-sm-10">
-      <%= f.check_box :only_allow_authorized_login %>
-      <%= f.label :only_allow_authorized_login %>
-      <%= doorkeeper_errors_for application, :only_allow_authorized_login %>
+      <%= f.check_box :handles_own_authorization %>
+      <%= f.label :handles_own_authorization %>
+      <%= doorkeeper_errors_for application, :handles_own_authorization %>
     </div>
   <% end %>
 
