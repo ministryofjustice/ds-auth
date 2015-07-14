@@ -4,6 +4,7 @@ en:
       doorkeeper/application:
         name: 'Name'
         redirect_uri: 'Redirect URI'
+        only_allow_authorized_login: 'Only Allow Authorized Login'
     errors:
       models:
         doorkeeper/application:
