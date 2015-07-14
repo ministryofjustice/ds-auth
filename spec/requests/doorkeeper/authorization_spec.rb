@@ -57,29 +57,13 @@ RSpec.describe "GET /oauth/authorize" do
       handles_own_authorization: true
     }
 
-    context "the user has a role for the application" do
-      it "redirects to the apps auth callback uri" do
-        create :membership, user: resource_owner, organisation: organisation, permissions: { roles: ["admin"] }
-        allow_any_instance_of(Doorkeeper::Application).to receive(:available_role_names).and_return ["admin"]
+    it "redirects to the apps auth callback uri" do
+      get authorize_url
 
-        get authorize_url
+      response_redirect_uri = URI.parse response.headers["Location"]
+      response_redirect_uri.query = nil
 
-        response_redirect_uri = URI.parse response.headers["Location"]
-        response_redirect_uri.query = nil
-
-        expect(response_redirect_uri.to_s).to eq(doorkeeper_app.redirect_uri)
-      end
-    end
-
-    context "the user has no role for the application" do
-      it "redirects to the apps auth callback uri" do
-        get authorize_url
-
-        response_redirect_uri = URI.parse response.headers["Location"]
-        response_redirect_uri.query = nil
-
-        expect(response_redirect_uri.to_s).to eq(doorkeeper_app.redirect_uri)
-      end
+      expect(response_redirect_uri.to_s).to eq(doorkeeper_app.redirect_uri)
     end
   end
 end
