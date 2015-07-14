@@ -4,7 +4,7 @@ module Doorkeeper
 
     def application_params
       if params.respond_to?(:permit)
-        params.require(:doorkeeper_application).permit(:name, :redirect_uri, :handles_own_authorization, :scopes)
+        params.require(:doorkeeper_application).permit(:name, :redirect_uri, :failure_uri, :handles_own_authorization, :scopes)
       else
         (params[:doorkeeper_application] || {}).slice(:name, :redirect_uri, :handles_own_authorization, :scopes)
       end

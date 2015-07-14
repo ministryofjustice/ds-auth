@@ -98,3 +98,5 @@ end
 
 require Rails.root.join("lib/doorkeeper/extensions/application")
 require Rails.root.join("lib/doorkeeper/hooks/logout.rb")
+
+Doorkeeper::Application.send :include, Doorkeeper::CustomApplicationMixin

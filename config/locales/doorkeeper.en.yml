@@ -5,11 +5,17 @@ en:
         name: 'Name'
         redirect_uri: 'Redirect URI'
         handles_own_authorization: 'Handles Own Authorization'
+        failure_uri: 'Failure URI'
     errors:
       models:
         doorkeeper/application:
           attributes:
             redirect_uri:
+              fragment_present: 'cannot contain a fragment.'
+              invalid_uri: 'must be a valid URI.'
+              relative_uri: 'must be an absolute URI.'
+              secured_uri: 'must be an HTTPS/SSL URI.'
+            failure_uri:
               fragment_present: 'cannot contain a fragment.'
               invalid_uri: 'must be a valid URI.'
               relative_uri: 'must be an absolute URI.'
@@ -59,6 +65,7 @@ en:
         error: 'Whoops! Check your form for possible errors'
       help:
         redirect_uri: 'Use one line per URI'
+        failure_uri: 'Use one line per URI'
         native_redirect_uri: 'Use %{native_redirect_uri} for local tests'
       edit:
         title: 'Edit application'
@@ -67,13 +74,15 @@ en:
         new: 'New Application'
         name: 'Name'
         callback_url: 'Callback URL'
+        failure_uri: 'Failure URI'
       new:
         title: 'New Application'
       show:
         title: 'Application: %{name}'
         application_id: 'Application Id'
         secret: 'Secret'
-        callback_urls: 'Callback urls'
+        callback_urls: 'Callback URLs'
+        failure_uris: 'Failure URIs'
         actions: 'Actions'
 
     authorizations:

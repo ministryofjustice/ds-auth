@@ -19,9 +19,13 @@ module Doorkeeper
     end
 
     def role_failure_uri
-      uri = URI.parse server.client_via_uid.redirect_uri
-      uri.path = "/auth/failure"
-      uri.query = "message=unauthorized"
+      if application.failure_uri.present?
+        uri = URI.parse application.failure_uri
+      else
+        uri = URI.parse server.client_via_uid.redirect_uri
+        uri.path = "/auth/failure"
+        uri.query = "message=unauthorized"
+      end
       uri.to_s
     end
 
