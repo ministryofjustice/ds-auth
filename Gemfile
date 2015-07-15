@@ -4,18 +4,12 @@ ruby "2.2.2"
 
 gem "dotenv-rails", "~> 2.0.0", require: "dotenv/rails-now"
 
-gem "asset_sync"
-gem "coffee-rails", "~> 4.1.0"
 gem "devise", "~> 3.4.1"
 gem "doorkeeper"
-gem "email_validator"
-gem "fog-aws", "= 0.1.2"          # See https://github.com/fog/fog-aws/issues/130
-gem "jbuilder", "~> 2.0"
 gem "jquery-rails"
 gem "lograge"
 gem "logstash-event"
 gem "pg"
-gem "phony_rails"
 gem "rails", "4.2.2"
 gem "rails_config", "~> 0.4.2"
 gem "sass-rails", "~> 5.0.2"
@@ -23,7 +17,6 @@ gem "sentry-raven"
 gem "sdoc", "~> 0.4.0", group: :doc
 gem "uglifier", ">= 1.3.0"
 gem "unicorn"
-gem "reform"
 gem "pundit"
 
 # MOJ styles
