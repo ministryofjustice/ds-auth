@@ -63,10 +63,13 @@ en:
         authorize: 'Authorize'
       form:
         error: 'Whoops! Check your form for possible errors'
+        no: 'No'
+        yes: 'Yes'
       help:
         redirect_uri: 'Use one line per URI'
         failure_uri: 'Use one line per URI'
         native_redirect_uri: 'Use %{native_redirect_uri} for local tests'
+        available_roles: 'Use one line per role'
       edit:
         title: 'Edit application'
       index:

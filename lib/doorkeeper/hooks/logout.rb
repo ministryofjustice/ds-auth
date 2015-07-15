@@ -5,4 +5,4 @@ revoke_all_tokens_for_user = Proc.new do |user|
                                 map(&:revoke)
 end
 
-Warden::Manager.before_logout &revoke_all_tokens_for_user
+Warden::Manager.before_logout(&revoke_all_tokens_for_user)

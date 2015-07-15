@@ -10,7 +10,7 @@ class MembershipPolicy < ApplicationPolicy
   end
 
   def create?
-    user_is_webops || user_is_admin_in_organisation
+    user_is_webops || user_is_organisation_admin
   end
 
   alias :update? :create?
@@ -18,7 +18,7 @@ class MembershipPolicy < ApplicationPolicy
 
   private
 
-  def user_is_admin_in_organisation
-    user.memberships.where(organisation: record.organisation).with_any_role("admin").exists?
+  def user_is_organisation_admin
+    user.memberships.where(organisation: record.organisation, is_organisation_admin: true).exists?
   end
 end

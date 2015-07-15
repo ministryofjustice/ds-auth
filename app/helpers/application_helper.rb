@@ -40,4 +40,8 @@ module ApplicationHelper
   def js_partial
     params[:controller] + "/js_partials/" + params[:controller] + "_" + params[:action] + "_js.html.erb"
   end
+
+  def tick_cross_mark(boolean)
+    boolean ? "✓" : "✗"
+  end
 end

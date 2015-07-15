@@ -8,10 +8,16 @@ RSpec.describe "GET /api/v1/me" do
     it_behaves_like "an endpoint that times out sessions", "/api/v1/me"
 
     it "returns a 200 response with the user credentials" do
+
+      # Note: application comes from the "logged in API User" context
       application_roles = ["admin"]
-      roles = application_roles + ["lion_tamer"]
-      organisation = create :organisation, organisation_type: "custody_suite"
-      create :membership, user: user, organisation: organisation, permissions: { roles: roles }
+      application.update available_roles: application_roles
+
+      organisation = create :organisation
+      application.organisations << organisation
+
+      membership = create :membership, user: user, organisation: organisation
+      create :application_membership, application: application, membership: membership, roles: application.available_roles
 
       get "/api/v1/me", nil, api_request_headers
 
@@ -31,8 +37,7 @@ RSpec.describe "GET /api/v1/me" do
                 {
                     "uid" => organisation.uid,
                     "name" => organisation.name,
-                    "type" => organisation.organisation_type,
-                    "roles" => application_roles
+                    "roles" => application.available_roles
                 }
             ],
             "uid" => user.uid

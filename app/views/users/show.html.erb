@@ -34,10 +34,35 @@
 <table>
   <thead>
     <th></th>
+    <th>Organisation Admin</th>
+    <th><%= t("applications_and_roles") %></th>
   </thead>
 <%- @user.memberships.each do |membership| %>
   <%= content_tag(:tr, membership) do %>
     <td><%= link_to membership.organisation.name, organisation_path(membership.organisation) %></td>
+    <td><%= tick_cross_mark membership.is_organisation_admin? %></td>
+    <td>
+
+        <% if membership.application_memberships.empty? %>
+          <p><%= t("can_access_no_applications") %></p>
+        <% else %>
+        <dl>
+          <%- membership.application_memberships.each do |application_membership| %>
+            <dt><%= application_membership.application_name %></dt>
+              <dd>
+                <% if application_membership.has_roles? %>
+                  <%= application_membership.roles.join(", ") %>
+                <% elsif application_membership.can_login %>
+                  <%= t("login") %>
+                <% else %>
+                  <%= t("login_disabled") %>
+                <%- end %>
+              </dd>
+          <%- end %>
+        </dl>
+        <%- end %>
+
+    </td>
   <%- end %>
 <%- end %>
 </table>

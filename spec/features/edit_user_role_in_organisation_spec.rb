@@ -11,10 +11,10 @@ RSpec.feature "Editing a Users role in an Organisation" do
 
   context "as a User with an admin permission" do
     before do
-      FactoryGirl.create :membership, user: user, organisation: organisation, permissions: { roles: "admin" }
+      create :membership, user: user, organisation: organisation, is_organisation_admin: true
     end
 
-    specify "Creating a user that already exists in a different organisation" do
+    specify "can change the roles a User has in my organisation" do
       membership = create :membership, user: other_user, organisation: organisation
 
       visit organisation_path(organisation)
@@ -24,15 +24,15 @@ RSpec.feature "Editing a Users role in an Organisation" do
 
       expect(current_path).to eq(edit_organisation_membership_path(organisation, membership))
 
-      check "Admin"
+      check "Organisation Admin"
 
       click_button "Update membership"
 
       expect(current_path).to eq(organisation_path(organisation))
 
       expect(page).to have_content("Membership successfully updated")
-      within ".members #membership_#{membership.id}" do
-        expect(page).to have_content("Admin")
+      within ".members #membership_#{membership.id} td:nth-of-type(2)" do
+        expect(page).to have_content("✓")
       end
     end
   end

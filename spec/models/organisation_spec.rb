@@ -4,9 +4,6 @@ RSpec.describe Organisation do
   describe "validations" do
     it { expect(subject).to validate_presence_of :name }
     it { expect(subject).to validate_presence_of :slug }
-    it { expect(subject).to validate_presence_of :organisation_type }
-    it { expect(subject).to validate_inclusion_of(:organisation_type).in_array(Organisation::ORGANISATION_TYPES) }
-    it { expect(subject).to_not allow_value("doesnt_exist").for(:organisation_type) }
 
     context "circular references" do
       let!(:organisation)       { create :organisation }

@@ -41,7 +41,7 @@ RSpec.describe OrganisationPolicy do
     subject { OrganisationPolicy.new admin_user, organisation }
 
     before do
-      FactoryGirl.create :membership, user: admin_user, organisation: organisation, permissions: { roles: ["admin"] }
+      FactoryGirl.create :membership, user: admin_user, organisation: organisation, is_organisation_admin: true
     end
 
     it { is_expected.to permit_action(:show) }
@@ -55,14 +55,9 @@ RSpec.describe OrganisationPolicy do
   end
 
   context "webops user" do
-    let!(:webops_user) { FactoryGirl.create :user }
-    let!(:webops_organisation) { FactoryGirl.create :organisation, organisation_type: "webops"}
+    let!(:webops_user) { FactoryGirl.create :user, is_webops: true }
 
     subject { OrganisationPolicy.new webops_user, organisation }
-
-    before do
-      FactoryGirl.create :membership, user: webops_user, organisation: webops_organisation, permissions: { roles: ["support"] }
-    end
 
     it { is_expected.to permit_action(:show) }
     it { is_expected.to permit_action(:edit) }

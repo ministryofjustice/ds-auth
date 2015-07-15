@@ -14,8 +14,7 @@ class UsersController < ApplicationController
 
   def new
     @user = BuildUserWithMembership.new(
-      organisation: @organisation,
-      membership_params: { roles: @organisation.default_role_names }
+      organisation: @organisation
     ).call
 
     authorize @user
@@ -24,14 +23,14 @@ class UsersController < ApplicationController
   def create
     @user = BuildUserWithMembership.new(
       organisation: @organisation,
-      user_params: user_params.except(:membership),
-      membership_params: user_params[:membership] || {}
+      user_params: user_params
     ).call
 
     authorize @user
 
     if @user.save
-      redirect_to user_path(@user), notice: flash_message(:create, User)
+      @user.reload # to pick up the membership id
+      redirect_to edit_organisation_membership_path(@organisation, @user.memberships.first), notice: flash_message(:create, User)
     else
       customize_user_already_exists_error_message @user, @organisation
       render :new

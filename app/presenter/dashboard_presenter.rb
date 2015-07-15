@@ -24,6 +24,10 @@ class DashboardPresenter
   private
 
   def applications
-    @applications ||= RoleLoader.new.application_names_for_roles(*user.roles)
+    @applications ||= Doorkeeper::Application.where(name: application_names)
+  end
+
+  def application_names
+    user.application_names
   end
 end

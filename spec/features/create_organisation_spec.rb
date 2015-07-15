@@ -17,12 +17,7 @@ RSpec.feature "Creating Organisations" do
   end
 
   context "user is webops" do
-    let!(:user) { FactoryGirl.create :user }
-    let!(:webops_organisation) { FactoryGirl.create :organisation, organisation_type: "webops"}
-
-    before do
-      FactoryGirl.create :membership, user: user, organisation: webops_organisation, permissions: { roles: ["support"] }
-    end
+    let!(:user) { create :user, is_webops: true }
 
     specify "can create a new organisation" do
       visit organisations_path
@@ -32,11 +27,6 @@ RSpec.feature "Creating Organisations" do
       fill_in "Name", with: "Imperial College London"
       fill_in "Slug", with: "imperial-college-london"
 
-      expect(page).to have_select("Organisation type")
-
-      select "Drs Call Center", from: "Organisation type"
-
-      check "Searchable"
       fill_in "Tel", with: "01632 960178"
       fill_in "Mobile", with: "07700 900407"
       fill_in "Address", with: "123 Fake Street"
@@ -64,8 +54,6 @@ RSpec.feature "Creating Organisations" do
 
       fill_in "Name", with: "Sub Organisation"
       fill_in "Slug", with: "sub-organisation"
-      select "Law firm", from: "Organisation type"
-      check "Searchable"
       fill_in "Tel", with: "01234 567890"
       fill_in "Mobile", with: "01234 567890"
       fill_in "Address", with: "123 Fake Street"
@@ -89,13 +77,10 @@ RSpec.feature "Creating Organisations" do
 
       click_link "New organisation"
 
-      fill_in "Name", with: "LRUG"
-      fill_in "Slug", with: "london-ruby-users-group"
-
       click_button "Create organisation"
 
       expect(page).to have_content "You need to fix the errors on this page before continuing"
-      expect(page).to have_content "Organisation type: can't be blank"
+      expect(page).to have_content "Name: can't be blank"
     end
   end
 end
