@@ -21,12 +21,12 @@ RSpec.describe "GET /oauth/authorize" do
   end
 
   context "when the application does not handle its own authorization" do
-    let!(:doorkeeper_app) {
-      create :doorkeeper_application,
-      redirect_uri: "https://localhost:34343/auth/callback"
-    }
-
     context "the user has a role for the application" do
+      let!(:doorkeeper_app) {
+        create :doorkeeper_application,
+        redirect_uri: "https://localhost:34343/auth/callback"
+      }
+
       it "redirects to the apps auth callback uri" do
         create :membership, user: resource_owner, organisation: organisation, permissions: { roles: ["admin"] }
         allow_any_instance_of(Doorkeeper::Application).to receive(:available_role_names).and_return ["admin"]
@@ -43,9 +43,29 @@ RSpec.describe "GET /oauth/authorize" do
     end
 
     context "the user has no role for the application" do
-      it "redirects to the apps auth failure uri" do
-        get authorize_url
-        expect(response).to redirect_to("https://localhost:34343/auth/failure?message=unauthorized")
+      context "the application has not provided a failure URI" do
+        let!(:doorkeeper_app) {
+          create :doorkeeper_application,
+          redirect_uri: "https://redirect.example:34343/auth/callback"
+        }
+
+        it "creates a failure URI from the redirect hostname" do
+          get authorize_url
+          expect(response).to redirect_to("https://redirect.example:34343/auth/failure?message=unauthorized")
+        end
+      end
+
+      context "the application has provided a failure URIs" do
+        let!(:doorkeeper_app) {
+          create :doorkeeper_application,
+          redirect_uri: "https://redirect.example:34343/auth/callback",
+          failure_uri: "https://redirect.example:34343/failure\r\nhttps://not-redirect.example:34343/failure"
+        }
+
+        it "selects the correct failure URI based on the redirect hostname" do
+          get authorize_url
+          expect(response).to redirect_to("https://redirect.example:34343/failure")
+        end
       end
     end
   end

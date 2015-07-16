@@ -28,6 +28,20 @@
         </tr>
       <% end %>
     </table>
+
+    <% if @application.failure_uri.present? %>
+      <h4><%= t('.failure_uris') %>:</h4>
+
+      <table>
+        <% @application.failure_uri.split.each do |uri| %>
+          <tr>
+            <td>
+              <code><%= uri %></code>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
   </div>
 
   <div class="col-md-4">
