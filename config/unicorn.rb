@@ -1,36 +1,31 @@
-APP_PATH = File.expand_path("../..", __FILE__)
-
-FOREMAN = ENV.key? "FOREMAN"
-UNICORN_NO_PID = ENV.key? "UNICORN_NO_PID"
-UNICORN_NO_SOCKET = ENV.key? "UNICORN_NO_SOCKET"
-
-worker_processes Integer(ENV.fetch("WEB_CONCURRENCY", 3))
-listen Integer(ENV.fetch("UNICORN_PORT", 3000))
-
-stderr_path File.join(APP_PATH, "log", "unicorn.stderr.log") unless FOREMAN
-stdout_path File.join(APP_PATH, "log", "unicorn.stderr.log") unless FOREMAN
-
-pid File.join(APP_PATH, "tmp", "pids", "unicorn.pid") unless UNICORN_NO_PID
-listen(File.join(APP_PATH, "tmp", "sockets", "unicorn.sock"), backlog: 64) unless UNICORN_NO_SOCKET
-
-timeout 15
-preload_app true
-
-before_fork do |server, worker|
-  Signal.trap "TERM" do
-    puts "Unicorn master intercepting TERM and sending myself QUIT instead"
-    Process.kill "QUIT", Process.pid
-  end
-
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.connection.disconnect!
+if ENV['RAILS_ENV']=="development"
+  worker_processes Integer 1
+  timeout 5000
+else
+  worker_processes Integer(ENV["WEB_CONCURRENCY"] || 2)
+  timeout 15
 end
 
-after_fork do |server, worker|
-  Signal.trap "TERM" do
-    puts "Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT"
+if ENV["RAILS_ENV"] == 'production'
+  timeout 15
+  preload_app true
+
+  before_fork do |server, worker|
+    Signal.trap 'TERM' do
+      puts 'Unicorn master intercepting TERM and sending myself QUIT instead'
+      Process.kill 'QUIT', Process.pid
+    end
+
+    defined?(ActiveRecord::Base) and
+      ActiveRecord::Base.connection.disconnect!
   end
 
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.establish_connection
+  after_fork do |server, worker|
+    Signal.trap 'TERM' do
+      puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
+    end
+
+    defined?(ActiveRecord::Base) and
+      ActiveRecord::Base.establish_connection
+  end
 end
