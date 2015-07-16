@@ -1,4 +1,4 @@
-# Defence Solicitor Authentication
+# Digital Services Authentication Platform
 
 This is a centralised OAuth 2-based single sign-on provider.
 
@@ -9,7 +9,7 @@ Notes on the application structure can be found [here](docs/structure.pdf)
 ## Usage
 The app currently uses Rails seeds to populate consuming applications and users. See [db/seeds](db/seeds) for more info.
 
-An [omniauth](https://github.com/intridea/omniauth) gem has been written to make integrating consuming applications easier: [omniauth-dsds](https://github.com/ministryofjustice/defence-request-service-omniauth-dsds)
+An [omniauth](https://github.com/intridea/omniauth) gem has been written to make integrating consuming applications easier: [ds-auth-omniauth](https://github.com/ministryofjustice/ds-auth-omniauth)
 
 ## Environment Variables
 see .example.env
@@ -24,7 +24,7 @@ This can be customized by setting the ```SESSION_TIMEOUT_MINUTES``` ENV variable
 To get the application running locally, you need to:
 
  * ### Clone the repository
- 	``` git clone git@github.com:ministryofjustice/defence-request-service-auth.git```
+ 	``` git clone git@github.com:ministryofjustice/ds-auth.git```
 
  * ### Install ruby 2.2.2
  	It is recommended that you use a ruby version manager such as [rbenv](http://rbenv.org/) or [rvm](https://rvm.io/)
@@ -33,7 +33,7 @@ To get the application running locally, you need to:
  	http://www.postgresql.org/
 
  * ### Bundle the gems
-       cd defence-request-service-auth
+       cd ds-auth
        bundle install
 
  * ### Create and migrate the database; run seeds
@@ -44,7 +44,7 @@ To get the application running locally, you need to:
 
 
  * ### Start the server
- 		cd defence-request-service-auth && bundle exec rails server
+ 		cd ds-auth && bundle exec rails server
 
  * ### Use the app
 

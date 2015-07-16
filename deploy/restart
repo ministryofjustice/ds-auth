@@ -1,6 +1,0 @@
-#!/bin/sh
-
-[ -d tmp/pids ] || mkdir -p tmp/pids
-[ -d tmp/sockets ] || mkdir -p tmp/sockets
-
-sudo /etc/init.d/defence-request-service-auth restart

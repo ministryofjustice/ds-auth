@@ -1,5 +1,5 @@
 dsauth:
-  app_title: Defence Request Service Authentication
+  app_title: Digital Services Authentication Platform
 
 rails:
   secret_key_base: <%= ENV.fetch('SECRET_KEY_BASE') %>
