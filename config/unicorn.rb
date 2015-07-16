@@ -1,4 +1,4 @@
-if ENV['RAILS_ENV']=="development"
+if ENV["RAILS_ENV"]=="development"
   worker_processes Integer 1
   timeout 5000
 else
@@ -6,14 +6,14 @@ else
   timeout 15
 end
 
-if ENV["RAILS_ENV"] == 'production'
+if ENV["RAILS_ENV"] == "production"
   timeout 15
   preload_app true
 
   before_fork do |server, worker|
-    Signal.trap 'TERM' do
-      puts 'Unicorn master intercepting TERM and sending myself QUIT instead'
-      Process.kill 'QUIT', Process.pid
+    Signal.trap "TERM" do
+      puts "Unicorn master intercepting TERM and sending myself QUIT instead"
+      Process.kill "QUIT", Process.pid
     end
 
     defined?(ActiveRecord::Base) and
@@ -21,8 +21,8 @@ if ENV["RAILS_ENV"] == 'production'
   end
 
   after_fork do |server, worker|
-    Signal.trap 'TERM' do
-      puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
+    Signal.trap "TERM" do
+      puts "Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT"
     end
 
     defined?(ActiveRecord::Base) and
