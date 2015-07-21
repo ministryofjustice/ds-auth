@@ -74,19 +74,19 @@ Can update their own information (name, email, password etc). Can see other User
 
 ### Adding a new Application
 
-* ###### First - as a Webops User
+* __First - as a Webops User __
 * Create the Application
 * Make note of the application_id and application_secret to use in the consuming Application
 * Enter in the applications roles OR mark the application as handles_own_authorization
 * Edit all the Organisations that require access to the Application and give them access
 * Create an Organisation Admin user (or add an existing user and give them Organisation Admin rights)
 
-* ###### Second - as a Webops User OR Organisation Admin user
+* __Second - as a Webops User OR Organisation Admin user__
 * Update the membership of the Users to give them one or more roles OR the login role
 
 ### Add a new User to an Organisation
 
-* ###### As a Webops User OR Organisation Admin user
+* __As a Webops User OR Organisation Admin user__
 * Go to the organisation details page
 * Click Add User button
 * Fill in the User details and click Create
@@ -95,7 +95,7 @@ Can update their own information (name, email, password etc). Can see other User
 
 ### Add an existing User to an Organisation
 
-* ###### As a Webops User OR Organisation Admin user
+* __As a Webops User OR Organisation Admin user__
 * Go to the organisation details page
 * Click Add User button
 * Fill in the User details and click Create
