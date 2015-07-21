@@ -12,7 +12,7 @@ class OrganisationPolicy < ApplicationPolicy
   def permitted_attributes
     atts = default_permitted_attributes.dup
     atts = atts + [:slug, :parent_organisation_id]  if record.new_record?
-    atts = atts + [:application_ids]                if user.is_webops?
+    atts = atts + [application_ids: []]             if user.is_webops?
     atts
   end
 
