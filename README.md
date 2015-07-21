@@ -11,7 +11,7 @@ A [demo Rails application](https://github.com/ministryofjustice/ds-auth-omniauth
 ## Structure
 This application is structured around Users belonging to different Groups / Organisations and gaining access to various applications / services because they belong to those Organisations.
 
-![Structure diagram](/docs/structure.png)
+![Structure diagram](/docs/schema.png)
 
 As shown above we have consuming Applications registered with the auth app, Organisations and Users. Organisations are given access to Applications by a User with a Webops role. Once done then any Users that are a member of those Organisations are be given access to those Applications.
 
