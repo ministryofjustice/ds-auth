@@ -31,7 +31,7 @@ RSpec.feature "Adding a user to an Organisation" do
       expect(page).to have_content "User: #{new_user.name} (#{new_user.email})"
 
       check "Admin"
-      check "beastmaster"
+      check "Beastmaster"
 
       click_button "Update membership"
 
@@ -41,7 +41,7 @@ RSpec.feature "Adding a user to an Organisation" do
       within ".members" do
         expect(page).to have_content(new_user.name)
         expect(page).to have_content("Admin")
-        expect(page).to have_content("beastmaster")
+        expect(page).to have_content("Beastmaster")
       end
     end
 
@@ -62,7 +62,7 @@ RSpec.feature "Adding a user to an Organisation" do
       expect(page).to have_content "You need to fix the errors on this page before continuing"
       expect(page).to have_link "Click here to add #{new_user.email} to #{organisation.name}"
 
-      click_link "Click here to add #{new_user.email} to #{organisation.name}"
+      click_link "Click here to add #{new_user.email} to #{organisation.name}", match: :first
 
       expect(current_path).to eq(new_organisation_membership_path(organisation))
       expect(page).to have_content "New membership to #{organisation.name}"

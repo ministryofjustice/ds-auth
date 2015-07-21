@@ -1,0 +1,30 @@
+#global-header-bar {
+  display: none;
+}
+
+.right {
+  float: right;
+}
+
+.notice-summary {
+  border: solid 3px $green;
+  margin: 2rem 0;
+  padding: 2rem;
+
+  p {
+    margin: 0.25rem 0;
+  }
+}
+
+.sidebar {
+  float: right;
+
+  h3 {
+    margin: 0;
+  }
+
+  a {
+    display: block;
+    margin: 1rem 0;
+  }
+}

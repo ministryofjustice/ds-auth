@@ -19,12 +19,12 @@ RSpec.feature "Editing a Users role in an Organisation" do
 
       visit organisation_path(organisation)
       within ".members #membership_#{membership.id}" do
-        click_link "Edit membership"
+        click_link "Edit"
       end
 
       expect(current_path).to eq(edit_organisation_membership_path(organisation, membership))
 
-      check "Organisation Admin"
+      check "Organisation admin"
 
       click_button "Update membership"
 

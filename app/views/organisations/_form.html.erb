@@ -1,54 +1,55 @@
-<div class="field">
+<h3><%= t("organisation_details") %></h3>
+
+<%= f.field_with_error :name do %>
   <%= f.label :name %>
   <%= f.text_field :name %>
-</div>
-
-<%- if @organisation.new_record? %>
-  <div class="field">
-    <%= f.label :slug %>
-    <%= f.text_field :slug %>
-  </div>
 <%- end %>
 
-<div class="field">
-  <%= f.label :tel %>
-  <%= f.text_field :tel %>
-</div>
-
-<div class="field">
-  <%= f.label :mobile %>
-  <%= f.text_field :mobile %>
-</div>
-
-<div class="field">
-  <%= f.label :address %>
-  <%= f.text_field :address %>
-</div>
-
-<div class="field">
-  <%= f.label :postcode %>
-  <%= f.text_field :postcode %>
-</div>
-
-<div class="field">
+<%= f.field_with_error :email do %>
   <%= f.label :email %>
-  <%= f.text_field :email %>
-</div>
+  <%= f.email_field :email %>
+<%- end %>
 
 <%- if @organisation.new_record? %>
-  <div class="field">
+  <%= f.field_with_error :slug do %>
+    <%= f.label :slug %>
+    <%= f.text_field :slug %>
+  <%- end %>
+<%- end %>
+
+<%= f.field_with_error :tel do %>
+  <%= f.label :tel %>
+  <%= f.text_field :tel %>
+<%- end %>
+
+<%= f.field_with_error :mobile do %>
+  <%= f.label :mobile %>
+  <%= f.text_field :mobile %>
+<%- end %>
+
+<%= f.field_with_error :address do %>
+  <%= f.label :address %>
+  <%= f.text_area :address, rows: 3 %>
+<%- end %>
+
+<%= f.field_with_error :postcode do %>
+  <%= f.label :postcode %>
+  <%= f.text_field :postcode %>
+<%- end %>
+
+<%- if @organisation.new_record? %>
+  <%= f.field_with_error :parent_organisation_id do %>
     <%= f.label :parent_organisation_id %>
-    <%= f.select :parent_organisation_id, options_for_parent_organisation, include_blank: "---" %>
-  </div>
+    <%= f.select :parent_organisation_id, options_for_parent_organisation, include_blank: "None" %>
+  <%- end %>
 <%- end %>
 
 <%- if current_user.is_webops? %>
-<div class="field">
-
-  <%= f.label :applications %>
-  <aside><%= simple_format t("webops_add_applications_to_organisation") %></aside>
-  <%= f.collection_check_boxes :application_ids, Doorkeeper::Application.all, :id, :name do |b| %>
-    <%= b.label() { b.check_box + t(b.text) } %>
+  <h3><%= t('applications') %></h3>
+  <%= f.field_with_error :application_ids do %>
+    <aside><%= simple_format t("webops_add_applications_to_organisation") %></aside>
+    <%= f.collection_check_boxes :application_ids, Doorkeeper::Application.by_name, :id, :name do |b| %>
+      <%= b.label() { b.check_box + t(b.text) } %>
+    <%- end %>
   <%- end %>
-</div>
 <%- end %>

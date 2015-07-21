@@ -27,6 +27,7 @@ gem "govuk_elements_rails", "~> 0.1.1"
 group :development do
   gem "web-console", "~> 2.0"
   gem "guard-rspec", require: false
+  gem "i18n-debug"
 end
 
 group :development, :test do

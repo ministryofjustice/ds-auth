@@ -2,36 +2,63 @@
   <%= Settings.dsauth.app_title %>
 <% end %>
 <% content_for :stylesheets do %>
-  <%= stylesheet_link_tag('application', media: 'all') %>
+  <%# main compiled stylesheet for decent browsers %>
+  <!--[if gt IE 8]><!-->
+  <%= stylesheet_link_tag('main', media: 'all') %>
+  <!--<![endif]-->
+
+  <%# if IE<=8, use compiled version for that browser instead %>
   <!--[if IE 6]>
-  <%= stylesheet_link_tag "govuk_elements_extensions_ie6", media: "all" %>
+  <%= stylesheet_link_tag "main_ie6", media: "all" %>
   <![endif]-->
   <!--[if IE 7]>
-  <%= stylesheet_link_tag "govuk_elements_extensions_ie7", media: "all" %>
+  <%= stylesheet_link_tag "main_ie7", media: "all" %>
   <![endif]-->
   <!--[if IE 8]>
-  <%= stylesheet_link_tag "govuk_elements_extensions_ie8", media: "all" %>
+  <%= stylesheet_link_tag "main_ie8", media: "all" %>
   <![endif]-->
+
+  <%# additional app styles via pipeline %>
+  <%= stylesheet_link_tag('application', media: 'all') %>
+
 <% end %>
 <% content_for :javascripts do %>
   <%= javascript_include_tag 'application' %>
+  <%= yield :javascript_includes %>
 <% end %>
 <% content_for :head do %>
   <%= csrf_meta_tag %>
-  <%# render 'shared/ga' %>
+  <%= render 'shared/ga' %>
 <% end %>
 <%= content_for :cookie_message, "" %>
-<%= content_for :js_gt_ie, '6' %>
+<%= content_for :js_gt_ie, '5' %>
 <%# TODO: convert banner to i18n? %>
 <% content_for :content_override do %>
+  <%- if current_user %>
+    <nav>
+      <div class="nav-wrapper">
+        <ul>
+          <li><%= link_to t("home"), root_path %></li>
+          <li class='nested'>
+            <a href="#">Manage</a>
+            <ul>
+              <%- if current_user.is_webops? %>
+                <li><%= link_to t("applications"), oauth_applications_path %></li>
+              <%- end %>
+              <li><%= link_to t("organisations"), organisations_path %></li>
+              <li><%= link_to t("users"), users_path %></li>
+            </ul>
+          </li>
+          <li><%= link_to t("profile"), edit_user_path(current_user) %></li>
+          <li class="right"><%= link_to(t('devise.sessions.log_out'), destroy_user_session_path, method: :delete, class: 'user-links') %></li>
+        </ul>
+      </div>
+    </nav>
+    <%- end %>
   <main id="page-container" role="main">
-    <%= render 'shared/banner' %>
     <%= flash_messages %>
     <%= yield %>
   </main>
-<% end %>
-<% content_for :proposition_links do %>
-  <%= render 'shared/user_profile_links' %>
 <% end %>
 
 <% content_for :footer_support_links do %>

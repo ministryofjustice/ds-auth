@@ -4,7 +4,7 @@ class OrganisationsController < ApplicationController
   after_action :verify_policy_scoped, only: :index
 
   def index
-    @organisations = policy_scope(Organisation)
+    @organisations = policy_scope(Organisation).by_name
   end
 
   def show

@@ -1,3 +1,12 @@
+<h1><%= t("organisation_details") %></h1>
+
+<div class='sidebar'>
+  <h3><%= t("actions") %></h3>
+  <%= link_to t('edit'), edit_organisation_path(@organisation) if policy(@organisation).edit? %>
+  <%= link_to t('back'), organisations_path %>
+  <%= link_to t('new_user'), new_organisation_user_path(@organisation) if policy(@organisation).manage_members? %>
+</div>
+
 <p>
   <strong><%= t('name') %>:</strong>
   <%= @organisation.name %>
@@ -51,12 +60,12 @@
 
 <h3><%= t('members') %></h3>
 
-<table class="members">
+<table class="members <%= params[:confirm_delete_membership_id] ? "confirm-delete" : "" %>">
   <thead>
     <tr>
-      <th>User</th>
-      <th>Organisation Admin</th>
-      <th>Applications and Roles</th>
+      <th><%= t("user") %></th>
+      <th><%= t("organisation_admin") %></th>
+      <th><%= t("applications_and_roles") %></th>
       <th></th>
     </tr>
   </thead>
@@ -76,7 +85,7 @@
                 <dt><%= application_membership.application_name %></dt>
                 <dd>
                   <% if application_membership.has_roles? %>
-                    <%= application_membership.roles.join(", ") %>
+                    <%= application_membership.print_roles %>
                   <% elsif application_membership.can_login %>
                     <%= t("login") %>
                   <% else %>
@@ -87,10 +96,21 @@
             </dl>
             <%- end %>
           </td>
-          <td>
-            <%= link_to t("edit_membership"), edit_organisation_membership_path(@organisation, membership) if policy(@organisation).manage_members? %>
-            <%= link_to t("delete_membership"), organisation_membership_path(@organisation, membership), method: :delete if policy(@organisation).manage_members? %>
+
+          <% if Integer(params[:confirm_delete_membership_id] || 0) == membership.id %>
+          <td class="actions-delete">
+            <div class="actions-delete-wrapper">
+              <p><%= t("membership_delete_are_you_sure", user_name: membership.user.name, organisation_name: @organisation.name) %></p>
+              <%= link_to t("delete"), organisation_membership_path(@organisation, membership), class: "button-delete", method: :delete if policy(@organisation).manage_members? %>
+              <%= link_to t("cancel"), organisation_path(@organisation), class: "link-cancel" %>
+            </div>
           </td>
+          <% else %>
+          <td class="actions">
+            <%= link_to t("edit"), edit_organisation_membership_path(@organisation, membership) if policy(@organisation).manage_members? %>
+            <%= link_to t("delete"), organisation_path(@organisation, confirm_delete_membership_id: membership.id), class: "button-delete" if policy(membership).destroy? %>
+          </td>
+          <%- end %>
         <%- end %>
       <%- end %>
     <% else %>
@@ -98,9 +118,3 @@
     <%- end %>
   </tbody>
 </table>
-
-<br/>
-
-<%= link_to t('edit'), edit_organisation_path(@organisation) if policy(@organisation).edit? %> |
-<%= link_to t('back'), organisations_path %>
-<%= link_to t('new_user'), new_organisation_user_path(@organisation) if policy(@organisation).manage_members? %>

@@ -17,7 +17,7 @@ RSpec.feature "Viewing an organisations details" do
       visit organisations_path
 
       within "#organisation_#{organisation.id}" do
-        click_link "Show"
+        click_link organisation.name
       end
 
       expect(page).to have_content "Name: #{organisation.name}"

@@ -57,5 +57,8 @@ module DsAuth
     config.action_mailer.smtp_settings = Settings.action_mailer.smtp_settings.to_h
 
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.action_view.default_form_builder = "AuthFormBuilder"
+    config.action_view.field_error_proc = Proc.new {|html_tag, instance| html_tag }
   end
 end

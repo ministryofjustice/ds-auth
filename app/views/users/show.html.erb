@@ -1,5 +1,11 @@
 <h1><%= t("user") %></h1>
 
+<div class="sidebar">
+  <h3><%= t("actions") %></h3>
+  <%= link_to t('edit'), edit_user_path(@user) %>
+  <%= link_to t('back'), users_path %>
+</div>
+
 <p>
   <strong><%= t('name') %>:</strong>
   <%= @user.name %>
@@ -30,7 +36,7 @@
   <%= @user.postcode %>
 </p>
 
-<h3>Organisations</h3>
+<h3><%= t("organisations") %></h3>
 <table>
   <thead>
     <th></th>
@@ -66,7 +72,3 @@
   <%- end %>
 <%- end %>
 </table>
-
-<br />
-<%= link_to t('edit'), edit_user_path(@user) %> |
-<%= link_to t('back'), users_path %>
