@@ -74,7 +74,7 @@ Can update their own information (name, email, password etc). Can see other User
 
 ### Adding a new Application
 
-* __First - as a Webops User __
+* __First - as a Webops User__
 * Create the Application
 * Make note of the application_id and application_secret to use in the consuming Application
 * Enter in the applications roles OR mark the application as handles_own_authorization
