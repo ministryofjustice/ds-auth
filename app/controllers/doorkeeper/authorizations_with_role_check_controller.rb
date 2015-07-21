@@ -1,21 +1,17 @@
 module Doorkeeper
   class AuthorizationsWithRoleCheckController < Doorkeeper::AuthorizationsController
     def new
-      if application.handles_own_authorization?
+      if resource_owner_has_access_to_application?
         super
       else
-        if resource_owner_has_role_for_application?
-          super
-        else
-          redirect_to role_failure_uri
-        end
+        redirect_to role_failure_uri
       end
     end
 
     private
 
-    def resource_owner_has_role_for_application?
-      current_resource_owner.memberships.with_any_role(*application.available_role_names).exists?
+    def resource_owner_has_access_to_application?
+      current_resource_owner.can_login_to_application?(application)
     end
 
     def role_failure_uri

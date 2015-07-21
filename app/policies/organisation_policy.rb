@@ -4,17 +4,16 @@ class OrganisationPolicy < ApplicationPolicy
       if user.is_webops?
         scope.all
       else
-        scope.joins(:memberships).where(memberships: { user: user })
+        scope.uniq.joins(:memberships).where(memberships: { user: user })
       end
     end
   end
 
   def permitted_attributes
-    if record.new_record?
-      default_permitted_attributes + [:slug, :organisation_type, :parent_organisation_id]
-    else
-      default_permitted_attributes
-    end
+    atts = default_permitted_attributes.dup
+    atts = atts + [:slug, :parent_organisation_id]  if record.new_record?
+    atts = atts + [:application_ids]                if user.is_webops?
+    atts
   end
 
   def show?
@@ -31,7 +30,7 @@ class OrganisationPolicy < ApplicationPolicy
 
   alias :destroy? :create?
 
-  # Can the user create a user for this Organisation
+  # Can the user create/update a user for this Organisation
   def manage_members?
     user_is_admin_in_organisation || user_is_webops
   end
@@ -40,13 +39,11 @@ class OrganisationPolicy < ApplicationPolicy
 
   def default_permitted_attributes
     [:name,
-     :searchable,
      :tel,
      :mobile,
      :address,
      :postcode,
-     :email,
-     :supplier_number]
+     :email]
   end
 
   def user_belongs_to_organisation
@@ -54,6 +51,6 @@ class OrganisationPolicy < ApplicationPolicy
   end
 
   def user_is_admin_in_organisation
-    record.memberships.where(user: user).with_any_role("admin").exists?
+    record.memberships.where(user: user, is_organisation_admin: true).exists?
   end
 end

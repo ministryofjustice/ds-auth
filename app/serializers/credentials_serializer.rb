@@ -35,12 +35,10 @@ class CredentialsSerializer
   def serialized_organisations
     user.memberships.map do |membership|
       organisation = membership.organisation
-
       {
           uid: organisation.uid,
           name: organisation.name,
-          type: organisation.organisation_type,
-          roles: membership.roles & @application.available_role_names
+          roles: membership.roles_for_application(@application) & @application.available_roles
       }
     end
   end

@@ -1,5 +1,5 @@
 module DoorkeeperHelper
   def authorization_status(application)
-    application.handles_own_authorization ? "✓" : "✗"
+    tick_cross_mark application.handles_own_authorization
   end
 end

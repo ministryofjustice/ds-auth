@@ -4,17 +4,13 @@ class UserPolicy < ApplicationPolicy
       if user.is_webops?
         scope.all
       else
-        scope.joins(:memberships).where(memberships: { organisation: user.organisations })
+        scope.uniq.joins(:memberships).where(memberships: { organisation: user.organisations })
       end
     end
   end
 
   def permitted_attributes
-    if record.new_record?
-      [:email, :password, :password_confirmation, :name, :telephone, :mobile, :address, :postcode, :email, membership: { roles: [] }]
-    else
-      [:email, :password, :password_confirmation, :name, :telephone, :mobile, :address, :postcode, :email]
-    end
+    [:email, :password, :password_confirmation, :name, :telephone, :mobile, :address, :postcode, :email]
   end
 
   def show?
@@ -22,11 +18,11 @@ class UserPolicy < ApplicationPolicy
   end
 
   def create?
-    user_is_admin_in_profile_organisation || user_is_webops
+    user_is_organisation_admin || user_is_webops
   end
 
   def update?
-    is_user || user_is_admin_in_profile_organisation || user_is_webops
+    is_user || user_is_organisation_admin || user_is_webops
   end
 
   alias :destroy? :create?
@@ -41,11 +37,7 @@ class UserPolicy < ApplicationPolicy
     (user.organisation_ids & record.organisation_ids).length > 0
   end
 
-  def user_is_admin_in_profile_organisation
-    user.memberships.where(organisation: record.memberships.map(&:organisation)).with_any_role("admin").exists?
-  end
-
-  def user_is_admin
-    user.memberships.with_any_role("admin").exists?
+  def user_is_organisation_admin
+    user.memberships.where(organisation: record.memberships.map(&:organisation), is_organisation_admin: true).exists?
   end
 end

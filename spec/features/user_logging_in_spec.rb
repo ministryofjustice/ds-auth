@@ -47,14 +47,16 @@ RSpec.feature "User logging in" do
   end
 
   specify "after logging in User has links to all Applications they have access to" do
-    create :doorkeeper_application, name: "drs-service", redirect_uri: "http://foobar.example.org/oauth/callback"
-    create :membership, user: user, roles: ["cso"]
+    application = create :doorkeeper_application, name: "test app", redirect_uri: "http://foobar.example.org/oauth/callback", handles_own_authorization: true
+    organisation = create :organisation, applications: [application]
+    membership = create :membership, user: user, organisation: organisation
+    create :application_membership, application: application, membership: membership, can_login: true
 
     user_is_logged_in user
 
     expect(current_path).to eq(root_path)
     expect(page).to have_content("You have access to these applications:")
-    expect(page).to have_link("drs-service", href: "http://foobar.example.org/")
+    expect(page).to have_link("test app", href: "http://foobar.example.org/")
   end
 end
 

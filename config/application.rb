@@ -56,7 +56,6 @@ module DsAuth
     config.action_mailer.default_url_options = Settings.action_mailer.default_url_options.to_h
     config.action_mailer.smtp_settings = Settings.action_mailer.smtp_settings.to_h
 
-    config.action_controller.action_on_unpermitted_parameters = :raise
     config.active_record.raise_in_transactional_callbacks = true
   end
 end

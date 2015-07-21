@@ -6,15 +6,6 @@
 
     <%= render 'form', f: f %>
 
-    <div class="field">
-      <h3>Roles</h3>
-      <%= f.fields_for :membership, @user.memberships.first do |ff| %>
-        <%= ff.collection_check_boxes :roles, @organisation.available_roles.sort, :name, :name do |b| %>
-          <%= b.label() { b.check_box + t(b.text) } %>
-        <%- end %>
-      <%- end %>
-    </div>
-
     <div class="actions">
       <%= f.submit t('create_user'), class: "button" %>
     </div>

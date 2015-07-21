@@ -1,13 +1,6 @@
 class Organisation < ActiveRecord::Base
-  ORGANISATION_TYPES = %w{
-    webops
-    drs_call_center
-    laa_rota_team
-    court
-    custody_suite
-    law_firm
-    law_office
-  }
+  has_and_belongs_to_many :applications, class_name: "Doorkeeper::Application",
+    join_table: :applications_organisations, association_foreign_key: :oauth_application_id
 
   has_many :memberships
   has_many :users, through: :memberships
@@ -15,28 +8,19 @@ class Organisation < ActiveRecord::Base
   has_many :sub_organisations, -> { order :id }, class_name: "Organisation", foreign_key: "parent_organisation_id"
   belongs_to :parent_organisation, class_name: "Organisation"
 
-  validates :slug, :name, :organisation_type, presence: true
-  validates :organisation_type, inclusion: { in: ORGANISATION_TYPES }
+  validates :slug, :name, presence: true
   validate :no_circular_references
 
   scope :by_name, -> { order(name: :asc) }
 
   store_accessor :details, :supplier_number
 
-  def is_law_firm?
-    organisation_type == "law_firm" || organisation_type == "law_office"
-  end
-
   def available_roles
-    @available_roles ||= RoleLoader.new.available_roles_for_organisation_type organisation_type
+    applications.map(&:available_roles).flatten.uniq.sort
   end
 
-  def default_role_names
-    @default_roles ||= RoleLoader.new.default_roles_for_organisation_type organisation_type
-  end
-
-  def available_role_names
-    available_roles.map(&:name)
+  def has_access_to_application?(application)
+    applications.exists?(application.id)
   end
 
   private

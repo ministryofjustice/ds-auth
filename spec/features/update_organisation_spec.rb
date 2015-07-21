@@ -9,7 +9,7 @@ RSpec.feature "Updating an Organisation" do
   end
 
   specify "admin users for the Organisation can update it" do
-    create :membership, user: user, organisation: organisation, permissions: { roles: "admin" }
+    create :membership, user: user, organisation: organisation, is_organisation_admin: true
 
     visit edit_organisation_path(organisation)
 
@@ -33,7 +33,7 @@ RSpec.feature "Updating an Organisation" do
   end
 
   specify "are shown errors if invalid details are entered" do
-    create :membership, user: user, organisation: organisation, permissions: { roles: "admin" }
+    create :membership, user: user, organisation: organisation, is_organisation_admin: true
 
     visit edit_organisation_path(organisation)
 
@@ -57,7 +57,7 @@ RSpec.feature "Updating an Organisation" do
 
   specify "admin users for other Organisations cannot update it" do
     other_organisation = create :organisation
-    create :membership, user: user, organisation: other_organisation, permissions: { roles: "admin" }
+    create :membership, user: user, organisation: other_organisation, is_organisation_admin: true
 
     visit edit_organisation_path(organisation)
 

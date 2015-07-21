@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Viewing an organisations details" do
   let!(:user) { create :user }
-  let!(:organisation) { create :organisation, organisation_type: "custody_suite" }
+  let!(:organisation) { create :organisation }
 
   before do
     login_as_user user.email, user.password
@@ -22,8 +22,6 @@ RSpec.feature "Viewing an organisations details" do
 
       expect(page).to have_content "Name: #{organisation.name}"
       expect(page).to have_content "Slug: #{organisation.slug}"
-      expect(page).to have_content "Organisation type: Custody suite"
-      expect(page).to have_content "Searchable: true"
 
       expect(page).to have_content "Members"
       organisation.users.each do |u|
@@ -32,7 +30,7 @@ RSpec.feature "Viewing an organisations details" do
     end
 
     context "when the Organisation has parent and child organisations" do
-      let!(:organisation) { create :organisation, organisation_type: "custody_suite", parent_organisation: parent }
+      let!(:organisation) { create :organisation, parent_organisation: parent }
       let(:parent) { create :organisation }
 
       specify "can view parent and child organisations and links on a show page" do

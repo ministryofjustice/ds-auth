@@ -16,24 +16,21 @@ RSpec.describe Membership, type: :model do
     end
   end
 
-  describe "scopes" do
-    describe "with_roles" do
-      it "finds Memberships that match all the given roles" do
-        create :membership, roles: ["foo", "bar"]
-        membership2 = create :membership, roles: ["admin", "foo", "bar"]
+  describe "#roles_for_application" do
+    let!(:application) { create :doorkeeper_application, available_roles: ["beastmaster"]}
 
-        expect(Membership.with_roles("admin", "foo").to_a).to eq([membership2])
-      end
+    it "returns the roles the membership has for the given application" do
+      organisation = create :organisation
+      application.organisations << organisation
+      application.save!
+      membership = create :membership, organisation: organisation
+      create :application_membership, membership: membership, application: application, roles: application.available_roles
+
+      expect(membership.roles_for_application(application)).to eq(application.available_roles)
     end
 
-    describe "with_any_roles" do
-      it "finds Memberships that match any the given roles" do
-        membership1 = create :membership, roles: ["foo", "bar"]
-        membership2 = create :membership, roles: ["admin", "foo", "bar"]
-        create :membership, roles: ["admin", "bar"]
-
-        expect(Membership.with_any_role("foo", "banana").to_a).to eq([membership1, membership2])
-      end
+    it "returns [] when the membership does not include the given application" do
+      expect(subject.roles_for_application(application)).to be_empty
     end
   end
 end

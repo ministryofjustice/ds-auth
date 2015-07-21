@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.shared_examples "editing a User" do
   specify "Editing a user" do
-    new_user = FactoryGirl.build :user
+    new_user = build :user
 
     fill_in_edit_user_form_with user, new_user
 
@@ -12,7 +12,7 @@ RSpec.shared_examples "editing a User" do
   end
 
   specify "errors are shown if a user cannot be updated" do
-    new_user = FactoryGirl.build :user, name: ""
+    new_user = build :user, name: ""
 
     fill_in_edit_user_form_with user, new_user
 
@@ -40,7 +40,7 @@ RSpec.feature "Editing a user" do
     let!(:current_user) { create :user }
 
     before do
-      FactoryGirl.create :membership, user: current_user, organisation: organisation, permissions: { roles: "admin" }
+      create :membership, user: current_user, organisation: organisation, is_organisation_admin: true
     end
 
     include_examples "editing a User"

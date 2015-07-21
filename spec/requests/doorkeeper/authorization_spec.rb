@@ -24,15 +24,20 @@ RSpec.describe "GET /oauth/authorize" do
     context "the user has a role for the application" do
       let!(:doorkeeper_app) {
         create :doorkeeper_application,
-        redirect_uri: "https://localhost:34343/auth/callback"
+        redirect_uri: "https://localhost:34343/auth/callback",
+        available_roles: ["viewer"]
       }
 
       it "redirects to the apps auth callback uri" do
-        create :membership, user: resource_owner, organisation: organisation, permissions: { roles: ["admin"] }
-        allow_any_instance_of(Doorkeeper::Application).to receive(:available_role_names).and_return ["admin"]
+        doorkeeper_app.organisations << organisation
+        doorkeeper_app.save!
+        membership = create :membership, user: resource_owner, organisation: organisation
+        create :application_membership, application: doorkeeper_app, membership: membership, roles: doorkeeper_app.available_roles
 
         get authorize_url
-
+        sleep 2
+        # puts "URI:"
+        # puts response.headers["Location"]
         # all we want to check is the redirect goes to the redirect_uri
         # not whether the code and state params are correct
         response_redirect_uri = URI.parse response.headers["Location"]
@@ -76,14 +81,34 @@ RSpec.describe "GET /oauth/authorize" do
       redirect_uri: "https://localhost:34343/auth/callback",
       handles_own_authorization: true
     }
+    let!(:membership) { create :membership, user: resource_owner, organisation: organisation }
 
-    it "redirects to the apps auth callback uri" do
-      get authorize_url
+    before do
+      doorkeeper_app.organisations << organisation
+      doorkeeper_app.save!
+    end
 
-      response_redirect_uri = URI.parse response.headers["Location"]
-      response_redirect_uri.query = nil
+    context "the user has access to the application" do
+      it "redirects to the apps auth callback uri" do
+        create :application_membership, application: doorkeeper_app, membership: membership, can_login: true
 
-      expect(response_redirect_uri.to_s).to eq(doorkeeper_app.redirect_uri)
+        get authorize_url
+        sleep 2
+
+        response_redirect_uri = URI.parse response.headers["Location"]
+        response_redirect_uri.query = nil
+
+        expect(response_redirect_uri.to_s).to eq(doorkeeper_app.redirect_uri)
+      end
+    end
+
+    context "the user does not have access to the application" do
+      it "redirects to the failure uri" do
+        create :application_membership, application: doorkeeper_app, membership: membership, can_login: false
+
+        get authorize_url
+        expect(response).to redirect_to("https://localhost:34343/auth/failure?message=unauthorized")
+      end
     end
   end
 end

@@ -43,7 +43,7 @@ RSpec.describe UserPolicy do
     subject { UserPolicy.new admin_user, user }
 
     before do
-      FactoryGirl.create :membership, user: admin_user, organisation: organisation, permissions: { roles: ["admin"] }
+      FactoryGirl.create :membership, user: admin_user, organisation: organisation, is_organisation_admin: true
     end
 
     it { is_expected.to permit_action(:show) }
@@ -61,7 +61,7 @@ RSpec.describe UserPolicy do
     subject { UserPolicy.new admin_user, user }
 
     before do
-      FactoryGirl.create :membership, user: admin_user, organisation: create(:organisation), permissions: { roles: ["admin"] }
+      FactoryGirl.create :membership, user: admin_user, organisation: create(:organisation), is_organisation_admin: true
     end
 
     it { is_expected.not_to permit_action(:show) }

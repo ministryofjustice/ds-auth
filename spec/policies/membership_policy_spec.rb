@@ -26,7 +26,7 @@ RSpec.describe MembershipPolicy do
     let(:admin_user) { create :user }
 
     before do
-      create :membership, user: admin_user, organisation: organisation, roles: ["admin"]
+      create :membership, user: admin_user, organisation: organisation, is_organisation_admin: true
     end
 
     subject { MembershipPolicy.new admin_user, membership }
@@ -41,14 +41,9 @@ RSpec.describe MembershipPolicy do
   end
 
   context "webops user" do
-    let!(:webops_user) { FactoryGirl.create :user }
-    let!(:webops_organisation) { FactoryGirl.create :organisation, organisation_type: "webops"}
+    let!(:webops_user) { FactoryGirl.create :user, is_webops: true }
 
     subject { MembershipPolicy.new webops_user, membership }
-
-    before do
-      FactoryGirl.create :membership, user: webops_user, organisation: webops_organisation, permissions: { roles: ["support"] }
-    end
 
     it { is_expected.not_to permit_action(:show) }
     it { is_expected.to permit_action(:edit) }

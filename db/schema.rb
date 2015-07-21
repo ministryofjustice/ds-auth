@@ -11,18 +11,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714125125) do
+ActiveRecord::Schema.define(version: 20150717110438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
+  create_table "application_memberships", force: :cascade do |t|
+    t.integer  "application_id"
+    t.integer  "membership_id"
+    t.string   "roles",          default: [],                 array: true
+    t.boolean  "can_login",      default: false, null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "application_memberships", ["application_id"], name: "index_application_memberships_on_application_id", using: :btree
+  add_index "application_memberships", ["membership_id"], name: "index_application_memberships_on_membership_id", using: :btree
+
+  create_table "applications_organisations", id: false, force: :cascade do |t|
+    t.integer  "oauth_application_id"
+    t.integer  "organisation_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "applications_organisations", ["oauth_application_id"], name: "index_applications_organisations_on_oauth_application_id", using: :btree
+  add_index "applications_organisations", ["organisation_id"], name: "index_applications_organisations_on_organisation_id", using: :btree
+
   create_table "memberships", force: :cascade do |t|
     t.integer  "organisation_id"
     t.integer  "user_id"
-    t.jsonb    "permissions",     default: {}
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "is_organisation_admin", default: false, null: false
   end
 
   add_index "memberships", ["organisation_id", "user_id"], name: "index_memberships_on_organisation_id_and_user_id", unique: true, using: :btree
@@ -66,6 +88,7 @@ ActiveRecord::Schema.define(version: 20150714125125) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "handles_own_authorization", default: false
+    t.string   "available_roles",           default: [],                 array: true
     t.text     "failure_uri"
   end
 
@@ -74,8 +97,6 @@ ActiveRecord::Schema.define(version: 20150714125125) do
   create_table "organisations", force: :cascade do |t|
     t.string   "slug",                                                  null: false
     t.string   "name",                                                  null: false
-    t.string   "organisation_type",                                     null: false
-    t.boolean  "searchable",             default: false,                null: false
     t.string   "tel"
     t.text     "address"
     t.string   "postcode"
@@ -111,11 +132,16 @@ ActiveRecord::Schema.define(version: 20150714125125) do
     t.string   "address"
     t.string   "postcode"
     t.uuid     "uid",                    default: "uuid_generate_v4()"
+    t.boolean  "is_webops",              default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "application_memberships", "memberships"
+  add_foreign_key "application_memberships", "oauth_applications", column: "application_id"
+  add_foreign_key "applications_organisations", "oauth_applications"
+  add_foreign_key "applications_organisations", "organisations"
   add_foreign_key "memberships", "organisations"
   add_foreign_key "memberships", "users"
   add_foreign_key "organisations", "organisations", column: "parent_organisation_id", name: "organisations_parent_organisation_id_fk"

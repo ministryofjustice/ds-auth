@@ -22,8 +22,10 @@
 en:
   access_to_applications: "You have access to these applications:"
   admin: "Admin"
+  applications_and_roles: "Applications and Roles"
   are_you_sure: "Are you sure?"
   back: "Back"
+  can_access_no_applications: "Can access no applications"
   can_login: "Can login?"
   continue: "Continue"
   create_membership: "Create membership"
@@ -39,13 +41,8 @@ en:
   delete_membership: "Delete membership"
   fix_errors_before_continuing: "You need to fix the errors on this page before continuing."
   organisations: "Organisations"
-  organisation_types:
-    call_centre: "Call centre"
-    court: "Court"
-    custody_suite: "Custody suite"
-    law_firm: "Law firm"
-    law_office: "Law office"
-    webops: "Webops"
+  login: "Login"
+  login_disabled: "Login disabled"
   members: "Members"
   name: "Name"
   manage_organisation: "Manage %{organisation_name}"
@@ -56,6 +53,7 @@ en:
   not_authorized: "You are not authorized to do that"
   organisation_type: "Organisation type"
   organisation: "Organisation"
+  organisation_has_no_applications: "%{organisation_name} has access to no applications. Please contact support."
   password: "Change Password"
   searchable: "Searchable"
   select_organisation_type: "-- Select an organisation type --"
@@ -73,6 +71,7 @@ en:
   user_cannot_login: "This user cannot login"
   support: "Support"
   webops: "Webops"
+  webops_add_applications_to_organisation: "Only webops can give Organisations access to Applications.\nUsers in Organisations that are not linked to any Applications cannot do anything."
 
   models:
     create: "%{model} successfully created"
@@ -84,4 +83,11 @@ en:
     attributes:
       membership:
         profile: "Member"
+
+    errors:
+      models:
+        application_membership:
+          attributes:
+            application:
+              application_not_available: "That application is not available to %{organisation_name}"
 
