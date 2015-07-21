@@ -60,7 +60,7 @@ Only Webops users can create and manage Applications, create Organisations, and 
 
 Webops users are created using a rake task as they are meant to be "unseen" users 
 
-```bundle exec rake users:create_webops name='First Last' email=user@example.com ```
+```bundle exec rake users:create_webops name='First Last' email=user@example.com password='aabbccddee' ```
 
 Can also do everything that an Organisation Admin and User can.
 
