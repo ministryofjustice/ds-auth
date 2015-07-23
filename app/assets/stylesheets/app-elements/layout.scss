@@ -6,14 +6,21 @@
   float: right;
 }
 
-.notice-summary {
-  border: solid 3px $green;
+.notice-summary, .alert-summary {
   margin: 2rem 0;
   padding: 2rem;
 
   p {
     margin: 0.25rem 0;
   }
+}
+
+.notice-summary {
+  border: solid 3px $green;
+}
+
+.alert-summary {
+  border: solid 3px $red;
 }
 
 .sidebar {
