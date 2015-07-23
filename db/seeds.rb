@@ -6,5 +6,5 @@ User.where(email: "admin@example.com").first_or_create!(
   email: "webops@example.com",
   telephone: "01234567890",
   mobile: "07123456789",
-  webops: true
+  is_webops: true
 )
