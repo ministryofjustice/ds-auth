@@ -3,9 +3,9 @@ require "rails_helper"
 RSpec.describe CreateUserWithoutMembership, "#call" do
   it "creates a webops user with the attributes provided" do
     attrs = {
-      "name" => "Test User",
-      "email" => "test.user@webops.example",
-      "password" => "password"
+      name: "Test User",
+      email: "test.user@webops.example",
+      password: "password"
     }
 
     CreateUserWithoutMembership.new(attrs).call
@@ -18,8 +18,8 @@ RSpec.describe CreateUserWithoutMembership, "#call" do
 
   it "raises an error if any of the attributes are not provided" do
     attrs = {
-      "name" => "Test User",
-      "password" => "password"
+      name: "Test User",
+      password: "password"
     }
 
     expect { CreateUserWithoutMembership.new(attrs).call }.to raise_error(/Requires name, email, and password/)

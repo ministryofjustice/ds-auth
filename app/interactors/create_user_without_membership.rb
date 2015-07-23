@@ -1,8 +1,8 @@
 class CreateUserWithoutMembership
   def initialize(attrs={})
-    @name = attrs["name"]
-    @email = attrs["email"]
-    @password = attrs["password"]
+    @name     = attrs[:name]
+    @email    = attrs[:email]
+    @password = attrs[:password]
   end
 
   def call
