@@ -37,14 +37,14 @@ The Auth app knows what roles the consuming Application recognises. Each User th
 
 ```available_roles``` needs to be filled in (1 role per line)
 
-```failure_uri``` can optionally be customized - by default it is a redirect back to ```/auth/failure``` on the consuming application domain 
+```failure_uri``` can optionally be customized - by default it is a redirect back to ```/auth/failure``` on the consuming application domain
 
 Otherwise when that User tries to access the Application they will be redirected to the ```failure_uri``` url (```/auth/failure``` by default) as they are trying to log into an application that requires them to have a role and they have no role assigned to them.
 
 #### Own Authorization
 The Auth app only needs to know that the Application that it ```handles_own_authorization``` (set on the Application object)
 
-The role check will be skipped and all Users of this Application will be issued access_tokens. 
+The role check will be skipped and all Users of this Application will be issued access_tokens.
 
 Any ```available_roles``` and ```failure_uri``` will be ignored.
 
@@ -54,11 +54,11 @@ Any ```available_roles``` and ```failure_uri``` will be ignored.
 There are 2 user types in the Auth app:
 
 #### Webops user
-Are the super users - they can do everything. 
+Are the super users - they can do everything.
 
 Only Webops users can create and manage Applications, create Organisations, and give Organisations access to Applications.
 
-Webops users are created using a rake task as they are meant to be "unseen" users 
+Webops users are created using a rake task as they are meant to be "unseen" users
 
 ```bundle exec rake users:create_webops name='First Last' email=user@example.com password='aabbccddee' ```
 
@@ -169,18 +169,4 @@ A [Makefile](Makefile) is provided to build the app as a docker image.
 ```make development_container``` will just build be development image
 
 ```docker run -i -v./:/app ds-auth_development```
-
-
-
-
-
-
-
-
-
-
-
-
-
-end
 
