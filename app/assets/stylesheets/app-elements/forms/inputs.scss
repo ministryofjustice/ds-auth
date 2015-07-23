@@ -1,0 +1,47 @@
+@import "colours_extensions";
+
+select {
+  @extend .form-label;
+
+  fieldset.time-select & {
+    display: inline;
+  }
+}
+
+label + input, label + textarea, aside + input {
+  @extend .form-control;
+}
+
+textarea {
+  height: 110px;
+}
+
+[type="text"], [type="password"], textarea {
+  padding: 5px 4px 2px;
+  border: 1px solid $grey-2;
+}
+
+input[disabled],
+input[disabled="disabled"],
+input[readonly="readonly"],
+textarea[disabled],
+textarea[disabled="disabled"],
+textarea[readonly="readonly"] {
+  opacity: 1;
+  background-color: $disable-background;
+  color: $grey-1;
+  &:focus {
+    outline: none;
+  }
+}
+
+.text-field {
+  text-transform: none;
+  border: 1px solid #bbbbbb;
+  margin: 0;
+  padding: 0.5em;
+}
+
+.text-field-wide {
+  width: 80%;
+}

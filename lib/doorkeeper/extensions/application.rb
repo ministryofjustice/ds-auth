@@ -9,6 +9,13 @@ module Doorkeeper
 
         validates :name, uniqueness: true
         validates :failure_uri, failure_uri: true
+        validates :handles_own_authorization, inclusion: { in: [true, false] }
+
+        validates :available_roles_as_string, presence: true, if: ->(app) { !app.handles_own_authorization? }
+
+        scope :by_name, ->{
+          order(:name)
+        }
       end
 
       def available_roles_as_string

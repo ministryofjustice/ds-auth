@@ -60,7 +60,7 @@ RSpec.feature "Creating Organisations" do
       fill_in "Postcode", with: "POSTCODE"
       fill_in "Email", with: "suborganisation@example.com"
 
-      expect(page).to have_select("Parent organisation", with_options: ["---", organisation.name])
+      expect(page).to have_select("Parent organisation", with_options: ["None", organisation.name])
 
       select organisation.name, from: "Parent organisation"
 

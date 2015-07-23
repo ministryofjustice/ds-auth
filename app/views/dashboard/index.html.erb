@@ -1,20 +1,20 @@
 <h1>Welcome <%= current_user.name %></h1>
 
+<h3><%= t("manage") %></h3>
+
 <section>
   <ul>
-    <%- if current_user.organisations.count > 1 %>
-      <li><%= link_to t("organisations"), organisations_path %></li>
+    <%- if current_user.is_webops? %>
+      <li><%= link_to t("applications"), oauth_applications_path %></li>
     <%- end %>
-
-    <%- if current_user.organisations.count == 1 %>
-      <li><%= link_to current_user.organisations.first.name, organisation_path(current_user.organisations.first) %></li>
-    <%- end %>
+    <li><%= link_to t("organisations"), organisations_path %></li>
+    <li><%= link_to t("users"), users_path %></li>
   </ul>
 </section>
 
 <%- if @dashboard.has_applications? %>
 <section>
-  <h2><%= t("access_to_applications") %></h2>
+  <h3><%= t("access_to_applications") %></h3>
 
   <ul>
     <%= @dashboard.application_links %>

@@ -8,9 +8,8 @@
 
     <div class="actions">
       <%= f.submit t('create_user'), class: "button" %>
+      <%= link_to t('back'), organisation_path(@organisation) %>
     </div>
-
-
 <%- end %>
 
-<%= link_to t('back'), organisation_path(@organisation) %>
+

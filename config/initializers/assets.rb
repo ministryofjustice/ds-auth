@@ -10,7 +10,8 @@ Rails.application.config.assets.version = "1.0"
 # application.js, application.scss, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w(
-      govuk_elements_extensions_ie6.css
-      govuk_elements_extensions_ie7.css
-      govuk_elements_extensions_ie8.css
+      main.css
+      main_ie6.css
+      main_ie7.css
+      main_ie8.css
     )

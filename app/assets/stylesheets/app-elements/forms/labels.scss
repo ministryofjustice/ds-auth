@@ -1,0 +1,30 @@
+@import "colours_extensions";
+
+.field label {
+  display: block;
+  color: $secondary-text-colour;
+}
+
+fieldset.radio {
+  label {
+    @extend .block-label;
+
+    &.s-selected {
+      border: 1px solid $black;
+      background: $white;
+    }
+  }
+}
+
+legend {
+  @extend .form-label;
+  color: black;
+}
+
+label .aside {
+  display: inline;
+}
+
+.error .form-control, .error label + input, .error label + textarea {
+  border: 1px solid $grey-2
+}

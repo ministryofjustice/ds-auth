@@ -1,74 +1,37 @@
-<%= form_for application, url: doorkeeper_submit_path(application), html: {class: 'form-horizontal', role: 'form'} do |f| %>
-  <% if application.errors.any? %>
-    <div class="alert alert-danger" data-alert><p><%= t('doorkeeper.applications.form.error') %></p></div>
-  <% end %>
+<%= f.field_with_error(:name) do %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+<%- end %>
 
-  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:name].present?}" do %>
-    <%= f.label :name, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
-      <%= f.text_field :name, class: 'form-control' %>
-      <%= doorkeeper_errors_for application, :name %>
-    </div>
-  <% end %>
+<%= f.field_with_error(:redirect_uri) do %>
+  <%= f.label :redirect_uri %>
+  <%= f.text_area :redirect_uri, rows: 4 %>
+  <aside><%= t('doorkeeper.applications.help.failure_uri') %></aside>
+  <aside><%= raw t('doorkeeper.applications.help.native_redirect_uri', native_redirect_uri: "<code>#{ Doorkeeper.configuration.native_redirect_uri }</code>") %></aside>
+<%- end %>
 
-  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:redirect_uri].present?}" do %>
-    <%= f.label :redirect_uri, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
-      <%= f.text_area :redirect_uri, class: 'form-control' %>
-      <%= doorkeeper_errors_for application, :redirect_uri %>
-      <span class="help-block">
-        <%= t('doorkeeper.applications.help.redirect_uri') %>
-      </span>
-      <% if Doorkeeper.configuration.native_redirect_uri %>
-        <span class="help-block">
-          <%= raw t('doorkeeper.applications.help.native_redirect_uri', native_redirect_uri: "<code>#{ Doorkeeper.configuration.native_redirect_uri }</code>") %>
-        </span>
-      <% end %>
-    </div>
-  <% end %>
+<%= f.field_with_error(:failure_uri) do %>
+  <%= f.label :failure_uri %>
+  <%= f.text_area :failure_uri, rows: 4 %>
+  <aside><%= t('doorkeeper.applications.help.failure_uri') %></aside>
+<%- end %>
 
-  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:failure_uri].present?}" do %>
-    <%= f.label :failure_uri, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
-      <%= f.text_area :failure_uri, class: 'form-control' %>
-      <%= doorkeeper_errors_for application, :failure_uri %>
-      <span class="help-block">
-        <%= t('doorkeeper.applications.help.failure_uri') %>
-      </span>
-    </div>
-  <% end %>
+<%= f.field_with_error(:handles_own_authorization) do %>
+  <%= f.label :handles_own_authorization %>
+  <%= label_tag do %>
+    <%= f.radio_button :handles_own_authorization, :true %>
+    <%= t("yes") %>
+  <%- end %>
+  <%= label_tag "", data: { target: "handles_own_authorization_no" } do %>
+    <%= f.radio_button :handles_own_authorization, :false %>
+    <%= t("no") %>
+  <%- end %>
+<%- end %>
 
-  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:handles_own_authorization].present?}" do %>
-    <%= f.label :handles_own_authorization, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-offset-2 col-sm-10 align-top">
-      <%= label_tag do %>
-        <%= f.radio_button :handles_own_authorization, true %>
-        <%= t('doorkeeper.applications.form.yes') %>
-      <%- end %>
-
-      <%= label_tag do %>
-        <%= f.radio_button :handles_own_authorization, false %>
-        <%= t('doorkeeper.applications.form.no') %>
-      <%- end %>
-      <%= doorkeeper_errors_for application, :handles_own_authorization %>
-    </div>
-  <% end %>
-
-  <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:available_roles].present?}" do %>
-    <%= f.label :available_roles, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
-      <%= f.text_area :available_roles_as_string, class: 'form-control' %>
-      <%= doorkeeper_errors_for application, :available_roles %>
-      <span class="help-block">
-        <%= t('doorkeeper.applications.help.available_roles') %>
-      </span>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <%= f.submit t('doorkeeper.applications.buttons.submit'), class: "btn btn-primary" %>
-      <%= link_to t('doorkeeper.applications.buttons.cancel'), oauth_applications_path, :class => "btn btn-default" %>
-    </div>
-  </div>
-<% end %>
+<div id="handles_own_authorization_no" class="panel-indent js-hidden" aria-hidden="true">
+  <%= f.field_with_error(:available_roles_as_string) do %>
+    <%= f.label :available_roles_as_string %>
+    <%= f.text_area :available_roles_as_string, rows: 4 %>
+    <aside><%= t('doorkeeper.applications.help.available_roles') %></aside>
+  <%- end %>
+</div>

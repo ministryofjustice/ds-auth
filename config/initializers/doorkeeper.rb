@@ -99,3 +99,5 @@ end
 require Rails.root.join("lib/doorkeeper/extensions/application")
 require Rails.root.join("lib/doorkeeper/hooks/logout")
 
+Doorkeeper::ApplicationsController.layout "application"
+

@@ -1,0 +1,25 @@
+section.error-summary {
+  border: solid 3px $error-colour;
+  margin-top: 2rem;
+  padding: 2rem;
+
+  h3 {
+    margin: 1rem 0;
+  }
+
+  li, a {
+    color: $error-colour;
+    font-weight: bold;
+  }
+}
+
+div.field.error {
+  border-left: solid 3px $error-colour;
+}
+
+span.error-message {
+  display: block;
+  color: $error-colour;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}

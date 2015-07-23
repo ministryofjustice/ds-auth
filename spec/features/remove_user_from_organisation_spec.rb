@@ -8,12 +8,18 @@ RSpec.shared_examples "removing a user" do
 
     visit organisation_path(organisation)
     within ".members #membership_#{membership.id}" do
-      click_link "Delete membership"
+      click_link "Delete"
     end
 
     expect(current_path).to eq(organisation_path(organisation))
 
+    within ".members #membership_#{membership.id}" do
+      expect(page).to have_content "Are you sure you want to remove #{other_user.name} from #{organisation.name}"
+      click_link "Delete"
+    end
+
     expect(page).to have_content("Membership successfully deleted")
+
     within ".members" do
       expect(page).not_to have_content(other_user.name)
     end
@@ -28,7 +34,7 @@ RSpec.shared_examples "cannot remove a user" do
 
     visit organisation_path(organisation)
     within ".members #membership_#{membership.id}" do
-      expect(page).not_to have_link("Delete membership")
+      expect(page).not_to have_link("Delete")
     end
   end
 end

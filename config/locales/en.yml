@@ -23,11 +23,12 @@ en:
   access_to_applications: "You have access to these applications:"
   admin: "Admin"
   applications_and_roles: "Applications and Roles"
-  are_you_sure: "Are you sure?"
+  are_you_sure: "Are you sure you want to delete %{name}?"
   back: "Back"
   can_access_no_applications: "Can access no applications"
   can_login: "Can login?"
   continue: "Continue"
+  create_application: "Create application"
   create_membership: "Create membership"
   create_organisation: "Create organisation"
   create_user: "Create user"
@@ -46,13 +47,15 @@ en:
   members: "Members"
   name: "Name"
   manage_organisation: "Manage %{organisation_name}"
+  membership_delete_are_you_sure: "Are you sure you want to remove %{user_name} from %{organisation_name}?"
   new_membership_to_organisation: "New membership to %{organisation_name}"
   new_organisation: "New organisation"
   new_user: "New user"
   new_user_for_organisation: "New user for %{organisation_name}"
   not_authorized: "You are not authorized to do that"
-  organisation_type: "Organisation type"
+  organisation_admin: "Organisation admin"
   organisation: "Organisation"
+  organisation_details: "Organisation details"
   organisation_has_no_applications: "%{organisation_name} has access to no applications. Please contact support."
   password: "Change Password"
   searchable: "Searchable"
@@ -61,6 +64,7 @@ en:
   slug: "Slug"
   supplier_number: "Supplier number"
   update: "Update"
+  update_application: "Update application"
   update_organisation: "Update organisation"
   update_membership: "Update membership"
   update_user: "Update user"
@@ -81,8 +85,8 @@ en:
 
   activerecord:
     attributes:
-      membership:
-        profile: "Member"
+      doorkeeper/application:
+          available_roles_as_string: "Available roles"
 
     errors:
       models:
@@ -90,4 +94,8 @@ en:
           attributes:
             application:
               application_not_available: "That application is not available to %{organisation_name}"
+        doorkeeper/application:
+          attributes:
+            available_roles_as_string:
+              blank: "Must define at least 1 role if the application does not handle its own authorization"
 

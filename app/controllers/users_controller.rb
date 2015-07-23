@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   after_action :verify_policy_scoped, only: :index
 
   def index
-    @users = policy_scope(User)
+    @users = policy_scope(User).by_name
   end
 
   def show

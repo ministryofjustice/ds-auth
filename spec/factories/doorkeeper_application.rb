@@ -5,5 +5,6 @@ FactoryGirl.define do
     sequence(:secret) {|i| "#{i}" }
     redirect_uri "https://example.com/oauth/callbacks"
     handles_own_authorization false
+    available_roles ["viewer"]
   end
 end

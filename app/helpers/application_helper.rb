@@ -26,19 +26,17 @@ module ApplicationHelper
     content_tag(:ul) do
       active_model_messages.each do |field_name, field_messages|
         field_name_text = object.class.human_attribute_name field_name
-        concat errors_for_field(field_name_text, field_messages)
+        concat errors_for_field(field_name, field_name_text, field_messages)
       end
     end
   end
 
-  def errors_for_field(field_name, field_messages)
+  def errors_for_field(field_name, display_name, field_messages)
     content_tag :li do
-      "#{field_name}: #{field_messages.join(', ')}".html_safe
+      content_tag :a, href: "#field_#{field_name.downcase}" do
+        "#{display_name}: #{field_messages.join(', ')}".html_safe
+      end
     end
-  end
-
-  def js_partial
-    params[:controller] + "/js_partials/" + params[:controller] + "_" + params[:action] + "_js.html.erb"
   end
 
   def tick_cross_mark(boolean)

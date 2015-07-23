@@ -1,54 +1,50 @@
-<div class="page-header">
-  <h1><%= t('.title', name: @application.name) %></h1>
+<h1><%= t('.title', name: @application.name) %></h1>
+
+<div class='sidebar'>
+  <h3><%= t("actions") %></h3>
+  <%= link_to t('edit'), edit_oauth_application_path(@application) %>
+  <%= link_to t('back'), oauth_applications_path %>
 </div>
 
-<div class="row">
-  <div class="col-md-8">
-    <h4><%= t('.application_id') %>:</h4>
 
-    <p><code id="application_id"><%= @application.uid %></code></p>
+<p>
+  <strong><%= t('.application_id') %></strong>
+  <%= @application.uid %>
+</p>
 
-    <h4><%= t('.secret') %>:</h4>
+<p>
+  <strong><%= t('.secret') %></strong>
+  <%= @application.secret %>
+</p>
 
-    <p><code id="secret"><%= @application.secret %></code></p>
 
-    <h4><%= t('.handles_own_authorization')%>: <%= authorization_status(@application) %></h4>
+<p>
+  <strong><%= t('.handles_own_authorization') %></strong>
+  <%= authorization_status(@application) %>
+</p>
 
-    <h4><%= t('.callback_urls') %>:</h4>
 
-    <table>
-      <% @application.redirect_uri.split.each do |uri| %>
-        <tr>
-          <td>
-            <code><%= uri %></code>
-          </td>
-          <td>
-            <%= link_to t('doorkeeper.applications.buttons.authorize'), oauth_authorization_path(client_id: @application.uid, redirect_uri: uri, response_type: 'code'), class: 'btn btn-success', target: '_blank' %>
-          </td>
-        </tr>
-      <% end %>
-    </table>
+<p>
+  <strong><%= t('.callback_urls') %></strong>
+  <% @application.redirect_uri.split.each do |uri| %>
+  <%= uri %><br />
+  <%- end %>
+</p>
 
-    <% if @application.failure_uri.present? %>
-      <h4><%= t('.failure_uris') %>:</h4>
+<p>
+  <strong><%= t('.failure_uris') %></strong>
+  <% @application.failure_uri.split.each do |uri| %>
+  <%= uri %><br />
+  <%- end %>
+  <% if @application.failure_uri.blank? %>
+  /auth/failure?message=unauthorized
+  <%- end %>
+</p>
 
-      <table>
-        <% @application.failure_uri.split.each do |uri| %>
-          <tr>
-            <td>
-              <code><%= uri %></code>
-            </td>
-          </tr>
-        <% end %>
-      </table>
-    <% end %>
-  </div>
+<p>
+  <strong><%= t('.roles') %></strong>
+  <% @application.available_roles.each do |role| %>
+  <%= role %><br />
+  <%- end %>
+</p>
 
-  <div class="col-md-4">
-    <h3><%= t('.actions') %></h3>
-
-    <p><%= link_to t('doorkeeper.applications.buttons.edit'), edit_oauth_application_path(@application), class: 'btn btn-primary' %></p>
-
-    <p><%= render 'delete_form', application: @application, submit_btn_css: 'btn btn-danger' %></p>
-  </div>
-</div>

@@ -11,6 +11,10 @@ class ApplicationMembership < ActiveRecord::Base
     roles.present?
   end
 
+  def print_roles
+    roles.select(&:present?).map(&:humanize).join(", ")
+  end
+
   private
 
   # Sense check that the application has been made available to at least 1 of

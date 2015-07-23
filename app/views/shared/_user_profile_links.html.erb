@@ -1,4 +1,0 @@
-<% if current_user %>
-  <%= link_to(t('change_password'), edit_user_path(current_user), class: 'user-links') %>
-  <%= link_to(t('devise.sessions.log_out'), destroy_user_session_path, method: :delete, class: 'user-links') %>
-<% end %>
