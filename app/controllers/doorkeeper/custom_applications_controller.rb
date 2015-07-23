@@ -1,5 +1,20 @@
 module Doorkeeper
   class CustomApplicationsController < Doorkeeper::ApplicationsController
+    before_action :authenticate_webops!
+
+    protected
+
+    def authenticate_webops!
+      unless current_user.is_webops?
+        user_not_authorized
+      end
+    end
+
+    def user_not_authorized
+      flash[:alert] = t("not_authorized")
+      redirect_to(request.referrer || root_path)
+    end
+
     private
 
     def application_params
