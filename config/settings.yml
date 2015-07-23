@@ -15,21 +15,18 @@ doorkeeper:
   session_timeout: <%= ENV.fetch('SESSION_TIMEOUT_MINUTES', 60) %>
 
 action_mailer:
+  from_address: <%= ENV.fetch('MAILER_FROM_ADDRESS') %>
   default_url_options:
     host: <%= ENV.fetch('MAILER_DEFAULT_URL_HOST') %>
     port: <%= ENV.fetch('MAILER_DEFAULT_URL_PORT') %>
     protocol: <%= ENV.fetch('MAILER_DEFAULT_URL_PROTOCOL') %>
   smtp_settings:
-    address: smtp.sendgrid.net
-    port: 587
-    domain: em.email.dsds.dsd.io
-    authentication: plain
+    address: <%= ENV.fetch('MAILER_SMTP_SERVER') %>
+    port: <%= ENV.fetch('MAILER_SMTP_PORT') %>
+    authentication: login
     user_name: <%= ENV.fetch('MAILER_SMTP_USER_NAME') %>
     password: <%= ENV.fetch('MAILER_SMTP_PASSWORD') %>
     enable_starttls_auto: true
-
-sandbox_email: <%= ENV.fetch('SANDBOX_EMAIL', 'false') %>
-sandbox_email_address: <%= ENV.fetch('SANDBOX_EMAIL_ADDRESS', nil) %>
 
 sentry:
   # Note that this should only be set to false if you absolutely dont care
