@@ -9,6 +9,11 @@ FactoryGirl.define do
     uid                         { SecureRandom.uuid }
     password                    Faker::Internet.password(8)
     password_confirmation       { password }
+    is_webops                   false
+
+    trait :webops do
+      is_webops                 true
+    end
 
     trait :with_organisations do
       transient do
