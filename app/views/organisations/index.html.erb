@@ -4,7 +4,7 @@
 
 <h1><%= t('organisations') %></h1>
 
-<table class="<%= params[:confirm_delete_organisation_id] ? "confirm-delete" : "" %>">
+<table class="<%= params[:confirm_delete_organisation_id] ? "confirm-delete" : "hide-delete" %>">
   <thead>
     <tr>
       <th><%= t("name") %></th>
@@ -23,20 +23,16 @@
           <%- end %>
         </td>
 
-        <% if Integer(params[:confirm_delete_organisation_id] || 0) == organisation.id %>
-        <td class="actions-delete">
+        <td class="actions clearfix <%= Integer(params[:confirm_delete_organisation_id] || 0) == organisation.id ? "actions-delete" : "" %>">
+          <%= link_to t("edit"), edit_organisation_path(organisation) if policy(organisation).edit? %>
+          <%= link_to t("delete"), organisations_path(confirm_delete_organisation_id: organisation.id), class: "button-delete" if policy(organisation).destroy? %>
+
           <div class="actions-delete-wrapper">
             <p><%= t("are_you_sure", name: organisation.name) %></p>
             <%= link_to t("delete"), organisation, class: "button-delete", method: :delete if policy(organisation).destroy? %>
             <%= link_to t("cancel"), organisations_path, class: "link-cancel" %>
           </div>
         </td>
-        <% else %>
-        <td class="actions">
-          <%= link_to t("edit"), edit_organisation_path(organisation) if policy(organisation).edit? %>
-          <%= link_to t("delete"), organisations_path(confirm_delete_organisation_id: organisation.id), class: "button-delete" if policy(organisation).destroy? %>
-        </td>
-        <%- end %>
       <%- end %>
     <%- end %>
   </tbody>

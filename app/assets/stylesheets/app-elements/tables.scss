@@ -11,9 +11,27 @@ table {
     }
   }
 
-  /* Hide action links for rows we are not deleting */
-  &.confirm-delete .actions a {
+  /* Hide delete confirm actions by default */
+  .actions-delete-wrapper {
     display: none;
+  }
+
+  /* Hide action links for rows we are not deleting */
+  &.confirm-delete {
+    .actions a {
+      display: none;
+    }
+
+    /* And show the delete actions for the row we are deleting */
+    .actions-delete {
+      .actions-delete-wrapper {
+        display: block;
+
+        a, button {
+          display: inline-block;
+        }
+      }
+    }
   }
 
   .actions-delete-wrapper {
