@@ -4,7 +4,11 @@ class UserPolicy < ApplicationPolicy
       if user.is_webops?
         scope.includes(memberships: [ :organisation ]).all
       else
-        scope.uniq.joins(:memberships).where(memberships: { organisation: user.organisations }).includes(memberships: [ :organisation ])
+        scope.
+        uniq.
+        joins(:memberships).
+        where(memberships: { organisation: user.organisations }).
+        includes(memberships: [ :organisation ])
       end
     end
   end
