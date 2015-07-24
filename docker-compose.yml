@@ -1,0 +1,17 @@
+web:
+  image: ds-auth:development_localbuild
+  links:
+    - db:postgres
+  environment:
+    DS_AUTH_DATABASE_HOST: postgres
+  ports:
+    - "3000:3000"
+  volumes:
+    - .:/usr/src/app
+  command: bash -c "bundle exec rake db:reset && bundle exec rails s -b 0.0.0.0"
+
+db:
+  image: postgres
+  environment:
+    DS_AUTH_DATABASE_PASSWORD: password
+    DS_AUTH_DATABASE_USERNAME: ds_auth

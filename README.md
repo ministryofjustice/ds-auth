@@ -168,5 +168,7 @@ A [Makefile](Makefile) is provided to build the app as a docker image.
 
 ```make development_container``` will just build be development image
 
-```docker run -i -v./:/app ds-auth_development```
+```docker-compose up``` will bring up the web process on port 3000 with a linked database container. If you are using boot2docker the ip addresss can be got by ```boot2docker ip```
+
+Note: docker compose will use the most recent image built by ```make development_container```. It will not build the container itself.
 
