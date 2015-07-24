@@ -15,28 +15,25 @@
   </thead>
   <tbody>
   <% @applications.each do |application| %>
-    <tr id="application_<%= application.id %>">
+    <%= content_tag_for(:tr, application) do %>
       <td><%= link_to application.name, oauth_application_path(application) %></td>
       <td><%= application.redirect_uri %></td>
       <td><%= application.failure_uri %></td>
       <td><%= authorization_status(application) %></td>
 
-      <% if Integer(params[:confirm_delete_application_id] || 0) == application.id %>
-        <td class="actions-delete">
+
+        <td class="actions clearfix <%= Integer(params[:confirm_delete_application_id] || 0) == application.id ? "actions-delete" : "" %>">
+          <%= link_to t("edit"), edit_oauth_application_path(application) %>
+          <%= link_to t("delete"), oauth_applications_path(confirm_delete_application_id: application.id), class: "button-delete" %>
+
           <div class="actions-delete-wrapper">
             <p><%= t("are_you_sure", name: application.name) %></p>
             <%= link_to t("delete"), oauth_application_path(application), class: "button-delete", method: :delete %>
             <%= link_to t("cancel"), oauth_applications_path, class: "link-cancel" %>
           </div>
         </td>
-        <% else %>
-        <td class="actions">
-          <%= link_to t("edit"), edit_oauth_application_path(application) %>
-          <%= link_to t("delete"), oauth_applications_path(confirm_delete_application_id: application.id), class: "button-delete" %>
-        </td>
-        <%- end %>
 
-    </tr>
-  <% end %>
+    <%- end %>
+  <%- end %>
   </tbody>
 </table>

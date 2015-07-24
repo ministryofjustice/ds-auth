@@ -6,6 +6,10 @@
   float: right;
 }
 
+.visible {
+  display: block;
+}
+
 .notice-summary, .alert-summary {
   margin: 2rem 0;
   padding: 2rem;
