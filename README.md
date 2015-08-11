@@ -174,6 +174,6 @@ The database uses volumes from a persistent data-only container called dbdata, s
 
 However, this does mean that you will need to manually create and populate the database once the container is running, with the following commands:
 
-    docker exec -ti dsauth_web_1 "bundle exec rake db:create"
-    docker exec -ti dsauth_web_1 "bundle exec rake db:migrate"
-    docker exec -ti dsauth_web_1 "bundle exec rake db:seed"
+    docker-compose run web bundle exec rake db:create
+    docker-compose run web bundle exec rake db:migrate
+    docker-compose run web bundle exec rake db:seed
