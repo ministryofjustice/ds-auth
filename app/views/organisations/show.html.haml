@@ -1,0 +1,96 @@
+%h1= t("organisation_details")
+.sidebar
+  %h3= t("actions")
+  = link_to t('edit'), edit_organisation_path(@organisation) if policy(@organisation).edit?
+  = link_to t('back'), organisations_path
+  = link_to t('new_user'), new_organisation_user_path(@organisation) if policy(@organisation).manage_members?
+%p
+  %strong
+    = t('name')
+    \:
+  = @organisation.name
+%p
+  %strong
+    = t('slug')
+    \:
+  = @organisation.slug
+%p
+  %strong
+    = t('tel')
+    \:
+  = @organisation.tel
+%p
+  %strong
+    = t('mobile')
+    \:
+  = @organisation.mobile
+%p
+  %strong
+    = t('address')
+    \:
+  = @organisation.address
+%p
+  %strong
+    = t('postcode')
+    \:
+  = @organisation.postcode
+%p
+  %strong
+    = t('email')
+    \:
+  = @organisation.email
+- if @organisation.parent_organisation
+  %p
+    %strong
+      = t('parent_organisation')
+      \:
+    = link_to @organisation.parent_organisation.name,      |
+      organisation_path(@organisation.parent_organisation) |
+- if @organisation.sub_organisations.present?
+  %p
+    %strong
+      = t('suborganisations')
+      \:
+    - @organisation.sub_organisations.each do |so|
+      = link_to so.name, organisation_path(so)
+%h3= t('members')
+%table{:class => "members #{params[:confirm_delete_membership_id] ? "confirm-delete" : ""}"}
+  %thead
+    %tr
+      %th= t("user")
+      %th= t("organisation_admin")
+      %th= t("applications_and_roles")
+      %th
+  %tbody
+    - if @organisation.memberships.any?
+      - @organisation.memberships.order(:id).each do |membership|
+        = content_tag_for(:tr, membership) do
+          %td= link_to membership.user.name, user_path(membership.user)
+          %td= tick_cross_mark membership.is_organisation_admin?
+          %td
+            - if membership.application_memberships.empty?
+              %p= t("can_access_no_applications")
+            - else
+              %dl
+                - membership.application_memberships.each do |application_membership|
+                  %dt= application_membership.application_name
+                  %dd
+                    - if application_membership.has_roles?
+                      = application_membership.print_roles
+                    - elsif application_membership.can_login
+                      = t("login")
+                    - else
+                      = t("login_disabled")
+          - if Integer(params[:confirm_delete_membership_id] || 0) == membership.id
+            %td.actions-delete
+              .actions-delete-wrapper
+                %p= t("membership_delete_are_you_sure", user_name: membership.user.name, organisation_name: @organisation.name)
+                = link_to t("delete"), organisation_membership_path(@organisation, membership), class: "button-delete", method: :delete if policy(@organisation).manage_members?
+                = link_to t("cancel"), organisation_path(@organisation), class: "link-cancel"
+          - else
+            %td.actions
+              = link_to t("edit"), edit_organisation_membership_path(@organisation, membership) if policy(@organisation).manage_members?
+              = link_to t("delete"), organisation_path(@organisation, confirm_delete_membership_id: membership.id), class: "button-delete" if policy(membership).destroy?
+    - else
+      %tr
+        %td No members

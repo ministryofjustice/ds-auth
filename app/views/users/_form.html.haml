@@ -1,0 +1,26 @@
+= f.field_with_error :name do
+  = f.label :name
+  = f.text_field :name
+= f.field_with_error :email do
+  = f.label :email
+  = f.email_field :email
+= f.field_with_error :telephone do
+  = f.label :telephone
+  = f.text_field :telephone
+= f.field_with_error :mobile do
+  = f.label :mobile
+  = f.text_field :mobile
+= f.field_with_error :address do
+  = f.label :address
+  = f.text_area :address, rows: 4
+= f.field_with_error :postcode do
+  = f.label :postcode
+  = f.text_field :postcode
+= f.field_with_error :password do
+  = f.label :password
+  - unless @user.new_record?
+    %aside Leave password blank to keep existing password
+  = f.password_field :password, autocomplete: "off"
+= f.field_with_error :password_confirmation do
+  = f.label :password_confirmation
+  = f.password_field :password_confirmation, autocomplete: "off"

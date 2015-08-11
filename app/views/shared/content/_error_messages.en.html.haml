@@ -1,0 +1,4 @@
+- content_for :error_messages do
+  %section#form_errors.error-summary{:tabindex => "-1"}
+    %h3#page-error-heading= t('fix_errors_before_continuing')
+    = object_error_messages object

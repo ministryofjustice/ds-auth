@@ -1,0 +1,23 @@
+.field
+  = "#{t("user")}: #{@membership.user.name} (#{@membership.user.email})"
+  = f.hidden_field :user_id
+.field
+  = label_tag do
+    = f.check_box :is_organisation_admin
+    = t("organisation_admin")
+%h3= t("applications")
+.field
+  %dl
+    - @membership.application_memberships.each do |application_membership|
+      = f.fields_for :application_memberships, application_membership do |ff|
+        = ff.hidden_field :application_id
+        %dt= application_membership.application.name
+        %dd
+          - if application_membership.application.handles_own_authorization
+            = label_tag do
+              = ff.check_box :can_login
+              = t("login")
+          - else
+            = ff.collection_check_boxes :roles, application_membership.application.available_roles, :to_s, :to_s do |b|
+              = b.label() { b.check_box + b.text.humanize }
+  .clearfix

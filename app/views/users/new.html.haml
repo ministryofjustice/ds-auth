@@ -1,0 +1,7 @@
+= render 'shared/error_messages', object: @user
+%h1= t('new_user_for_organisation', organisation_name: @organisation.name)
+= form_for([@organisation, @user]) do |f|
+  = render 'form', f: f
+  .actions
+    = f.submit t('create_user'), class: "button"
+    = link_to t('back'), organisation_path(@organisation)

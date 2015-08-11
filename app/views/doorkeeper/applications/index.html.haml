@@ -1,0 +1,25 @@
+= link_to t('new_application'), new_oauth_application_path, class: 'button right'
+%h1= t('applications')
+%table{:class => params[:confirm_delete_application_id] ? "confirm-delete" : ""}
+  %thead
+    %tr
+      %th= t('.name')
+      %th= t('.callback_url')
+      %th= t('.failure_uri')
+      %th= t('.handles_own_authorization')
+      %th
+      %th
+  %tbody
+    - @applications.each do |application|
+      = content_tag_for(:tr, application) do
+        %td= link_to application.name, oauth_application_path(application)
+        %td= application.redirect_uri
+        %td= application.failure_uri
+        %td= authorization_status(application)
+        %td{:class => "actions clearfix #{Integer(params[:confirm_delete_application_id] || 0) == application.id ? "actions-delete" : ""}"}
+          = link_to t("edit"), edit_oauth_application_path(application)
+          = link_to t("delete"), oauth_applications_path(confirm_delete_application_id: application.id), class: "button-delete"
+          .actions-delete-wrapper
+            %p= t("are_you_sure", name: application.name)
+            = link_to t("delete"), oauth_application_path(application), class: "button-delete", method: :delete
+            = link_to t("cancel"), oauth_applications_path, class: "link-cancel"

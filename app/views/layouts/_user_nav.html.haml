@@ -1,0 +1,11 @@
+%ul
+  %li= link_to t("home"), root_path
+  %li.nested
+    %a{:href => "#"} Manage
+    %ul
+      - if current_user.is_webops?
+        %li= link_to t("applications"), oauth_applications_path
+      %li= link_to t("organisations"), organisations_path
+      %li= link_to t("users"), users_path
+  %li= link_to t("profile"), edit_user_path(current_user)
+  %li.right= link_to(t('devise.sessions.log_out'), destroy_user_session_path, method: :delete, class: 'user-links')

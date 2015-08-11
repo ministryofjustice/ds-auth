@@ -1,0 +1,7 @@
+= render 'shared/error_messages', object: @membership
+%h1= t('edit_membership_to_organisation', organisation_name: @organisation.name)
+= form_for [@organisation, @membership] do |f|
+  = render 'form', f: f
+  .actions
+    = f.submit t("update_membership"), class: "button"
+= link_to t('back'), organisation_path(@organisation)

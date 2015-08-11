@@ -1,0 +1,33 @@
+%h3= t("organisation_details")
+= f.field_with_error :name do
+  = f.label :name
+  = f.text_field :name
+= f.field_with_error :email do
+  = f.label :email
+  = f.email_field :email
+- if @organisation.new_record?
+  = f.field_with_error :slug do
+    = f.label :slug
+    = f.text_field :slug
+= f.field_with_error :tel do
+  = f.label :tel
+  = f.text_field :tel
+= f.field_with_error :mobile do
+  = f.label :mobile
+  = f.text_field :mobile
+= f.field_with_error :address do
+  = f.label :address
+  = f.text_area :address, rows: 3
+= f.field_with_error :postcode do
+  = f.label :postcode
+  = f.text_field :postcode
+- if @organisation.new_record?
+  = f.field_with_error :parent_organisation_id do
+    = f.label :parent_organisation_id
+    = f.select :parent_organisation_id, options_for_parent_organisation, include_blank: "None"
+- if current_user.is_webops?
+  %h3= t('applications')
+  = f.field_with_error :application_ids do
+    %aside= simple_format t("webops_add_applications_to_organisation")
+    = f.collection_check_boxes :application_ids, Doorkeeper::Application.by_name, :id, :name do |b|
+      = b.label() { b.check_box + t(b.text) }
