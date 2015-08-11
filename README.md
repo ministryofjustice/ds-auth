@@ -138,9 +138,7 @@ To get the application running locally, you need to:
 
  * #### Create and migrate the database; run seeds
 
- 		bundle exec rake db:create
- 		bundle exec rake db:migrate
-
+    ```bundle exec rake db:create db:migrate; bundle exec rake db:seed```
 
  * #### Start the server
  		cd ds-auth && bundle exec rails server
@@ -172,3 +170,10 @@ A [Makefile](Makefile) is provided to build the app as a docker image.
 
 Note: docker compose will use the most recent image built by ```make development_container```. It will not build the container itself.
 
+The database uses volumes from a persistent data-only container called dbdata, so that data you modify during a session will not be lost when you restart the web container.
+
+However, this does mean that you will need to manually create and populate the database once the container is running, with the following commands:
+
+    docker-compose run web bundle exec rake db:create
+    docker-compose run web bundle exec rake db:migrate
+    docker-compose run web bundle exec rake db:seed

@@ -32,5 +32,9 @@ WORKDIR /usr/src/app
 # We don't run /usr/local/bin/clean-up-docker-container here, since in development mode
 # users may want to quickly run 'apt-get install packagename'.
 
+RUN bundle exec rake db:create db:schema:load db:migrate
+#  docker exec -ti ${DOCKER_IMAGE} "bundle exec rake db:seed && bundle exec rake users:create_webops name='Webops' email=webops@example.com password='password'""
+
+
 # Open rails console by default
 CMD ["bin/bundle", "exec", "rails", "console"]
