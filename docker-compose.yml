@@ -8,10 +8,19 @@ web:
     - "3000:3000"
   volumes:
     - .:/usr/src/app
-  command: bash -c "bundle exec rake db:reset && bundle exec rake users:create_webops name='Webops' email=webops@example.com password='password' && bundle exec rails s -b 0.0.0.0"
+  command: bash -c "bundle exec rails s -b 0.0.0.0"
+
+
+dbdata:
+  image: cogniteev/echo
+  command: echo 'Persistent data container for PostgreSQL'
+  volumes:
+    - /var/lib/postgresql/data
 
 db:
   image: postgres
   environment:
     DS_AUTH_DATABASE_PASSWORD: password
     DS_AUTH_DATABASE_USERNAME: ds_auth
+  volumes_from:
+    - dbdata
