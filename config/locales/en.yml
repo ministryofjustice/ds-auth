@@ -33,6 +33,68 @@ en:
   create_organisation: "Create organisation"
   create_user: "Create user"
   cso: "CSO"
+  dashboard:
+    index:
+      welcome: "Welcome, %{name}"
+  devise:
+    confirmations:
+      resend: 'Resend confirmation instructions'
+    passwords:
+      edit:
+        header: Change your password
+        labels:
+          password: "New password"
+          password_confirmation: 'Confirm new password'
+        submit: "Change my password"
+      new:
+        header: Forgot your password?
+        labels:
+          email: 'Your email address'
+        submit: "Send me reset password instructions"
+    registrations:
+      edit:
+        back: Back
+        header: "Edit %{name}"
+        hints:
+          current_password: "(we need your current password to confirm your changes)"
+          password: "(leave blank if you don't want to change it)"
+        labels:
+          current_password: 'Current password'
+          email: 'Email address'
+          password: 'Password'
+          password_confirmation: 'Confirm password'
+        pending_reconfirmation: 'Currently waiting confirmation for: %{email}'
+        submit: "Update"
+      new:
+        header: Sign up
+        hints:
+          password_min_length: '(%{minimum_password_length} characters minimum)'
+        labels:
+          password: 'Password'
+          email: 'Email address'
+          password: 'Password'
+          password_confirmation: 'Confirm password'
+        submit: "Sign up"
+    sessions:
+      new:
+        labels:
+          email: 'Email address'
+          password: 'Password'
+        submit: 'Log in'
+    shared:
+      links:
+        new_session: Log in
+        new_registration: Sign up
+        new_password: Forgotten your password?
+        new_confirmation: "Didn't receive confirmation instructions?"
+        new_unlock: "Didn't receive unlock instructions?"
+        omniauth_authorize: "Sign in with %{provider}"
+    unlocks:
+      new:
+        header: Resend unlock instructions
+        labels:
+          email: 'Email'
+        submit: "Resend unlock instructions"
   edit: "Edit"
   edit_membership_to_organisation: "Edit membership to %{organisation_name}"
   edit_organisation: "Edit organisation"

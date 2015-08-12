@@ -6,51 +6,42 @@
   = link_to t('new_user'), new_organisation_user_path(@organisation) if policy(@organisation).manage_members?
 %p
   %strong
-    = t('name')
-    \:
+    = t('name') + ':'
   = @organisation.name
 %p
   %strong
-    = t('slug')
-    \:
+    = t('slug') + ':'
   = @organisation.slug
 %p
   %strong
-    = t('tel')
-    \:
+    = t('tel') + ':'
   = @organisation.tel
 %p
   %strong
-    = t('mobile')
-    \:
+    = t('mobile') + ':'
   = @organisation.mobile
 %p
   %strong
-    = t('address')
-    \:
+    = t('address') + ':'
   = @organisation.address
 %p
   %strong
-    = t('postcode')
-    \:
+    = t('postcode') + ':'
   = @organisation.postcode
 %p
   %strong
-    = t('email')
-    \:
+    = t('email') + ':'
   = @organisation.email
 - if @organisation.parent_organisation
   %p
     %strong
-      = t('parent_organisation')
-      \:
+      = t('parent_organisation') + ':'
     = link_to @organisation.parent_organisation.name,      |
       organisation_path(@organisation.parent_organisation) |
 - if @organisation.sub_organisations.present?
   %p
     %strong
-      = t('suborganisations')
-      \:
+      = t('suborganisations') + ':'
     - @organisation.sub_organisations.each do |so|
       = link_to so.name, organisation_path(so)
 %h3= t('members')
