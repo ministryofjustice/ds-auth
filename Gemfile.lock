@@ -114,6 +114,8 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    haml (4.0.6)
+      tilt
     hitimes (1.2.2)
     i18n (0.7.0)
     i18n-debug (1.0.0)
@@ -323,6 +325,7 @@ DEPENDENCIES
   govuk_elements_rails (~> 0.1.1)
   govuk_frontend_toolkit (~> 2.0.1)
   guard-rspec
+  haml
   i18n-debug
   jquery-rails
   launchy
@@ -352,4 +355,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.10.5
+   1.10.6

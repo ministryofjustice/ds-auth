@@ -1,0 +1,7 @@
+= render 'shared/error_messages', object: @user
+%h1= t('edit_user')
+= form_for(@user) do |f|
+  = render 'form',  f: f
+  .actions
+    = f.submit t('update_user'), class: "button"
+    = link_to t('back'), users_path

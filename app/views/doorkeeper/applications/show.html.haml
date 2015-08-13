@@ -1,0 +1,31 @@
+%h1= t('.title', name: @application.name)
+.sidebar
+  %h3= t("actions")
+  = link_to t('edit'), edit_oauth_application_path(@application)
+  = link_to t('back'), oauth_applications_path
+%p
+  %strong= t('.application_id')
+  = @application.uid
+%p
+  %strong= t('.secret')
+  = @application.secret
+%p
+  %strong= t('.handles_own_authorization')
+  = authorization_status(@application)
+%p
+  %strong= t('.callback_urls')
+  - @application.redirect_uri.split.each do |uri|
+    = uri
+    %br/
+%p
+  %strong= t('.failure_uris')
+  - @application.failure_uri.split.each do |uri|
+    = uri
+    %br/
+  - if @application.failure_uri.blank?
+    \/auth/failure?message=unauthorized
+%p
+  %strong= t('.roles')
+  - @application.available_roles.each do |role|
+    = role
+    %br/

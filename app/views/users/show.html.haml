@@ -1,0 +1,57 @@
+%h1= t("user")
+.sidebar
+  %h3= t("actions")
+  = link_to t('edit'), edit_user_path(@user)
+  = link_to t('back'), users_path
+%p
+  %strong
+    = t('name')
+    \:
+  = @user.name
+%p
+  %strong
+    = t('email')
+    \:
+  = @user.email
+%p
+  %strong
+    = t('telephone')
+    \:
+  = @user.telephone
+%p
+  %strong
+    = t('mobile')
+    \:
+  = @user.mobile
+%p
+  %strong= t('address')
+  = @user.address
+%p
+  %strong
+    = t('postcode')
+    \:
+  = @user.postcode
+%h3= t("organisations")
+%table
+  %thead
+    %th
+    %th Organisation Admin
+    %th= t("applications_and_roles")
+  - @user.memberships.each do |membership|
+    = content_tag(:tr, membership) do
+      %td= link_to membership.organisation.name, organisation_path(membership.organisation)
+      %td= tick_cross_mark membership.is_organisation_admin?
+      %td
+        - if membership.application_memberships.empty?
+          %p= t("can_access_no_applications")
+        - else
+          %dl
+            - membership.application_memberships.each do |application_membership|
+              %dt= application_membership.application_name
+              %dd
+                - if application_membership.has_roles?
+                  = application_membership.roles.join(", ")
+                - elsif application_membership.can_login
+                  = t("login")
+                - else
+                  = t("login_disabled")

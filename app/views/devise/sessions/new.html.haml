@@ -1,0 +1,17 @@
+= render 'shared/error_messages', object: resource
+.panel-default
+  .panel-body
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .field
+        = f.label :email, class: 'form-label'
+        = f.email_field :email, autofocus: true, class: 'form-control'
+      .field
+        = f.label :password, class: 'form-label'
+        = f.password_field :password, autocomplete: "off", class: 'form-control'
+      - if devise_mapping.rememberable?
+        .field.remember-me-field
+          = f.check_box :remember_me
+          = f.label :remember_me, class: 'form-label remember-me'
+      .actions
+        = f.submit t('devise.sessions.log_in'), class: 'button'
+        = render "devise/shared/links"

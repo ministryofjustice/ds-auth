@@ -1,0 +1,32 @@
+= render 'shared/error_messages', object: resource
+.panel-default
+  .panel-body
+    %h2
+      Edit #{resource_name.to_s.humanize}
+    = form_for(resource, as: resource_name, url: user_registration_path(resource), html: {method: :patch}) do |f|
+      .field
+        = f.label :email
+        %br/
+        = f.email_field :email, autofocus: true, class: 'form-control'
+      - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+        %div
+          Currently waiting confirmation for: #{resource.unconfirmed_email}
+      .field
+        = f.label :password
+        %i (leave blank if you don't want to change it)
+        %br/
+        = f.password_field :password, autocomplete: "off", class: 'form-control'
+      .field
+        = f.label :password_confirmation
+        %br/
+        = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
+      .field
+        = f.label :current_password
+        %i (we need your current password to confirm your changes)
+        %br/
+        = f.password_field :current_password, autocomplete: "off", class: 'form-control'
+      %br/
+      .actions
+        = f.submit "Update", class: 'button'
+    %br/
+    = link_to "Back", :back

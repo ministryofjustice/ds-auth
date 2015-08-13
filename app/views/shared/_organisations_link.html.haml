@@ -1,0 +1,5 @@
+- orgs_as_member = current_user.memberships.as_admin(false).with_organisation
+- if orgs_as_member.count == 1
+  %li= link_to orgs_as_member.first.organisation.name, organisation_path(orgs_as_member.first)
+- else
+  %li= link_to t("organisations"), organisations_path
