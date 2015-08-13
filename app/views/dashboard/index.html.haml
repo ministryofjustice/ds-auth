@@ -1,5 +1,5 @@
 %h1
-  Welcome #{current_user.name}
+  = t('.welcome', name: current_user.name)
 %h3= t("manage")
 %section
   %ul

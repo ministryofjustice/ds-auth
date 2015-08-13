@@ -1,10 +1,11 @@
 = render 'shared/error_messages', object: resource
-%h2 Resend unlock instructions
+%h2
+  = t('.header')
 = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
   .field
-    = f.label :email
+    = f.label :email, t('.labels.email')
     %br/
     = f.email_field :email, autofocus: true
   .actions
-    = f.submit "Resend unlock instructions", class: 'button'
+    = f.submit t('.submit'), class: 'button'
 = render "devise/shared/links"

@@ -6,7 +6,7 @@ gem "dotenv-rails", "~> 2.0.0", require: "dotenv/rails-now"
 
 gem "devise", "~> 3.4.1"
 gem "doorkeeper"
-gem 'haml'
+gem "haml"
 gem "jquery-rails"
 gem "lograge"
 gem "logstash-event"
