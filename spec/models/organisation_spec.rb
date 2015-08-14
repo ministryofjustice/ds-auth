@@ -5,6 +5,19 @@ RSpec.describe Organisation do
     it { expect(subject).to validate_presence_of :name }
     it { expect(subject).to validate_presence_of :slug }
 
+    context 'when another organisation exists' do
+      let!(:existing_org){ create :organisation, slug: 'duplicate-slug' }
+
+      context 'saving an organisation with the same slug' do
+        before{
+          subject.slug='duplicate-slug'
+        }
+        it 'fails' do
+          expect( subject.save ).to be_false
+        end
+      end
+    end
+
     context "circular references" do
       let!(:organisation)       { create :organisation }
       let!(:child_organisation) { create :organisation,

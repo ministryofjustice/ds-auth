@@ -1,3 +1,4 @@
+
 unless ENV["NO_COVERAGE"]
   require "simplecov"
 
