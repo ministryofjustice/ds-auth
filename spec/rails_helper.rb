@@ -6,6 +6,7 @@ require "rspec/rails"
 require "shoulda-matchers"
 require "capybara/poltergeist"
 require "devise"
+require "database_cleaner"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
