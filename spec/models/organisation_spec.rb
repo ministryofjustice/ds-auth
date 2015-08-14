@@ -9,11 +9,10 @@ RSpec.describe Organisation do
       let!(:existing_org){ create :organisation, slug: 'duplicate-slug' }
 
       context 'saving an organisation with the same slug' do
-        before{
-          subject.slug='duplicate-slug'
-        }
+        subject { build(:organisation, name: 'Some org', slug:'duplicate-slug') }
+
         it 'fails' do
-          expect( subject.save ).to be_false
+          expect( subject.save ).to eq(false)
         end
       end
     end
