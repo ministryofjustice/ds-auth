@@ -25,14 +25,13 @@ RUN ln -sf /usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs /usr/loca
 ###############################################################################
 # Defaults for executing container
 ###############################################################################
-ENV RAILS_ENV development
 VOLUME /usr/src/app
 WORKDIR /usr/src/app
 
 # We don't run /usr/local/bin/clean-up-docker-container here, since in development mode
 # users may want to quickly run 'apt-get install packagename'.
 
-RUN bundle exec rake db:create db:schema:load db:migrate
+# RUN bundle exec rake db:create db:schema:load db:migrate
 #  docker exec -ti ${DOCKER_IMAGE} "bundle exec rake db:seed && bundle exec rake users:create_webops name='Webops' email=webops@example.com password='password'""
 
 
