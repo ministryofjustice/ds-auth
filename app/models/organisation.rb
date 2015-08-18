@@ -8,7 +8,10 @@ class Organisation < ActiveRecord::Base
   has_many :sub_organisations, -> { order :id }, class_name: "Organisation", foreign_key: "parent_organisation_id"
   belongs_to :parent_organisation, class_name: "Organisation"
 
+  acts_as_url :name, url_attribute: :slug, only_when_blank: true
+
   validates :slug, :name, presence: true
+  validates :slug, uniqueness: true
   validate :no_circular_references
 
   scope :by_name, -> { order(name: :asc) }

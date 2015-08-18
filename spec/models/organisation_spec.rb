@@ -61,4 +61,45 @@ RSpec.describe Organisation do
       end
     end
   end
+
+  describe "an organisation with a name" do
+    subject{ build(:organisation, name: "ACME organisation PLC", slug: slug) }
+
+    describe "being saved from new" do
+      context "with a blank slug" do
+        let(:slug){ nil }
+
+        it "auto-populates the slug" do
+          subject.save!
+          expect( subject.slug ).not_to be_blank
+        end
+      end
+
+      context "with a given slug" do
+        let(:slug){ "some-given-slug" }
+
+        it "does not change the given slug" do
+          subject.save!
+          expect( subject.slug ).to eq("some-given-slug")
+        end
+      end
+
+      context "with a slug that already exists" do
+        let!(:existing_org){ create :organisation, slug: "duplicate-slug" }
+
+        context "saving an organisation with the same slug" do
+          let(:slug){ "duplicate-slug" }
+
+          it "does not fail" do
+            expect{ subject.save! }.not_to raise_error
+          end
+
+          it "appends a suffix to make the slug unique" do
+            subject.save!
+            expect( subject.slug ).to start_with("duplicate-slug-")
+          end
+        end
+      end
+    end
+  end
 end
