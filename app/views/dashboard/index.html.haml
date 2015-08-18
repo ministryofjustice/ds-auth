@@ -1,6 +1,6 @@
 %h1
   = t('.welcome', name: current_user.name)
-%h3= t("manage")
+%h3= t(user_nav_header_key, scope: [:navigation, :models])
 %section
   %ul
     - if current_user.is_webops?

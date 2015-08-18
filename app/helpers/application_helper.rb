@@ -42,4 +42,14 @@ module ApplicationHelper
   def tick_cross_mark(boolean)
     boolean ? "✓" : "✗"
   end
+
+  def user_nav_header_key
+    if current_user.is_webops?
+      :webops
+    elsif current_user.memberships.as_admin.exists?
+      :organisation_admin
+    else
+      :user
+    end
+  end
 end

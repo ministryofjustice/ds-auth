@@ -9,6 +9,10 @@ class Membership < ActiveRecord::Base
 
   accepts_nested_attributes_for :application_memberships
 
+  def self.as_admin(flag=true)
+    where(is_organisation_admin: flag)
+  end
+
   def application_names
     application_memberships.map(&:application_name)
   end
