@@ -1,5 +1,5 @@
 class AddUniqueConstraintOnOrganisationSlug < ActiveRecord::Migration
   def change
-    change_column :organisations, :slug, :string, null: false, unique: true
+    add_index :organisations, :slug, unique: true
   end
 end

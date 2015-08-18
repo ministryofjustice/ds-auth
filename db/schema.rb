@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 20150817111030) do
 
   add_index "organisations", ["details"], name: "index_organisations_on_details", using: :gin
   add_index "organisations", ["parent_organisation_id"], name: "index_organisations_on_parent_organisation_id", using: :btree
+  add_index "organisations", ["slug"], name: "index_organisations_on_slug", unique: true, using: :btree
   add_index "organisations", ["uid"], name: "index_organisations_on_uid", using: :btree
 
   create_table "users", force: :cascade do |t|
