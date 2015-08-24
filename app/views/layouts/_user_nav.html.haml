@@ -1,7 +1,8 @@
 %ul
   %li= link_to t("home"), root_path
   %li.nested
-    %a{:href => "#"} Manage
+    %a{:href => "#"}
+      = t(user_nav_header_key, scope: [:navigation, :models])
     %ul
       - if current_user.is_webops?
         %li= link_to t("applications"), oauth_applications_path

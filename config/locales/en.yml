@@ -104,6 +104,11 @@ en:
   delete_membership: "Delete membership"
   fix_errors_before_continuing: "You need to fix the errors on this page before continuing."
   organisations: "Organisations"
+  navigation:
+    models:
+      organisation_admin: "Manage"
+      user: "Your Links"
+      webops: "Manage"
   login: "Login"
   login_disabled: "Login disabled"
   members: "Members"
