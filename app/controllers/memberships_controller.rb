@@ -35,7 +35,7 @@ class MembershipsController < ApplicationController
 
   def update
     authorize @membership
-
+    
     if @membership.update membership_params
       redirect_to organisation_path(@organisation), notice: flash_message(:update, Membership)
     else
@@ -69,6 +69,11 @@ class MembershipsController < ApplicationController
       :user_id, :is_organisation_admin, application_memberships_attributes: [:id, :application_id, :can_login, roles: []]
     ).tap do |whitelisted|
       whitelisted[:organisation_id] = @organisation.id
+      if whitelisted[:application_memberships_attributes]
+        whitelisted[:application_memberships_attributes].each do |index, attrs|
+          attrs[:roles].reject!{|r| r.blank?}
+        end
+      end
     end
   end
 

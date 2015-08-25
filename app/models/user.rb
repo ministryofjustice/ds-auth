@@ -28,4 +28,12 @@ class User < ActiveRecord::Base
   def application_names
     memberships.map(&:application_names).flatten.uniq
   end
+
+  def roles_for_application(application_id)
+    memberships
+      .joins(:application_memberships)
+      .where(application_memberships: {application_id: application_id})
+      .map{|m| m.roles_for_application(application_id)}
+      .flatten.uniq
+  end
 end
