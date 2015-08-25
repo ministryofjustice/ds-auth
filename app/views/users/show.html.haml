@@ -41,17 +41,17 @@
     = content_tag(:tr, membership) do
       %td= link_to membership.organisation.name, organisation_path(membership.organisation)
       %td= tick_cross_mark membership.is_organisation_admin?
-      %td
+      %td.memberships-list
         - if membership.application_memberships.empty?
           %p= t("can_access_no_applications")
         - else
-          %dl
-            - membership.application_memberships.each do |application_membership|
-              %dt= application_membership.application_name
-              %dd
-                - if application_membership.has_roles?
-                  = application_membership.roles.join(", ")
-                - elsif application_membership.can_login
-                  = t("login")
-                - else
-                  = t("login_disabled")
+          - membership.application_memberships.each do |application_membership|
+            
+            %h4= application_membership.application_name
+            %p
+              - if application_membership.has_roles?
+                = application_membership.print_roles
+              - elsif application_membership.can_login
+                = t("login")
+              - else
+                = t("login_disabled")
