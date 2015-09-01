@@ -14,7 +14,8 @@ RSpec.feature "Adding a user to an Organisation" do
     before do
       application.organisations << organisation
       application.save!
-      create :membership, user: user, organisation: organisation, is_organisation_admin: true
+      membership = create :membership, user: user, organisation: organisation, is_organisation_admin: true
+      create :application_membership, membership: membership, application: application, roles: ["Admin", "beastmaster"]
     end
 
     specify "Creating a user with a role" do

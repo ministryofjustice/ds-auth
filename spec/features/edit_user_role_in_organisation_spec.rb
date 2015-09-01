@@ -35,6 +35,54 @@ RSpec.feature "Editing a Users role in an Organisation" do
         expect(page).to have_content("✓")
       end
     end
+
+    context "but not a webops" do
+      let!(:application){ create :doorkeeper_application, available_roles: ["viewer", "manager", "role user does not have"] }
+      let(:app_membership){ create :application_membership, application: application, membership: user.memberships.last, roles: ["viewer", "manager"] }
+      let!(:other_user_membership){ create(:membership, user: other_user, organisation: organisation) }
+      before do
+        user.update_attribute(:is_webops, false)
+        organisation.applications << application
+        app_membership
+      end
+
+      specify "I can give a user all the roles I have" do
+        visit edit_organisation_membership_path(organisation, other_user_membership)
+
+        within ".memberships" do
+          expect(page).to have_css("label", text: "Viewer")
+          expect(page).to have_css("label", text: "Manager")
+        end
+      end
+
+      context "when the 'can_only_grant_own_roles' feature is enabled" do
+        before do
+          allow(FeatureFlags::Features).to receive(:enabled?).with("can_only_grant_own_roles").and_return(true)
+        end
+
+        specify "I cannot give a user a role I don't have" do
+          visit edit_organisation_membership_path(organisation, other_user_membership)
+
+          within ".memberships" do
+            expect(page).not_to have_css("label", text: "Role user does not have")
+          end
+        end
+      end
+
+      context "when the 'can_only_grant_own_roles' feature is not enabled" do
+        before do
+          allow(FeatureFlags::Features).to receive(:enabled?).with("can_only_grant_own_roles").and_return(false)
+        end
+
+        specify "I can give a user a role I don't have" do
+          visit edit_organisation_membership_path(organisation, other_user_membership)
+
+          within ".memberships" do
+            expect(page).to have_css("label", text: "Role user does not have")
+          end
+        end
+      end
+    end
   end
 end
 

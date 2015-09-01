@@ -161,6 +161,10 @@ en:
           attributes:
             application:
               application_not_available: "That application is not available to %{organisation_name}"
+            roles:
+              not_authorized_to_grant_role:
+                one: "You are not authorized to grant the %{roles} role"
+                other: "You are not authorized to grant the %{roles} roles"
         doorkeeper/application:
           attributes:
             available_roles_as_string:

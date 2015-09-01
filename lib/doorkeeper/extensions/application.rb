@@ -26,6 +26,14 @@ module Doorkeeper
         self.available_roles= str.split("\r\n")
       end
 
+      def available_roles_matching_user(user)
+        if FeatureFlags::Features.enabled?("can_only_grant_own_roles")
+          self.available_roles & user.roles_for_application(self.id)
+        else
+          self.available_roles
+        end
+      end
+
       def url
         @url || URI.parse(redirect_uri).tap do |uri|
           uri.path = "/"

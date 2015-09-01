@@ -36,4 +36,12 @@ class User < ActiveRecord::Base
       .map{|m| m.roles_for_application(application_id)}
       .flatten.uniq
   end
+
+  def self.current
+    Thread.current[:user]
+  end
+
+  def self.current=(user)
+    Thread.current[:user] = user
+  end
 end
