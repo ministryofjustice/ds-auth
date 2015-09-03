@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
    protect_from_forgery with: :exception
 
    before_action :authenticate_user!
+   before_action :set_user_current
 
    def flash_message(type, klass)
      t("models.#{type}", model: klass.model_name.human)
@@ -19,5 +20,9 @@ class ApplicationController < ActionController::Base
 
   def after_sign_out_path_for(resource_or_scope)
     new_user_session_path
+  end
+
+  def set_user_current
+    User.current = current_user
   end
 end

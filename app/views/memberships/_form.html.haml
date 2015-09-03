@@ -20,6 +20,7 @@
                 = ff.check_box :can_login
                 = t("login")
             - else
-              = ff.collection_check_boxes :roles, application_membership.application.available_roles, :to_s, :to_s do |b|
+              - available_roles = application_membership.application.available_roles_matching_user(current_user)
+              = ff.collection_check_boxes :roles, available_roles, :to_s, :to_s do |b|
                 = b.label() { b.check_box + b.text.humanize }
   .clearfix

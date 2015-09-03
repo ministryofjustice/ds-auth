@@ -69,6 +69,12 @@ class MembershipsController < ApplicationController
       :user_id, :is_organisation_admin, application_memberships_attributes: [:id, :application_id, :can_login, roles: []]
     ).tap do |whitelisted|
       whitelisted[:organisation_id] = @organisation.id
+      if whitelisted[:application_memberships_attributes]
+        whitelisted[:application_memberships_attributes].each do |index, attrs|
+          attrs[:roles].reject!(&:blank?)
+          remove_roles_current_user_cannot_grant(attrs)
+        end
+      end
     end
   end
 
@@ -85,5 +91,13 @@ class MembershipsController < ApplicationController
     @organisation.applications.each do |app|
       @membership.application_memberships.build application: app unless app.id.in? @membership.application_memberships.map(&:application_id)
     end
+  end
+
+  def remove_roles_current_user_cannot_grant(attrs)
+    if FeatureFlags::Features.enabled?("can_only_grant_own_roles")
+      whitelist = User.current.roles_for_application(attrs[:application_id])
+      attrs[:roles].reject!{|r| !whitelist.include?(r) }
+    end
+    attrs[:roles]
   end
 end

@@ -113,5 +113,20 @@ RSpec.describe MembershipsController, type: :controller do
       expect(assigns(:membership).application_memberships.size).to eq(1)
       expect(assigns(:membership).application_memberships.first.application_id).to eq(application1.id)
     end
+
+    context "when the can_only_grant_own_roles feature is enabled" do
+      let(:current_user_membership){ current_user.memberships.last }
+      before do
+        allow(FeatureFlags::Features).to receive(:enabled?).with("can_only_grant_own_roles").and_return(true)
+        create(:application_membership, membership: current_user_membership, application: application1, roles: ["wookie_wrangler"])
+        create(:application_membership, membership: current_user_membership, application: application1, roles: ["cheese_monger"])
+      end
+
+      it "removes any roles that the current_user does not have" do
+        do_patch
+        granted_roles = assigns(:membership).application_memberships.map(&:roles).flatten
+        expect(granted_roles).to eq(["wookie_wrangler"])
+      end
+    end
   end
 end
