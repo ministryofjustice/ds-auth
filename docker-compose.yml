@@ -1,5 +1,5 @@
 web:
-  image: ds-auth:development_localbuild
+  image: ds-auth:base_localbuild
   links:
     - db:postgres
   environment:
@@ -8,6 +8,7 @@ web:
     - "3000:3000"
   volumes:
     - .:/usr/src/app
+  working_dir: /usr/src/app
   command: bash -c "bundle exec rails s -b 0.0.0.0"
 
 
