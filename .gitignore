@@ -27,9 +27,5 @@
 # The .env file is now used for defaults, which are then overriden with per-environment .env.production style files
 .env.local
 
-# The Dockerfile is copied from docker/... to Dockerfile during builds via Makefile, since we can't
-# use the -f option to Docker (CircleCI's docker version is too old)
-/Dockerfile
-
 # This is created by docker builds, and reflects the current git repo status
 .git-revision

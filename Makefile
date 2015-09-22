@@ -29,43 +29,17 @@ force_filesystem_timestamps:
 build_all_containers: force_filesystem_timestamps base_container test_container 
 
 base_container:
-	#cp -a docker/Dockerfile-base Dockerfile
-	# docker build -t "${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}" .
-	#rm -f Dockerfile
-
-# development_container: base_container
-# 	cat docker/Dockerfile-development | sed -e "s/FROM ${DOCKER_IMAGE}:base_localbuild/FROM ${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}/g" > Dockerfile
-
-# 	docker build -t "${DOCKER_IMAGE}:development_${DOCKER_IMAGE_TAG}" .
-# 	rm -f Dockerfile
-
-# production_container: base_container
-	# cat docker/Dockerfile-production | sed -e "s/FROM ${DOCKER_IMAGE}:base_localbuild/FROM ${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}/g" > Dockerfile
-
-	# Store the repo offset into the Dockerfile. We do this as the very last
-	# step of each container (not the Base container) to avoid invalidating caching.
-	printf "\nRUN echo version_number: ${DOCKER_IMAGE_TAG} >> /.version.yml\n\n" >> Dockerfile
-	printf "\nRUN echo build_date: `date -u '+%Y-%m-%dT%k:%M:%S%z'` >> /.version.yml\n\n" >> Dockerfile
-	printf "\nRUN echo commit_id: `git rev-parse HEAD` >> /.version.yml\n\n" >> Dockerfile
-	printf "\nRUN echo build_tag: ${JOB_NAME} ${BUILD_ID} >> /.version.yml\n\n" >> Dockerfile
-
 	docker build -t "${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}" .
-	# rm -f Dockerfile
-
+	
 test_container: base_container
-	cat docker/Dockerfile-test | sed -e "s/FROM ${DOCKER_IMAGE}:base_localbuild/FROM ${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}/g" > Dockerfile
-
 	docker build -t "${DOCKER_IMAGE}:test_${DOCKER_IMAGE_TAG}" .
-	rm -f Dockerfile
-
+	
 # Tag repos
 tag:
 ifeq (${DOCKER_IMAGE_TAG}, localbuild)
 	@echo Not tagging localbuild containers
 else
 	docker tag -f "${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}" "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}"
-	#docker tag -f "${DOCKER_IMAGE}:development_${DOCKER_IMAGE_TAG}" "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:development_${DOCKER_IMAGE_TAG}"
-	#docker tag -f "${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}" "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}"
 	docker tag -f "${DOCKER_IMAGE}:test_${DOCKER_IMAGE_TAG}" "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:test_${DOCKER_IMAGE_TAG}"
 	@echo Tagged successfully
 endif
@@ -76,8 +50,6 @@ ifeq (${DOCKER_IMAGE_TAG}, localbuild)
 	@echo Not pushing localbuild containers
 else
 	docker push "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}"
-	docker push "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:development_${DOCKER_IMAGE_TAG}"
-	docker push "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}"
 	docker push "${DOCKER_PUBLISH_PREFIX}/${DOCKER_IMAGE}:test_${DOCKER_IMAGE_TAG}"
 
 	@echo Pushed successfully
