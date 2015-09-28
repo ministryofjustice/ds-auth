@@ -3,6 +3,7 @@ default: &default
   encoding: utf8
   host: <%= ENV.fetch("DS_AUTH_DATABASE_HOST", nil) %>
   password: <%= ENV.fetch("DS_AUTH_DATABASE_PASSWORD", nil) %>
+  port: <%= ENV.fetch('DS_AUTH_DATABASE_PORT', 5432) %>
   username: <%= ENV.fetch("DS_AUTH_DATABASE_USERNAME", nil) %>
   pool: <%= ENV.fetch("DS_AUTH_DATABASE_POOL", 5) %>
 
